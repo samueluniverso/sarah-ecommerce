@@ -1,0 +1,53 @@
+services:
+    nginx:
+        container_name: nginx
+        restart: always
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        volumes:
+            - ${BACKEND}:/app
+            - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+            - ${NGINX_SITES_PATH}:/etc/nginx/conf.d
+        ports:
+            - "${NGINX_HOST_HTTP_PORT}:8080"
+            #- "${NGINX_HOST_HTTPS_PORT}:443"
+        links:
+            - php-fpm
+        networks:
+            - code-network
+
+    php-fpm:
+        container_name: php-fpm
+        restart: always
+        build:
+            context: ./php-fpm
+            dockerfile: Dockerfile
+        expose:
+            - "9000"    
+        volumes:
+            - ${BACKEND}:/app
+        networks:
+            - code-network
+
+    postgres:
+        container_name: postgres
+        restart: always
+        build:
+            context: ./postgres
+            dockerfile: Dockerfile
+        ports:
+            - "${POSTGRES_PORT}:5432"
+        volumes:
+            - ${POSTGRES_DATA}:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_PORT=${POSTGRES_PORT}
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge
