@@ -15,7 +15,7 @@ services:
         links:
             - php-fpm
         networks:
-            - code-network
+            - my-network
 
     php-fpm:
         container_name: php-fpm
@@ -23,12 +23,19 @@ services:
         build:
             context: ./php-fpm
             dockerfile: Dockerfile
+            args:
+                - INSTALL_COMPRESSION=${PHP_FPM_INSTALL_COMPRESSION}
+                - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+                - PHP_FPM_INSTALL_PDO_PGSQL=${PHP_FPM_INSTALL_PDO_PGSQL}
+                - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+                - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+                - INSTALL_COMPOSER=${PHP_FPM_INSTALL_COMPOSER}
         expose:
             - "9000"    
         volumes:
             - ${BACKEND}:/app
         networks:
-            - code-network
+            - my-network
 
     postgres:
         container_name: postgres
@@ -46,8 +53,8 @@ services:
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_PORT=${POSTGRES_PORT}
         networks:
-            - code-network
+            - my-network
 
 networks:
-    code-network:
+    my-network:
         driver: bridge
