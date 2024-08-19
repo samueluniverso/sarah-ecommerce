@@ -1,4 +1,6 @@
 FROM php:8.3-fpm
+
+WORKDIR /app
  
 # Additional tools
 RUN apt-get update \
@@ -74,7 +76,6 @@ RUN if [ ${INSTALL_COMPOSER} = true ]; then \
 RUN rm -rf /var/lib/apt/lists/*
 
 # Permissions
-RUN mkdir /app
 RUN chown -R root:www-data /app
 RUN chmod u+rwx,g+rx,o+rx /app
 RUN find /var/www/html -type d -exec chmod u+rwx,g+rx,o+rx {} +

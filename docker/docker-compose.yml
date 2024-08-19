@@ -37,6 +37,20 @@ services:
         networks:
             - my-network
 
+    node:
+        container_name: node
+        restart: always
+        build:
+            context: ./node
+            dockerfile: Dockerfile
+        ports:
+            - ${NODEJS_PORT}:3000
+        volumes:
+            - ${FRONTEND}:/app
+        entrypoint: ["npx", "nodemon", "--legacy-watch", "/app/server.js"]
+        networks:
+            - my-network
+
     postgres:
         container_name: postgres
         restart: always
