@@ -10,7 +10,7 @@ RUN apt-get update \
     vim
 
 # Common php-ext and requirements
-RUN apt-get install -y --no-install-recommends libzip-dev libpq-dev libz-dev \
+RUN apt-get install -y --no-install-recommends libzip-dev libpq-dev libz-dev zip unzip \
  && docker-php-ext-install pcntl \
  && docker-php-ext-install session \
  && docker-php-ext-install phar \
