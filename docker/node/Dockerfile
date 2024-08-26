@@ -2,9 +2,6 @@ FROM node:22.7.0
 
 WORKDIR /app/sarah-app
 
-EXPOSE 3001
+COPY ../frontend/sarah-app/package*.json ./
 
-## production
-# CMD ["node", "build"]
-## development
-# CMD ["npm", "run", "dev"]
+EXPOSE 3001
