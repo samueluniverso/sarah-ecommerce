@@ -50,6 +50,9 @@ Instruções de como fazer o *boostraping* da aplicação
 		DB_USERNAME=admin
 		DB_PASSWORD=admin
 
+#### KEY
+	php artisan key:generate
+
 #### API
 	php artisan install:api
 
