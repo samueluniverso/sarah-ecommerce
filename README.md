@@ -77,8 +77,10 @@ Instruções de como fazer o *boostraping* da aplicação
 		import adapter from '@sveltejs/adapter-node';
 	npm install
 	npm run build
-	# run locally
+	# run prod
 	node build
+ 	# run dev
+  	npm run dev
 
 ## Postgres
 Para acessar banco na máquina local
