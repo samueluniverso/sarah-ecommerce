@@ -47,7 +47,8 @@ services:
             - ${NODEJS_PORT}:3000
         volumes:
             - ${FRONTEND}:/app
-        #entrypoint: ["npx", "nodemon", "--legacy-watch", "/app/server.js"]
+        # command: node build ## production
+        command: npm run dev  ## development
         networks:
             - my-network
 
