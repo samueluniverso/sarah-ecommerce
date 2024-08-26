@@ -6,10 +6,10 @@ Guia rápido de como configurar o projeto Sarah-Ecommerce passo-a-passo.
 
 ## Docker
 
-    docker compose build 		# compilar
+    docker compose build 	# compilar
     docker compose up | watch	# subir
-	docker compose stop		 	# parar
-	docker compose down 		# excluir
+	docker compose stop	# parar
+	docker compose down 	# excluir
 
 #### Containers:
 	**nginx:** page-server
