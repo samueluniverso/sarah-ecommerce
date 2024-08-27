@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-WORKDIR /app
+WORKDIR /app/sarah-api
  
 # Additional tools
 RUN apt-get update \

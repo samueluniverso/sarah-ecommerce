@@ -19,7 +19,7 @@ services:
 
     php-fpm:
         container_name: php-fpm
-        restart: always
+        restart: on-failure
         build:
             context: ./php-fpm
             dockerfile: Dockerfile
@@ -39,7 +39,7 @@ services:
 
     node:
         container_name: node
-        restart: always
+        restart: on-failure
         build:
             context: ./node
             dockerfile: Dockerfile
