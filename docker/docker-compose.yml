@@ -6,7 +6,7 @@ services:
             context: ./nginx
             dockerfile: Dockerfile
         volumes:
-            - ${BACKEND}:/app
+            - ${BACKEND}/sarah-api:/app/sarah-api
             - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
             - ${NGINX_SITES_PATH}:/etc/nginx/conf.d
         ports:
@@ -19,7 +19,7 @@ services:
 
     php-fpm:
         container_name: php-fpm
-        restart: on-failure
+        restart: always
         build:
             context: ./php-fpm
             dockerfile: Dockerfile
@@ -33,7 +33,8 @@ services:
         expose:
             - "9000"    
         volumes:
-            - ${BACKEND}:/app
+            - ${BACKEND}/sarah-api:/app/sarah-api
+        entrypoint: ["/app/deploy/php-fpm-afterbuild.sh"]
         networks:
             - my-network
 
@@ -46,8 +47,8 @@ services:
         ports:
             - ${NODEJS_PORT}:3000
         volumes:
-            - ${FRONTEND}:/app
-        command: ${NPM_DEV}
+            - ${FRONTEND}/sarah-app:/app/sarah-app
+        entrypoint: ["/app/deploy/node-afterbuild.sh"]
         networks:
             - my-network
 
