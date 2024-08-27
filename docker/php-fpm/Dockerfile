@@ -1,7 +1,10 @@
 FROM php:8.3-fpm
 
+COPY ./php-fpm-afterbuild.sh /app/deploy/
+RUN chmod +x /app/deploy/php-fpm-afterbuild.sh
+
 WORKDIR /app/sarah-api
- 
+
 # Additional tools
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
@@ -76,11 +79,10 @@ RUN if [ ${INSTALL_COMPOSER} = true ]; then \
 RUN rm -rf /var/lib/apt/lists/*
 
 # Permissions
-RUN chown -R root:www-data /app
+RUN chown -R www-data:www-data /app
+RUN chmod 777 -R /app/sarah-api
 RUN chmod u+rwx,g+rx,o+rx /app
 RUN find /var/www/html -type d -exec chmod u+rwx,g+rx,o+rx {} +
 RUN find /var/www/html -type f -exec chmod u+rw,g+rw,o+r {} +
-
-CMD ["php-fpm"]
 
 EXPOSE 9000
