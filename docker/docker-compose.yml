@@ -14,6 +14,11 @@ services:
             #- "${NGINX_HOST_HTTPS_PORT}:443"
         links:
             - php-fpm
+        environment:
+            ## enable hot-reload on Windows
+            - WDS_SOCKET_HOST=localhost
+            - CHOKIDAR_USEPOLLING=true
+            - WATCHPACK_POLLING=true 
         networks:
             - my-network
 
@@ -35,6 +40,11 @@ services:
         volumes:
             - ${BACKEND}/sarah-api:/app/sarah-api
         entrypoint: ["/app/deploy/php-fpm-afterbuild.sh"]
+        environment:
+            ## enable hot-reload on Windows
+            - WDS_SOCKET_HOST=localhost
+            - CHOKIDAR_USEPOLLING=true
+            - WATCHPACK_POLLING=true 
         networks:
             - my-network
 
@@ -49,6 +59,11 @@ services:
         volumes:
             - ${FRONTEND}/sarah-app:/app/sarah-app
         entrypoint: ["/app/deploy/node-afterbuild.sh"]
+        environment:
+            ## enable hot-reload on Windows
+            - WDS_SOCKET_HOST=localhost
+            - CHOKIDAR_USEPOLLING=true
+            - WATCHPACK_POLLING=true 
         networks:
             - my-network
 
