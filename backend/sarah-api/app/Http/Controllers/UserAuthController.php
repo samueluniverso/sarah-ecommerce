@@ -3,12 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Dotenv\Repository\RepositoryInterface;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Throwable;
 
 class UserAuthController extends Controller
 {
+    public function login(Request $request)
+    {
+        $user = User::where('name', $request->name)->first();
+        if (!$user || !Hash::check($request->password, $user->password))
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Username or password is incorrect',
+            ]);
+        }
+
+        $user->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged-in successfully',
+            'token' => $user->createToken('auth_token')->plainTextToken,
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged-out successfully'
+        ]);
+    }
+
     public function register(Request $request)
     {
         $data = [];
@@ -34,7 +67,8 @@ class UserAuthController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'User registered successfully.'
+            'success' => true,
+            'message' => 'User registered successfully',
         ]);
     }
 }
