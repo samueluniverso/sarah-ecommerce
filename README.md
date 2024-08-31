@@ -1,6 +1,6 @@
-# Sarah-Ecommerce
+# Sarah e-commerce
 
-Guia rápido de como configurar o projeto Sarah-Ecommerce passo-a-passo.
+Guia rápido de como configurar o projeto Sarah e-commerce passo-a-passo.
 
 # Overview
 
