@@ -34,7 +34,6 @@ class UserAuthController extends Controller
 
     public function logout(Request $request)
     {
-        throw new Exception('Teste');
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
