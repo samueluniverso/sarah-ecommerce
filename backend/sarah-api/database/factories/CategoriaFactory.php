@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categoria>
  */
 class CategoriaFactory extends Factory
 {
@@ -17,16 +17,7 @@ class CategoriaFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome'      => fake()->name(),
-            'descricao' => fake()->name()
+            //
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => []);
     }
 }
