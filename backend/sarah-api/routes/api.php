@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UserAuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [
@@ -15,3 +15,15 @@ Route::post('/logout', [
 Route::post('/register', [
     UserAuthController::class, 'register'
 ]);
+
+Route::put('/salvar-categoria', [
+    CategoriaController::class, 'store'
+]);
+
+Route::post('/salvar-categoria', [
+    CategoriaController::class, 'update'
+]);
+
+// Route::put('/salvar-categoria', [
+//     CategoriaController::class, 'store'
+// ])->middleware('auth:sanctum');
