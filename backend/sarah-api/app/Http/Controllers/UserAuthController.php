@@ -18,9 +18,8 @@ class UserAuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password))
         {
             return response()->json([
-                'success' => false,
                 'message' => 'Username or password is incorrect',
-            ]);
+            ], 401);
         }
 
         $user->tokens()->delete();
@@ -39,7 +38,7 @@ class UserAuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User logged-out successfully'
-        ]);
+        ], 200);
     }
 
     public function register(Request $request)
@@ -67,8 +66,7 @@ class UserAuthController extends Controller
         ]);
 
         return response()->json([
-            'success' => true,
             'message' => 'User registered successfully',
-        ]);
+        ], 201);
     }
 }
