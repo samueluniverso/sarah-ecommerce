@@ -56,7 +56,7 @@ class UserAuthController extends Controller
         {
             return response()->json([
                 'message' => $th->getMessage()
-            ]);
+            ], 500);
         }
 
         User::create([
