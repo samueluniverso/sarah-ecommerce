@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome')->nullable(false); // O nome nao pode ser null
             $table->string('descricao')->nullable();
+            $table->timestamps();
         });
     }
 
