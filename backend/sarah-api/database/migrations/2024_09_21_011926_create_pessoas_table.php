@@ -21,7 +21,7 @@ return new class extends Migration
         });
 
         Schema::table('pessoas', function(Blueprint $table) {
-            $table->foreign('fk_user')->references('id')->on('users');
+            $table->foreign('fk_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

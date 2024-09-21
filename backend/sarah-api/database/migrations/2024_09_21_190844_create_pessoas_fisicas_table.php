@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         Schema::table('pessoas_fisicas', function(Blueprint $table) {
-            $table->foreign('fk_pessoa')->references('id')->on('pessoas');
+            $table->foreign('fk_pessoa')->references('id')->on('pessoas')->onDelete('cascade');
         });
     }
 
