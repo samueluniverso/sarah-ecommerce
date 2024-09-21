@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('telefone');
-            $table->string('email');
+            $table->boolean('is_admin')->default(false);
             $table->bigInteger('fk_user')->unsigned()->nullable();
             $table->timestamps();
         });

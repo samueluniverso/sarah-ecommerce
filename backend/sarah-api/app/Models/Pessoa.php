@@ -11,6 +11,8 @@ class Pessoa extends Model
 
     protected $table = 'pessoas';
 
+    public $incrementing = true;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,8 +20,7 @@ class Pessoa extends Model
      */
     protected $fillable = [
         'nome',
-        'telefone',
-        'email'
+        'telefone'
     ];
 
     public function user()

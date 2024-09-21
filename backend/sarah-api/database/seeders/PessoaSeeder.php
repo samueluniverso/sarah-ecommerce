@@ -13,10 +13,9 @@ class PessoaSeeder extends Seeder
     public function run(): void
     {
         Pessoa::factory()->create([
-            'nome' => 'Nome Sobrenome',
+            'nome' => 'Adminsitrador',
             'telefone' => '51987654321',
-            'email' => 'nome.sobrenome@locahost',
-            'fk_user' => 2
+            'fk_user' => 1
         ]);
     }
 }

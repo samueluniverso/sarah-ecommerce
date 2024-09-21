@@ -19,7 +19,6 @@ class PessoaFactory extends Factory
     {
         return [
             'nome' => fake()->name(),
-            'email' => fake()->email(),
             'telefone' => fake()->phoneNumber(),
             'fk_user' => User::all()->random()
         ];
