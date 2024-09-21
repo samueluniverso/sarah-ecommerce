@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\PessoasFisicas;
+use App\Models\PessoaFisica;
 use Illuminate\Database\Seeder;
 
-class PessoasFisicasSeeder extends Seeder
+class PessoaFisicaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        PessoasFisicas::factory()->create([
+        PessoaFisica::factory()->create([
             'fk_pessoa' => 1
         ]);
     }

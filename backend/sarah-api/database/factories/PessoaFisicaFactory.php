@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Pessoas;
+use App\Models\Pessoa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PessoasFisicas>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PessoaFisica>
  */
-class PessoasFisicasFactory extends Factory
+class PessoaFisicaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class PessoasFisicasFactory extends Factory
     {
         return [
             'cpf' => rand(10e9, 10e10),
-            'fk_pessoa' => Pessoas::all()->random()
+            'fk_pessoa' => Pessoa::all()->random()
         ];
     }
 }

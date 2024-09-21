@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PessoasFisicas extends Model
+class Pessoa extends Model
 {
     use HasFactory;
+
+    protected $table = 'pessoas';
 
     /**
      * The attributes that are mass assignable.
@@ -15,12 +17,14 @@ class PessoasFisicas extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'cpf',
+        'nome',
+        'telefone',
+        'email'
     ];
 
-    public function pessoa()
+    public function user()
     {
-        return $this->hasOne(Pessoas::class);
+        return $this->hasOne(User::class);
     }
 
     /**
