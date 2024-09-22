@@ -74,6 +74,7 @@ class PessoaFisicaController extends Controller
         }
 
         $user = User::factory()->create([
+            'name' => $data['nome'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
