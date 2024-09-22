@@ -11,7 +11,7 @@ class UserAuthController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('name', $request->name)->first();
+        $user = User::where('username', $request->name)->first();
         if (!$user || !Hash::check($request->password, $user->password))
         {
             return response()->json([
@@ -44,7 +44,7 @@ class UserAuthController extends Controller
         try
         {
             $data = $request->validate([
-                'name' => 'required|string|unique:users',
+                'username' => 'required|string|unique:users',
                 'email' => 'required|string|email|unique:users',
                 'password' => 'required|min:8',
             ]);
@@ -57,7 +57,7 @@ class UserAuthController extends Controller
         }
 
         User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
