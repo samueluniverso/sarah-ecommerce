@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Pessoas extends Model
+class PessoaFisica extends Model
 {
     use HasFactory;
+
+    protected $table = 'pessoas_fisicas';
+
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -15,14 +20,12 @@ class Pessoas extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nome',
-        'telefone',
-        'email'
+        'cpf',
     ];
 
-    public function user()
+    public function pessoa() : HasOne
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(Pessoa::class, 'id', 'fk_pessoa');
     }
 
     /**

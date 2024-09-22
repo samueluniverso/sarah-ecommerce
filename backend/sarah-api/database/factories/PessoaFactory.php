@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pessoas>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pessoa>
  */
-class PessoasFactory extends Factory
+class PessoaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,6 @@ class PessoasFactory extends Factory
     {
         return [
             'nome' => fake()->name(),
-            'email' => fake()->email(),
             'telefone' => fake()->phoneNumber(),
             'fk_user' => User::all()->random()
         ];

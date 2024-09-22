@@ -3,24 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Dotenv\Repository\RepositoryInterface;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redis;
 use Throwable;
 
 class UserAuthController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('name', $request->name)->first();
+        $user = User::where('username', $request->username)->first();
         if (!$user || !Hash::check($request->password, $user->password))
         {
             return response()->json([
-                'success' => false,
                 'message' => 'Username or password is incorrect',
-            ]);
+            ], 401);
         }
 
         $user->tokens()->delete();
@@ -39,7 +35,7 @@ class UserAuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User logged-out successfully'
-        ]);
+        ], 200);
     }
 
     public function register(Request $request)
@@ -48,7 +44,7 @@ class UserAuthController extends Controller
         try
         {
             $data = $request->validate([
-                'name' => 'required|string|unique:users',
+                'username' => 'required|string|unique:users',
                 'email' => 'required|string|email|unique:users',
                 'password' => 'required|min:8',
             ]);
@@ -57,18 +53,17 @@ class UserAuthController extends Controller
         {
             return response()->json([
                 'message' => $th->getMessage()
-            ]);
+            ], 500);
         }
 
         User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
         return response()->json([
-            'success' => true,
             'message' => 'User registered successfully',
-        ]);
+        ], 201);
     }
 }
