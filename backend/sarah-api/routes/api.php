@@ -22,18 +22,18 @@ Route::post('/register', [
 /**
  * Pessoa Fisica
  */
-Route::get('/pessoa_fisica/{id}', [
+Route::get('/pessoa-fisica/{id}', [
     PessoaFisicaController::class, 'get'
 ])->middleware('auth:sanctum');
 
-Route::post('/pessoa_fisica/', [
+Route::post('/pessoa-fisica/', [
     PessoaFisicaController::class, 'store'
 ])->middleware('auth:sanctum');
 
-Route::delete('/pessoa_fisica/{id}', [
+Route::delete('/pessoa-fisica/{id}', [
     PessoaFisicaController::class, 'delete'
 ])->middleware('auth:sanctum');
 
-Route::put('/pessoa_fisica/', [
+Route::put('/pessoa-fisica/', [
     PessoaFisicaController::class, 'update'
 ])->middleware('auth:sanctum');
