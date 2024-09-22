@@ -12,6 +12,8 @@ class PessoaFisica extends Model
 
     protected $table = 'pessoas_fisicas';
 
+    public $incrementing = true;
+
     /**
      * The attributes that are mass assignable.
      *
