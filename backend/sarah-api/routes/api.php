@@ -28,7 +28,7 @@ Route::get('/pessoa-fisica/{id}', [
 
 Route::post('/pessoa-fisica/', [
     PessoaFisicaController::class, 'store'
-])->middleware('auth:sanctum');
+]);
 
 Route::delete('/pessoa-fisica/{id}', [
     PessoaFisicaController::class, 'delete'
