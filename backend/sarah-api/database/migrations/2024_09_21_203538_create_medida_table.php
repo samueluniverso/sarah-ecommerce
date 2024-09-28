@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('completo');
             $table->string('sigla');
-            $table->float('comprimento');
-            $table->float('largura');
-            $table->float('altura');
+            $table->float('comprimento')->nullable();
+            $table->float('largura')->nullable();
+            $table->float('altura')->nullable();
             $table->timestamps();
         });
     }
