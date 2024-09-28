@@ -4,9 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Throwable;
 
 class CategoriaController extends Controller
 {
+    public function store(Request $request)
+    {
+        try
+        {
+            $data = $request->validate([
+                'nome'      => 'required|string|min:1',
+                'descricao' => 'nullable|string'
+            ]);
+        }
+        catch(Throwable $th)
+        {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $categoria = new Categoria();
+        $categoria->nome      = $data['nome'];
+        $categoria->descricao = $data['descricao'] ?? null;
+        $categoria->save();
+
+        return response()->json([
+            'message' => 'Categoria created successfully!'
+        ], 200);
+    }
+
+    public function update(Request $request)
+    {
+        try
+        {
+            $data = $request->validate([
+                'id'        => 'required|integer',
+                'nome'      => 'required|string|min:1',
+                'descricao' => 'nullable|string'
+            ]);
+        }
+        catch(Throwable $th)
+        {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        if (!Categoria::where('id', $data['id'])->exists()) {
+            return response()->json([
+                'message' => 'Categoria not found!'
+            ], 404);
+        }
+
+        $categoria = Categoria::where('id', $data['id'])->first();
+        $categoria->nome      = $data['nome'];
+        $categoria->descricao = $data['descricao'] ?? null;
+        $categoria->update();
+
+        return response()->json([
+            'message' => 'Categoria updated successfully!'
+        ], 200);
+    }
+
     public function get(Request $request)
     {
         $param = $request->route('id');
@@ -18,10 +78,9 @@ class CategoriaController extends Controller
         }
 
         $categoria = Categoria::where('id', $param)->first();
-        // $pessoa->pessoa;
 
         return response()->json([
-            'pessoa_fisica' => $pessoa
+            'categoria' => $categoria
         ], 200);
     }
 
@@ -35,103 +94,11 @@ class CategoriaController extends Controller
             ], 404);
         }
 
-        $pessoa_fisica = Categoria::where('id', $param)->first();
-        $pessoa = $pessoa_fisica->pessoa;
-        $user = $pessoa->user;
-
-        $pessoa_fisica->delete();
-        $pessoa->delete();
-        $user->delete();
+        $categoria = Categoria::where('id', $param)->first();
+        $categoria->delete();
 
         return response()->json([
             'message' => 'Categoria deleted successfully!'
-        ], 200);
-    }
-
-    public function store(Request $request)
-    {
-        try
-        {
-            $data = $request->validate([
-                'username' => 'required|string|unique:users',
-                'password' => 'required|min:8',
-                'is_admin' => 'required|boolean',
-                'cpf' => 'required|string|min:11|unique:pessoas_fisicas',
-                'nome' => 'required|string|',
-                'email' => 'required|string',
-                'telefone' => 'required|string|min:13',
-            ]);
-        }
-        catch(Throwable $th)
-        {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 500);
-        }
-
-        $user = User::factory()->create([
-            'name' => $data['nome'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'is_admin' => (bool) $data['is_admin'],
-        ]);
-
-        $pessoa = new Pessoa();
-        $pessoa->nome = $data['nome'];
-        $pessoa->telefone = $data['telefone'];
-        $pessoa->fk_user = $user->id;
-        $pessoa->save();
-
-        $pessoa_fisica = new Categoria();
-        $pessoa_fisica->cpf = $data['cpf'];
-        $pessoa_fisica->fk_pessoa = $pessoa->id;
-        $pessoa_fisica->save();
-
-        return response()->json([
-            'message' => 'Categoria created successfully!'
-        ], 200);
-    }
-
-    public function update(Request $request)
-    {
-        try
-        {
-            $data = $request->validate([
-                'id' => 'required|integer',
-                'email' => 'required|string',
-                'telefone' => 'required|string|min:13',
-            ]);
-        }
-        catch(Throwable $th)
-        {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 500);
-        }
-
-        if (!User::where('id', $data['id'])->exists()) {
-            return response()->json([
-                'message' => 'User not found!'
-            ], 404);
-        }
-
-        if (!Pessoa::where('id', $data['id'])->exists()) {
-            return response()->json([
-                'message' => 'Categoria not found!'
-            ], 404);
-        }
-
-        $user = User::where('id', $data['id'])->first();
-        $user->email = $data['email'];
-        $user->update();
-
-        $pessoa = Pessoa::where('id', $data['id'])->first();
-        $pessoa->telefone = $data['telefone'];
-        $pessoa->update();
-
-        return response()->json([
-            'message' => 'Categoria updated successfully!'
         ], 200);
     }
 }
