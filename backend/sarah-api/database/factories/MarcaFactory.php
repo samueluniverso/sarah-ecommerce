@@ -14,10 +14,12 @@ class MarcaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
         return [
-            //
+            'nome' => fake()->name(),
+            'descricao' => fake()->name()
         ];
     }
 }
