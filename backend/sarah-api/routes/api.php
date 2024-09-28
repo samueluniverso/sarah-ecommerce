@@ -30,9 +30,13 @@ Route::get('/pessoa-fisica/{id}', [
     PessoaFisicaController::class, 'get'
 ])->middleware('auth:sanctum');
 
+Route::get('/pessoa-fisica/{limit}{offset}', [
+    PessoaFisicaController::class, 'list'
+])->middleware('auth:sanctum');
+
 Route::post('/pessoa-fisica/', [
     PessoaFisicaController::class, 'store'
-])->middleware('auth:sanctum');
+]);
 
 Route::delete('/pessoa-fisica/{id}', [
     PessoaFisicaController::class, 'delete'
