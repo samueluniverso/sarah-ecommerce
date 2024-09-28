@@ -17,7 +17,11 @@ class MedidaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'completo'    => fake()->name(),
+            'sigla'       => fake()->name(),
+            'comprimento' => fake()->numerify(),
+            'largura'     => fake()->numerify(),
+            'altura'      => fake()->numerify()
         ];
     }
 }
