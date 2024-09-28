@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\PessoaFisicaController;
 use App\Http\Controllers\UserAuthController;
-use App\Http\Controller\CategoriaController;
-use App\Http\Controller\MarcaController;
-use App\Http\Controller\MedidaController;
-use App\Http\Controller\PromocaoController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\MedidaController;
+use App\Http\Controllers\PromocaoController;
+// use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
 /**
