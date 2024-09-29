@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('fk_marca')->unsigned()->nullable();
-            $table->string('nome')->nullable();
-            $table->char('is_destaque')->nullable();
-            $table->float('preco');
+            $table->bigInteger('fk_marca')->unsigned()->nullable(false);
+            $table->string('nome')->nullable(false);
+            $table->boolean('is_destaque')->nullable(false);
+            $table->float('preco')->nullable(false);
             $table->timestamps();
         });
 
