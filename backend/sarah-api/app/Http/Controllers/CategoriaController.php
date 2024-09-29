@@ -13,7 +13,7 @@ class CategoriaController extends Controller
         try
         {
             $data = $request->validate([
-                'nome'      => 'required|string|min:1',
+                'nome'      => 'required|string',
                 'descricao' => 'nullable|string'
             ]);
         }
@@ -24,10 +24,10 @@ class CategoriaController extends Controller
             ], 500);
         }
 
-        $categoria = new Categoria();
-        $categoria->nome      = $data['nome'];
-        $categoria->descricao = $data['descricao'] ?? null;
-        $categoria->save();
+        $categoria = Categoria::factory()->create([
+            'nome'      => $data['nome'],
+            'descricao' => $data['descricao'] ?? null
+        ]);
 
         return response()->json([
             'message' => 'Categoria created successfully!'
