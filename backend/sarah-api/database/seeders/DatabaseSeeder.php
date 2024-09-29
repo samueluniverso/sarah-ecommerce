@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Medida;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MedidaSeeder::class);
         $this->call(MarcaSeeder::class);
         $this->call(CategoriaSeeder::class);
-        // $this->call(PromocaoSeeder::class);
-        // $this->call(ProdutoSeeder::class);
+        $this->call(ProdutoSeeder::class);
+        $this->call(CaracteristicaProdutoSeeder::class);
+        $this->call(ProdutoCategoriaSeeder::class);
+        $this->call(PromocaoSeeder::class);
     }
 }
