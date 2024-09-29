@@ -6,7 +6,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MedidaController;
 use App\Http\Controllers\PromocaoController;
-// use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -110,37 +110,37 @@ Route::put('/medida/', [
 /**
  * Promocao
  */
-// Route::get('/promocao/{id}', [
-//     Promocao::class, 'get'
-// ])->middleware('auth:sanctum');
+Route::get('/promocao/{id}', [
+    PromocaoController::class, 'get'
+])->middleware('auth:sanctum');
 
-// Route::post('/promocao/', [
-//     Promocao::class, 'store'
-// ])->middleware('auth:sanctum');
+Route::post('/promocao/', [
+    PromocaoController::class, 'store'
+])->middleware('auth:sanctum');
 
-// Route::delete('/promocao/{id}', [
-//     Promocao::class, 'delete'
-// ])->middleware('auth:sanctum');
+Route::delete('/promocao/{id}', [
+    PromocaoController::class, 'delete'
+])->middleware('auth:sanctum');
 
-// Route::put('/promocao/', [
-//     Promocao::class, 'update'
-// ])->middleware('auth:sanctum');
+Route::put('/promocao/', [
+    PromocaoController::class, 'update'
+])->middleware('auth:sanctum');
 
 /**
  * Produto
  */
-// Route::get('/produto/{id}', [
-//     Produto:class, 'get'
-// ])->middleware('auth:sanctum');
+Route::get('/produto/{id}', [
+    ProdutoController::class, 'get'
+])->middleware('auth:sanctum');
 
-// Route::post('/produto/', [
-//     Produto:class, 'store'
-// ])->middleware('auth:sanctum');
+Route::post('/produto/', [
+    ProdutoController::class, 'store'
+])->middleware('auth:sanctum');
 
-// Route::delete('/produto/{id}', [
-//     Produto:class, 'delete'
-// ])->middleware('auth:sanctum');
+Route::delete('/produto/{id}', [
+    ProdutoController::class, 'delete'
+])->middleware('auth:sanctum');
 
-// Route::put('/produto/', [
-//     Produto:class, 'update'
-// ])->middleware('auth:sanctum');
+Route::put('/produto/', [
+    ProdutoController::class, 'update'
+])->middleware('auth:sanctum');
