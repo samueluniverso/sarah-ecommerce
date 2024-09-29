@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('fk_produto')->unsigned()->nullable(false);
             $table->bigInteger('fk_medida')->unsigned()->nullable(false);
+            $table->string('cor')->nullable(false);
             $table->timestamps();
         });
 
