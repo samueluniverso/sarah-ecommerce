@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
+
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Home" />
+	<title>Sarah E-Commerce</title>
+	<meta name="description" content="Sarah E-Commerce" />
 </svelte:head>
 
 <section>
-	Hello World
 </section>
 
 <style>
