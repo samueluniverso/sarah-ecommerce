@@ -25,6 +25,7 @@ class UserAuthController extends Controller
             'success' => true,
             'message' => 'User logged-in successfully',
             'token' => $user->createToken('auth_token')->plainTextToken,
+            'pessoa_id' => $user->id
         ]);
     }
 

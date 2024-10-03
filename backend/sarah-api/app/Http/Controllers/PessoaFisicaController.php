@@ -23,6 +23,7 @@ class PessoaFisicaController extends Controller
 
         $pessoa = PessoaFisica::where('id', $param)->first();
         $pessoa->pessoa;
+        $pessoa->pessoa->user;
 
         return response()->json([
             'pessoa_fisica' => $pessoa
@@ -63,7 +64,7 @@ class PessoaFisicaController extends Controller
                 'cpf' => 'required|string|min:11|unique:pessoas_fisicas',
                 'nome' => 'required|string|',
                 'email' => 'required|string',
-                'telefone' => 'required|string|min:13',
+                'telefone' => 'required|string|min:11',
             ]);
         }
         catch(Throwable $th)
@@ -104,7 +105,7 @@ class PessoaFisicaController extends Controller
             $data = $request->validate([
                 'id' => 'required|integer',
                 'email' => 'required|string',
-                'telefone' => 'required|string|min:13',
+                'telefone' => 'required|string|min:11',
             ]);
         }
         catch(Throwable $th)
