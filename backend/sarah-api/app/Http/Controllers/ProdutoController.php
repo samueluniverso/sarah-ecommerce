@@ -27,25 +27,27 @@ class ProdutoController extends Controller
             ], 500);
         }
 
-        $marca = Marca::where('id', $data['fk_marca'])->first();
+        $marca = Marca::where('id', $data['fk_marca'])->first(); // Se nao existir ele vai retornar null
         if (!$marca) {
             return response()->json([
                 'message' => 'Marca not found!'
             ], 404);
         }
 
-        $produto = Produto::factory()->create()([
-            'nome'        => $data['nome'],
-            'is_destaque' => $data['is_destaque'],
-            'preco'       => $data['preco'],
-            'fk_marca'    => $marca->id
-        ]);
+        $produto = new Produto();
+        $produto->nome        = $data['nome'];
+        $produto->is_destaque = $data['is_destaque'];
+        $produto->preco       = $data['preco'];
+        $produto->fk_marca    = $marca->id;
+        $produto->save();
 
-        // $produto->nome        = $data['nome'];
-        // $produto->is_destaque = $data['is_destaque'];
-        // $produto->preco       = $data['preco'];
-        // $produto->fk_marca =    $marca->id;
-        // $produto->save();
+        // Nao user o factory por agora pois ele enche o saco e nao deixa salvar o registro
+        // $produto = Produto::factory()->create()([
+        //     'nome'        => $data['nome'],
+        //     'is_destaque' => $data['is_destaque'],
+        //     'preco'       => $data['preco'],
+        //     'fk_marca'    => $marca->id
+        // ]);
 
         return response()->json([
             'message' => 'Produto created successfully!'
@@ -58,6 +60,7 @@ class ProdutoController extends Controller
         {
             $data = $request->validate([
                 'id'          => 'required|integer',
+                'nome'        => 'required|string',
                 'is_destaque' => 'required|boolean',
                 'preco'       => 'required|numeric',
                 'fk_marca'    => 'required|integer'
@@ -77,7 +80,7 @@ class ProdutoController extends Controller
             ], 404);
         }
 
-        $produto = new Produto();
+        $produto = Produto::where('id', $data['id'])->first();
         $produto->nome        = $data['nome'];
         $produto->is_destaque = $data['is_destaque'];
         $produto->preco       = $data['preco'];
