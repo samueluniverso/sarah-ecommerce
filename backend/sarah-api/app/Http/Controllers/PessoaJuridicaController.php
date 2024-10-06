@@ -94,6 +94,7 @@ class PessoaJuridicaController extends Controller
         $pessoa_juridica->save();
 
         return response()->json([
+            'codigo' => $pessoa->id,
             'message' => 'Pessoa Juridica created successfully!'
         ], 200);
     }
