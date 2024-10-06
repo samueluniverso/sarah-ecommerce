@@ -141,4 +141,24 @@ class PessoaJuridicaController extends Controller
             'message' => 'Pessoa Juridica updated successfully!'
         ], 200);
     }
+
+    public function getByNomeFantasia(Request $request)
+    {
+        return PessoaJuridica::whereRaw('lower(nome_fantasia) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
+
+    public function getByNomeRazaoSocial(Request $request)
+    {
+        return PessoaJuridica::whereRaw('lower(razao_social) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
+
+    public function getByCnpj(Request $request)
+    {
+        $list_pessoa_juridica = PessoaJuridica::whereRaw('lower(cnpj) ILIKE ?', ["%{$request->route('cpf')}%"])->get();
+        foreach ($list_pessoa_juridica as $pessoa) {
+            $pessoa->pessoa;
+        }
+
+        return $list_pessoa_juridica;
+    }
 }

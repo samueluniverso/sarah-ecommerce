@@ -132,4 +132,19 @@ class PessoaFisicaController extends Controller
             'message' => 'Pessoa Fisica updated successfully!'
         ], 200);
     }
+
+    public function getByNome(Request $request)
+    {
+        return Pessoa::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
+
+    public function getByCpf(Request $request)
+    {
+        $list_pessoa_fisica = PessoaFisica::whereRaw('lower(cpf) ILIKE ?', ["%{$request->route('cpf')}%"])->get();
+        foreach ($list_pessoa_fisica as $pessoa) {
+            $pessoa->pessoa;
+        }
+
+        return $list_pessoa_fisica;
+    }
 }
