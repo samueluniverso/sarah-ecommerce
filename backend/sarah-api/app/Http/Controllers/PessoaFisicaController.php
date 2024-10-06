@@ -83,7 +83,7 @@ class PessoaFisicaController extends Controller
         ]);
 
         $pessoa = new Pessoa();
-        $pessoa->nome = $data['nome'];
+        $pessoa->nome = $data['nome_fantasia'];
         $pessoa->telefone = $data['telefone'];
         $pessoa->fk_user = $user->id;
         $pessoa->save();

@@ -13,6 +13,8 @@ class PessoaJuridicaSeeder extends Seeder
     public function run(): void
     {
         PessoaJuridica::factory()->create([
+            'nome_fantasia' => 'Empresa',
+            'razao_social' => 'Empresa LTDA',
             'fk_pessoa' => 2
         ]);
     }

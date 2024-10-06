@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('pessoas_juridicas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome_fantasia');
+            $table->string('razao_social');
             $table->string('cnpj');
             $table->bigInteger('fk_pessoa')->unsigned()->nullable();
             $table->timestamps();

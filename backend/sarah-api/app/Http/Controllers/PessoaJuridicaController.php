@@ -59,7 +59,8 @@ class PessoaJuridicaController extends Controller
                 'password' => 'required|min:8',
                 'is_admin' => 'required|boolean',
                 'cnpj' => 'required|string|min:14|unique:pessoas_juridicas',
-                'nome' => 'required|string|',
+                'nome_fantasia' => 'required|string',
+                'razao_social' => 'required|string',
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
@@ -72,7 +73,7 @@ class PessoaJuridicaController extends Controller
         }
 
         $user = User::factory()->create([
-            'name' => $data['nome'],
+            'name' => $data['nome_fantasia'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -80,12 +81,14 @@ class PessoaJuridicaController extends Controller
         ]);
 
         $pessoa = new Pessoa();
-        $pessoa->nome = $data['nome'];
+        $pessoa->nome = $data['nome_fantasia'];
         $pessoa->telefone = $data['telefone'];
         $pessoa->fk_user = $user->id;
         $pessoa->save();
 
         $pessoa_juridica = new PessoaJuridica();
+        $pessoa_juridica->nome_fantasia = $data['nome_fantasia'];
+        $pessoa_juridica->razao_social = $data['razao_social'];
         $pessoa_juridica->cnpj = $data['cnpj'];
         $pessoa_juridica->fk_pessoa = $pessoa->id;
         $pessoa_juridica->save();
@@ -101,6 +104,7 @@ class PessoaJuridicaController extends Controller
         {
             $data = $request->validate([
                 'id' => 'required|integer',
+                'nome_fantasia' => 'required|string',
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
@@ -122,10 +126,15 @@ class PessoaJuridicaController extends Controller
         $user = $pessoa->user;
 
         $user->email = $data['email'];
+        $user->name = $data['nome_fantasia'];
         $user->update();
 
         $pessoa->telefone = $data['telefone'];
+        $pessoa->nome = $data['nome_fantasia'];
         $pessoa->update();
+
+        $pessoa_juridica->nome_fantasia = $data['nome_fantasia'];
+        $pessoa_juridica->update();
 
         return response()->json([
             'message' => 'Pessoa Juridica updated successfully!'
