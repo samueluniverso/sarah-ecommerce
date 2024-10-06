@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Produto extends Model
 {
@@ -23,6 +25,16 @@ class Produto extends Model
         'is_destaque',
         'preco'
     ];
+
+    public function marca(): HasOne
+    {
+        return $this->hasOne(Marca::class, 'id', 'fk_marca');
+    }
+
+    public function caracteristicas(): HasMany
+    {
+        return $this->hasMany(CaracteristicaProduto::class, 'fk_produto', 'id');
+    }
 
     /**
      * Get the attributes that should be cast.
