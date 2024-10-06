@@ -15,18 +15,16 @@ class PessoaFisicaController extends Controller
     {
         $param = $request->route('id');
 
-        if (!PessoaFisica::where('id', $param)->exists()) {
+        $pessoa_fisica = PessoaFisica::where('fk_pessoa', $param)->first();
+        if (!$pessoa_fisica) {
             return response()->json([
                 'message' => 'Pessoa Fisica not found!'
             ], 404);
         }
-
-        $pessoa = PessoaFisica::where('id', $param)->first();
-        $pessoa->pessoa;
-        $pessoa->pessoa->user;
+        $pessoa_fisica->pessoa;
 
         return response()->json([
-            'pessoa_fisica' => $pessoa
+            'pessoa_fisica' => $pessoa_fisica
         ], 200);
     }
 
@@ -34,13 +32,12 @@ class PessoaFisicaController extends Controller
     {
         $param = $request->route('id');
 
-        if (!PessoaFisica::where('id', $param)->exists()) {
+        $pessoa_fisica = PessoaFisica::where('fk_pessoa', $param)->first();
+        if (!$pessoa_fisica) {
             return response()->json([
                 'message' => 'Pessoa Fisica not found!'
             ], 404);
         }
-
-        $pessoa_fisica = PessoaFisica::where('id', $param)->first();
         $pessoa = $pessoa_fisica->pessoa;
         $user = $pessoa->user;
 
@@ -83,7 +80,7 @@ class PessoaFisicaController extends Controller
         ]);
 
         $pessoa = new Pessoa();
-        $pessoa->nome = $data['nome_fantasia'];
+        $pessoa->nome = $data['nome'];
         $pessoa->telefone = $data['telefone'];
         $pessoa->fk_user = $user->id;
         $pessoa->save();
@@ -94,6 +91,7 @@ class PessoaFisicaController extends Controller
         $pessoa_fisica->save();
 
         return response()->json([
+            'codigo' => $pessoa->id,
             'message' => 'Pessoa Fisica created successfully!'
         ], 200);
     }
@@ -115,23 +113,18 @@ class PessoaFisicaController extends Controller
             ], 500);
         }
 
-        if (!User::where('id', $data['id'])->exists()) {
-            return response()->json([
-                'message' => 'User not found!'
-            ], 404);
-        }
-
-        if (!Pessoa::where('id', $data['id'])->exists()) {
+        $pessoa_fisica = PessoaFisica::where('fk_pessoa', $data['id'])->first();
+        if (!$pessoa_fisica) {
             return response()->json([
                 'message' => 'Pessoa Fisica not found!'
             ], 404);
         }
+        $pessoa = $pessoa_fisica->pessoa;
+        $user = $pessoa->user;
 
-        $user = User::where('id', $data['id'])->first();
         $user->email = $data['email'];
         $user->update();
 
-        $pessoa = Pessoa::where('id', $data['id'])->first();
         $pessoa->telefone = $data['telefone'];
         $pessoa->update();
 
