@@ -32,13 +32,20 @@ class PromocaoController extends Controller
             ], 404);
         }
 
-        $promocao = Promocao::factory()->create([
-            'dt_inicio'     => $data['dt_inicio'],
-            'dt_fim'        => $data['dt_fim'],
-            'vl_percentual' => $data['vl_percentual'],
-            'vl_absoluto'   => $data['vl_absoluto'],
-            'fk_produto'    => $produto->id
-        ]);
+        $promocao = new Promocao ();
+        $promocao->dt_inicio     = $data['dt_inicio'];
+        $promocao->dt_fim        = $data['dt_fim'];
+        $promocao->vl_percentual = $data['vl_percentual'];
+        $promocao->vl_absoluto   = $data['vl_absoluto'];
+        $promocao->fk_produto    = $produto->id;
+
+        // $promocao = Promocao::factory()->create([
+        //     'dt_inicio'     => $data['dt_inicio'],
+        //     'dt_fim'        => $data['dt_fim'],
+        //     'vl_percentual' => $data['vl_percentual'],
+        //     'vl_absoluto'   => $data['vl_absoluto'],
+        //     'fk_produto'    => $produto->id
+        // ]);
 
         return response()->json([
             'message' => 'Promocao created successfully!'
@@ -93,7 +100,6 @@ class PromocaoController extends Controller
         $param = $request->route('id');
 
         $promocao = Promocao::where('id', $param)->first();
-
         if (!$promocao) {
             return response()->json([
                 'message' => 'Promocao not found!'
