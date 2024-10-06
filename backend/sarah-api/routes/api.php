@@ -51,12 +51,10 @@ Route::prefix('pessoa')->group(function() {
     Route::get('/pessoa-fisica/nome/{nome}', [
         PessoaFisicaController::class, 'getByNome'
     ])->middleware('auth:sanctum');
-});
 
-/**
- * Pessoa juridica
- */
-Route::prefix('pessoa')->group(function() {
+    /**
+     * Pessoa juridica
+     */
     Route::get('/pessoa-juridica/{id}', [
         PessoaJuridicaController::class, 'get'
     ])->middleware('auth:sanctum');
