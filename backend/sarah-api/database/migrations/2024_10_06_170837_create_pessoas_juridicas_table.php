@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pessoas_fisicas', function (Blueprint $table) {
+        Schema::create('pessoas_juridicas', function (Blueprint $table) {
             $table->id();
-            $table->string('cpf');
+            $table->string('nome_fantasia');
+            $table->string('razao_social');
+            $table->string('cnpj');
             $table->bigInteger('fk_pessoa')->unsigned()->nullable();
             $table->timestamps();
         });
 
-        Schema::table('pessoas_fisicas', function(Blueprint $table) {
+        Schema::table('pessoas_juridicas', function(Blueprint $table) {
             $table->foreign('fk_pessoa')->references('id')->on('pessoas');
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pessoas_fisicas');
+        Schema::dropIfExists('pessoas_juridicas');
     }
 };
