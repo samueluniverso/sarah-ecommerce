@@ -26,9 +26,6 @@ class CaracteristicaProduto extends Model
 
     public function medidas(): HasOne
     {
-        // return $this->hasOne(Medida::class, 'id', 'fk_medida');
         return $this->hasOne(Medida::class, 'fk_medida', 'id');
-        // return $this->hasMany(Medida::class, 'fk_medida', 'id');
-        // return $this->hasMany(Medida::class, 'id', 'fk_medida');
     }
 }
