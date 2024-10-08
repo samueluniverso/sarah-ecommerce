@@ -11,10 +11,6 @@
     export let mask: ((value: string) => string) | null = null;
     export let disabled = false;
 
-    if (mask) {
-        value = mask(value);
-    }
-
     const handleInput = (e: Event) => {
         const target = e.target as HTMLInputElement;
         value = target.value;

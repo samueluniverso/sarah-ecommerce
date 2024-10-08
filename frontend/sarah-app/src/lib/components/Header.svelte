@@ -46,8 +46,8 @@
             {:else}
                 <IconUserCircle size={35} color={'#fff'} />
                 <span class="flex flex-col text-sarah-white text-sm leading-tight ml-1 font-bold">
-                    <a class="w-fit" href="/login">Entre</a>
-                    <a class="w-fit" href="/cadastre-se">Cadastre-se</a>
+                    <a class="w-fit hover:underline" href="/login">Entre</a>
+                    <a class="w-fit hover:underline" href="/cadastre-se">Cadastre-se</a>
                 </span>
             {/if}
         </nav>
