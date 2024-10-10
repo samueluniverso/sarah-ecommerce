@@ -17,5 +17,11 @@ class PessoaSeeder extends Seeder
             'telefone' => '51987654321',
             'fk_user' => 1
         ]);
+
+        Pessoa::factory()->create([
+            'nome' => 'Empresa',
+            'telefone' => '51123456789',
+            'fk_user' => 2
+        ]);
     }
 }

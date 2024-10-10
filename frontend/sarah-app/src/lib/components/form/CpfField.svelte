@@ -37,8 +37,6 @@
     }
 
     const maskFunction = createMask(mask);
-
-    value = maskFunction(value);
 </script>
 
 <BaseInput

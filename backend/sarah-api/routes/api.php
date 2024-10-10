@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PessoaFisicaController;
+use App\Http\Controllers\PessoaJuridicaController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
@@ -13,77 +14,89 @@ use Illuminate\Support\Facades\Route;
  * Usuario
  */
 Route::post('/login', [
-    UserAuthController::class, 'login'
+    UserAuthController::class,
+    'login'
 ]);
 
 Route::post('/logout', [
-    UserAuthController::class, 'logout'
+    UserAuthController::class,
+    'logout'
 ])->middleware('auth:sanctum');
 
 Route::post('/register', [
-    UserAuthController::class, 'register'
+    UserAuthController::class,
+    'register'
 ]);
 
 /**
  * Pessoa Fisica
  */
-Route::get('/pessoa-fisica/{id}', [
-    PessoaFisicaController::class, 'get'
-])->middleware('auth:sanctum');
+Route::prefix('pessoa')->group(function () {
+    Route::get('/pessoa-fisica/{id}', [
+        PessoaFisicaController::class,
+        'get'
+    ])->middleware('auth:sanctum');
 
-Route::get('/pessoa-fisica/{limit}{offset}', [
-    PessoaFisicaController::class, 'list'
-])->middleware('auth:sanctum');
+    Route::post('/pessoa-fisica/', [
+        PessoaFisicaController::class,
+        'store'
+    ]);
 
-Route::post('/pessoa-fisica/', [
-    PessoaFisicaController::class, 'store'
-]);
+    Route::delete('/pessoa-fisica/{id}', [
+        PessoaFisicaController::class,
+        'delete'
+    ])->middleware('auth:sanctum');
 
-Route::delete('/pessoa-fisica/{id}', [
-    PessoaFisicaController::class, 'delete'
-])->middleware('auth:sanctum');
-
-Route::put('/pessoa-fisica/', [
-    PessoaFisicaController::class, 'update'
-])->middleware('auth:sanctum');
-
+    Route::put('/pessoa-fisica/', [
+        PessoaFisicaController::class,
+        'update'
+    ])->middleware('auth:sanctum');
+});
 
 /**
  * Categoria
  */
 Route::get('/categoria/{id}', [
-    CategoriaController::class, 'get'
+    CategoriaController::class,
+    'get'
 ])->middleware('auth:sanctum');
 
 Route::post('/categoria/', [
-    CategoriaController::class, 'store'
+    CategoriaController::class,
+    'store'
 ])->middleware('auth:sanctum');
 
 Route::delete('/categoria/{id}', [
-    CategoriaController::class, 'delete'
+    CategoriaController::class,
+    'delete'
 ])->middleware('auth:sanctum');
 
 Route::put('/categoria/', [
-    CategoriaController::class, 'update'
+    CategoriaController::class,
+    'update'
 ])->middleware('auth:sanctum');
 
 /**
  * Marca
  */
 Route::get('/marca/{id}', [
-    MarcaController::class, 'get'
+    MarcaController::class,
+    'get'
 ])->middleware('auth:sanctum');
 
 Route::post('/marca/', [
-    MarcaController::class, 'store'
+    MarcaController::class,
+    'store'
 ])->middleware('auth:sanctum');
 
 Route::delete('/marca/{id}', [
-    MarcaController::class, 'delete'
+    MarcaController::class,
+    'delete'
 ])->middleware('auth:sanctum');
 
 Route::put('/marca/', [
-    MarcaController::class, 'update'
+    MarcaController::class,
+    'update'
 ])->middleware('auth:sanctum');
 
 
@@ -91,19 +104,23 @@ Route::put('/marca/', [
  * Medida
  */
 Route::get('/medida/{id}', [
-    MedidaController::class, 'get'
+    MedidaController::class,
+    'get'
 ])->middleware('auth:sanctum');
 
 Route::post('/medida/', [
-    MedidaController::class, 'store'
+    MedidaController::class,
+    'store'
 ])->middleware('auth:sanctum');
 
 Route::delete('/medida/{id}', [
-    MedidaController::class, 'delete'
+    MedidaController::class,
+    'delete'
 ])->middleware('auth:sanctum');
 
 Route::put('/medida/', [
-    MedidaController::class, 'update'
+    MedidaController::class,
+    'update'
 ])->middleware('auth:sanctum');
 
 
@@ -111,49 +128,112 @@ Route::put('/medida/', [
  * Promocao
  */
 Route::get('/promocao/{id}', [
-    PromocaoController::class, 'get'
+    PromocaoController::class,
+    'get'
 ])->middleware('auth:sanctum');
 
 Route::post('/promocao/', [
-    PromocaoController::class, 'store'
+    PromocaoController::class,
+    'store'
 ])->middleware('auth:sanctum');
 
 Route::delete('/promocao/{id}', [
-    PromocaoController::class, 'delete'
+    PromocaoController::class,
+    'delete'
 ])->middleware('auth:sanctum');
 
 Route::put('/promocao/', [
-    PromocaoController::class, 'update'
+    PromocaoController::class,
+    'update'
 ])->middleware('auth:sanctum');
 
 /**
  * Produto
  */
 Route::get('/produto/{id}', [
-    ProdutoController::class, 'get'
+    ProdutoController::class,
+    'get'
 ])->middleware('auth:sanctum');
 
 Route::post('/produto/', [
-    ProdutoController::class, 'store'
+    ProdutoController::class,
+    'store'
 ])->middleware('auth:sanctum');
 
 Route::delete('/produto/{id}', [
-    ProdutoController::class, 'delete'
+    ProdutoController::class,
+    'delete'
 ])->middleware('auth:sanctum');
 
 Route::put('/produto/', [
-    ProdutoController::class, 'update'
+    ProdutoController::class,
+    'update'
 ])->middleware('auth:sanctum');
 
 
-Route::prefix('produtos')->group(function() {
+Route::prefix('produtos')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
-        ProdutoController::class, 'paginar'
+        ProdutoController::class,
+        'paginar'
     ]);
     // ->middleware('auth:sanctum');
 
     Route::post('/buscar', [
-        ProdutoController::class, 'buscar'
+        ProdutoController::class,
+        'buscar'
     ]);
     // ->middleware('auth:sanctum');
 });
+
+Route::get('/pessoa-fisica/nome/{nome}', [
+    PessoaFisicaController::class,
+    'getByNome'
+])->middleware('auth:sanctum');
+
+Route::get('/pessoa-fisica/cpf/{cpf}', [
+    PessoaFisicaController::class,
+    'getByCpf'
+])->middleware('auth:sanctum');
+
+Route::get('/pessoa-fisica/nome/{nome}', [
+    PessoaFisicaController::class,
+    'getByNome'
+])->middleware('auth:sanctum');
+
+/**
+ * Pessoa juridica
+ */
+Route::get('/pessoa-juridica/{id}', [
+    PessoaJuridicaController::class,
+    'get'
+])->middleware('auth:sanctum');
+
+Route::post('/pessoa-juridica/', [
+    PessoaJuridicaController::class,
+    'store'
+]);
+
+Route::delete('/pessoa-juridica/{id}', [
+    PessoaJuridicaController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::put('/pessoa-juridica/', [
+    PessoaJuridicaController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::get('/pessoa-juridica/nome-fantasia/{nome}', [
+    PessoaJuridicaController::class,
+    'getByNomeFantasia'
+])->middleware('auth:sanctum');
+
+Route::get('/pessoa-juridica/razao-social/{nome}', [
+    PessoaJuridicaController::class,
+    'getByNomeRazaoSocial'
+])->middleware('auth:sanctum');
+
+Route::get('/pessoa-juridica/cnpj/{cnpj}', [
+    PessoaJuridicaController::class,
+    'getByCnpj'
+])->middleware('auth:sanctum');
