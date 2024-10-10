@@ -10,15 +10,12 @@ class MarcaController extends Controller
 {
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'nome'      => 'required|string|min:1',
                 'descricao' => 'nullable|string'
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -36,16 +33,13 @@ class MarcaController extends Controller
 
     public function update(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'id'        => 'required|integer',
                 'nome'      => 'required|string|min:1',
                 'descricao' => 'nullable|string'
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -101,4 +95,8 @@ class MarcaController extends Controller
             'message' => 'Marca deleted successfully!'
         ], 200);
     }
+
+    public function list(Request $request) {}
+
+    public function softDelete(Request $request) {}
 }
