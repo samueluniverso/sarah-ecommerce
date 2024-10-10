@@ -144,3 +144,16 @@ Route::delete('/produto/{id}', [
 Route::put('/produto/', [
     ProdutoController::class, 'update'
 ])->middleware('auth:sanctum');
+
+
+Route::prefix('produtos')->group(function() {
+    Route::get('/paginar/limit/{limit}/offset/{offset}', [
+        ProdutoController::class, 'paginar'
+    ]);
+    // ->middleware('auth:sanctum');
+
+    Route::post('/buscar', [
+        ProdutoController::class, 'buscar'
+    ]);
+    // ->middleware('auth:sanctum');
+});
