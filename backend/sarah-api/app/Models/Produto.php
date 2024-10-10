@@ -36,6 +36,11 @@ class Produto extends Model
         return $this->hasMany(CaracteristicaProduto::class, 'fk_produto', 'id');
     }
 
+    public function produtosCategorias(): HasMany
+    {
+        return $this->hasMany(ProdutoCategoria::class, 'fk_produto', 'id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

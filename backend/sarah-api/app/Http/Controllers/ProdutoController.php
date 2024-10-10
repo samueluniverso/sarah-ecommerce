@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\CaracteristicaProduto;
+use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\Medida;
 use App\Models\Produto;
+use App\Models\ProdutoCategoria;
 use Illuminate\Http\Request;
+use stdClass;
 use Throwable;
 
 class ProdutoController extends Controller
@@ -20,12 +23,24 @@ class ProdutoController extends Controller
                 'preco'           => 'required|numeric',
                 'fk_marca'        => 'required|integer',
                 'cor'             => 'required|string',
-                'caracteristicas' => 'required|json' // Vai vir um JSON com todas as medioas possiveis daquele produto (M, G, GG etc ...)
+                'caracteristicas' => 'required|json', // Vai vir um JSON com todas as medioas possiveis daquele produto (M, G, GG etc ...)
+                'categorias'      => 'required|json'
             ]);
         } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
+        }
+
+        $categorias = json_decode($data['categorias']);
+        foreach ($categorias as $categoria) {
+
+            $objCategoria = Categoria::where('id', $categoria)->first();
+            if (!$objCategoria) {
+                return response()->json([
+                    'message' => "Categoria $categoria not found!"
+                ], 404);
+            }
         }
 
         $caracteristicas = json_decode($data['caracteristicas']);
@@ -60,6 +75,14 @@ class ProdutoController extends Controller
             $objCaracteristica->fk_produto = $produto->id;
             $objCaracteristica->cor        = $data['cor'];
             $objCaracteristica->save();
+        }
+
+        foreach ($categorias as $categoria) {
+
+            $objProdutoCategoria = new ProdutoCategoria();
+            $objProdutoCategoria->fk_categoria  = $categoria;
+            $objProdutoCategoria->fk_produto    = $produto->id;
+            $objProdutoCategoria->save();
         }
 
         // Nao user o factory por agora pois ele enche o saco e nao deixa salvar o registro
@@ -168,5 +191,48 @@ class ProdutoController extends Controller
         return response()->json([
             'message' => 'Produto deleted successfully!'
         ], 200);
+    }
+
+    public function list(Request $request) {}
+
+    public function softDelete(Request $request) {}
+
+    public function buscar(Request $request) {}
+
+    public function paginar(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'limit'  => 'nullable|integer',
+                'offset' => 'nullable|integer'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $data['limit'] ?? '10'; // Se nao vier um limit ele assume como 10
+        $data['offset'] ?? '0'; // Se nao vier um offset ele assume como 0
+
+        $produto  = new Produto();
+        $produtos = $produto->take($data['limit'])->skip($data['offset'])->get();
+
+        $arrayProdutos = [];
+        foreach ($produtos as $produto) {
+
+            $objProduto = new stdClass();
+            $objProduto->caracteristicas    = $produto->caracteristicas;
+            $objProduto->marca              = $produto->marca;
+            $objProduto->produtosCategorias = $produto->produtosCategorias;
+            $objProduto->codigo_produto     = $produto['id'];
+            $objProduto->produto            = $produto['nome'];
+            $objProduto->preco              = $produto['preco'];
+            $arrayProdutos [] = $objProduto;
+        }
+
+        return response()->json([
+            'message' => $arrayProdutos
+        ]);
     }
 }
