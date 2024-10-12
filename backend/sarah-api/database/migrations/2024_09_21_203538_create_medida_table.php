@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('largura')->nullable();
             $table->float('altura')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

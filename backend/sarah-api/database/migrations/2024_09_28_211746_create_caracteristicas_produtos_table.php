@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('fk_medida')->unsigned()->nullable(false);
             $table->string('cor')->nullable(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('caracteristicas_produtos', function (Blueprint $table) {

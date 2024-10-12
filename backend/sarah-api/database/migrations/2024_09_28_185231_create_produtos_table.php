@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('is_destaque')->nullable(false);
             $table->float('preco')->nullable(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('produtos', function(Blueprint $table) {

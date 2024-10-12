@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('fk_produto')->unsigned()->nullable(false);
             $table->bigInteger('fk_categoria')->unsigned()->nullable(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('produtos_categorias', function (Blueprint $table) {

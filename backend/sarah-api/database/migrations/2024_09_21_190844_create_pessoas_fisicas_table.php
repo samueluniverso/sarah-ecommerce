@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('cpf');
             $table->bigInteger('fk_pessoa')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('pessoas_fisicas', function(Blueprint $table) {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->bigInteger('fk_user')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('pessoas', function(Blueprint $table) {

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('cnpj');
             $table->bigInteger('fk_pessoa')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('pessoas_juridicas', function(Blueprint $table) {

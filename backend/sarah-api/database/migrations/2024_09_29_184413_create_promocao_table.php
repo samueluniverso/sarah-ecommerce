@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('vl_absoluto');
             $table->bigInteger('fk_produto')->unsigned()->nullable(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('promocoes', function(Blueprint $table) {
