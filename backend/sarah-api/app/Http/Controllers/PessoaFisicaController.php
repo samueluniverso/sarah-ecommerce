@@ -163,4 +163,6 @@ class PessoaFisicaController extends Controller
 
         return $list_pessoa_fisica;
     }
+
+    public function listaPaginada(Request $request) {}
 }

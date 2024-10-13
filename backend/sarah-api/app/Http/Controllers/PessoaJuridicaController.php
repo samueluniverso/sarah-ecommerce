@@ -179,4 +179,6 @@ class PessoaJuridicaController extends Controller
 
         return $list_pessoa_juridica;
     }
+
+    public function listaPaginada(Request $request) {}
 }

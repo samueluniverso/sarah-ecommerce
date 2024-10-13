@@ -217,4 +217,97 @@ class ProdutoController extends Controller
     {
         return Produto::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
     }
+
+    public function listaPaginada(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'limit'  => 'nullable|integer',
+                'offset' => 'nullable|integer'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $data['limit'] ?? '10'; // Se nao vier um limit ele assume como 10
+        $data['offset'] ?? '0'; // Se nao vier um offset ele assume como 0
+
+        $produto  = new Produto();
+        $produtos = $produto->take($data['limit'])->skip($data['offset'])->get();
+
+        $arrayProdutos = [];
+        foreach ($produtos as $produto) {
+
+            $objProduto = new stdClass();
+            $objProduto->caracteristicas    = $produto->caracteristicas;
+            $objProduto->marca              = $produto->marca;
+            $objProduto->produtosCategorias = $produto->produtosCategorias;
+            $objProduto->codigo_produto     = $produto['id'];
+            $objProduto->produto            = $produto['nome'];
+            $objProduto->preco              = $produto['preco'];
+            $arrayProdutos[] = $objProduto;
+        }
+
+        return response()->json([
+            'message' => $arrayProdutos
+        ]);
+    }
+
+    // Esse metodo ficou meio ruim, pensar em uma abordagem usando JSON (condicao e o valor que desejo para ela)
+    public function buscar(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'nome'        => 'nullable|string',
+                'is_destaque' => 'nullable|boolean',
+                'preco'       => 'nullable|numeric',
+                'fk_marca'    => 'nullable|int',
+                'combinar'    => 'required|boolean'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $query = Produto::query();
+
+        $arrayColunas = ['nome','preco','is_destaque','fk_marca'];
+        if ($data['combinar']) {
+
+            foreach ($arrayColunas as $coluna) {
+                if (!empty($data[$coluna])) {
+                    $query->where($coluna, 'ILIKE', "%{$data[$coluna]}%");
+                }
+            }
+        } else {
+            foreach ($arrayColunas as $coluna) {
+                if (!empty($data[$coluna])) {
+                    $query->orWhere($coluna, 'ILIKE', "%{$data[$coluna]}%");
+                }
+            }
+        }
+
+        $produtos = $query->get();
+
+        // $produtos = Produto::where('nome', 'ilike', "%{$data['nome']}%")
+        //     ->orWhere('is_destaque','ilike', "%{$data['is_destaque']}%")
+        //     // ->orWhere('preco'      ,'ilike', "%{$data['preco']}%")
+        //     ->orWhere('preco'      ,'ilike', '%'.!isset($data['preco']) ? '0' : $data['preco'].'%')
+        //     ->orWhere('fk_marca'   ,'ilike', "%{$data['fk_marca']}%")->get();
+        //     // ->where('is_destaque','ilike', "%{$data['is_destaque']}%")
+        //     // ->where('preco'      ,'ilike', "%{$data['preco']}%")
+        //     // ->where('fk_marca'   ,'ilike', "%{$data['fk_marca']}%")->get();
+
+        // $produtos = [];
+        // if (isset($data['nome']) && (!empty($data['nome']))) {
+        //     $produtos = Produto::where('nome', 'ilike', "%{$data['nome']}%")->get();
+        // }
+
+        return response()->json([
+            'message' => $produtos
+        ]);
+    }
 }

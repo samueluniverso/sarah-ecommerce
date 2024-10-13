@@ -11,5 +11,5 @@ abstract class Controller
     abstract public function store(Request $request);
     abstract public function update(Request $request);
     abstract public function get(Request $request);
-    abstract public function list(Request $request);
+    abstract public function listaPaginada(Request $request);
 }

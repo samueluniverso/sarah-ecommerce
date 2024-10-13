@@ -146,5 +146,5 @@ class PromocaoController extends Controller
         ], 200);
     }
 
-    public function list(Request $request) {}
+    public function listaPaginada(Request $request) {}
 }

@@ -118,4 +118,6 @@ class CategoriaController extends Controller
     {
         return Categoria::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
     }
+
+    public function listaPaginada(Request $request) {}
 }
