@@ -114,5 +114,8 @@ class CategoriaController extends Controller
         ], 200);
     }
 
-    public function list(Request $request) {}
+    public function getByNome(Request $request)
+    {
+        return Categoria::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
 }

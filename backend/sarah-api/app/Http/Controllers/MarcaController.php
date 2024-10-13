@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use stdClass;
 use Throwable;
 
 class MarcaController extends Controller
@@ -115,5 +116,8 @@ class MarcaController extends Controller
         ], 200);
     }
 
-    public function list(Request $request) {}
+    public function getByNome(Request $request)
+    {
+        return Marca::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
 }

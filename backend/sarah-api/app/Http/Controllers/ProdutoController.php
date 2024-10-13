@@ -212,4 +212,9 @@ class ProdutoController extends Controller
             'message' => 'Produto inactivated successfully!'
         ], 200);
     }
+
+    public function getByNome(Request $request)
+    {
+        return Produto::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+    }
 }
