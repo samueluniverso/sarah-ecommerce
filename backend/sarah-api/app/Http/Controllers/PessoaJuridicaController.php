@@ -32,6 +32,30 @@ class PessoaJuridicaController extends Controller
     {
         $param = $request->route('id');
 
+        $pessoa_juridica = PessoaJuridica::withTrashed()->where('fk_pessoa', $param)->first();
+        if (!$pessoa_juridica) {
+            return response()->json([
+                'message' => 'Pessoa Juridica not found!'
+            ], 404);
+        }
+
+        $pessoa = $pessoa_juridica->pessoa;
+        $user   = $pessoa->user;
+
+
+        $pessoa_juridica->forceDelete();
+        $pessoa->forceDelete();
+        $user->forceDelete();
+
+        return response()->json([
+            'message' => 'Pessoa Juridica deleted successfully!'
+        ], 200);
+    }
+
+    public function softDelete(Request $request)
+    {
+        $param = $request->route('id');
+
         $pessoa_juridica = PessoaJuridica::where('fk_pessoa', $param)->first();
         if (!$pessoa_juridica) {
             return response()->json([
@@ -46,14 +70,13 @@ class PessoaJuridicaController extends Controller
         $user->delete();
 
         return response()->json([
-            'message' => 'Pessoa Juridica deleted successfully!'
+            'message' => 'Pessoa Juridica inactivated successfully!'
         ], 200);
     }
 
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'username' => 'required|string|unique:users',
                 'password' => 'required|min:8',
@@ -64,9 +87,7 @@ class PessoaJuridicaController extends Controller
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -101,17 +122,14 @@ class PessoaJuridicaController extends Controller
 
     public function update(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'id' => 'required|integer',
                 'nome_fantasia' => 'required|string',
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -161,4 +179,6 @@ class PessoaJuridicaController extends Controller
 
         return $list_pessoa_juridica;
     }
+
+    public function listaPaginada(Request $request) {}
 }

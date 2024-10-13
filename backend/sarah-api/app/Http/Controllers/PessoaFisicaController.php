@@ -32,6 +32,28 @@ class PessoaFisicaController extends Controller
     {
         $param = $request->route('id');
 
+        $pessoa_fisica = PessoaFisica::withTrashed()->where('fk_pessoa', $param)->first();
+        if (!$pessoa_fisica) {
+            return response()->json([
+                'message' => 'Pessoa Fisica not found!'
+            ], 404);
+        }
+        $pessoa = $pessoa_fisica->pessoa;
+        $user   = $pessoa->user;
+
+        $pessoa_fisica->forceDelete();
+        $pessoa->forceDelete();
+        $user->forceDelete();
+
+        return response()->json([
+            'message' => 'Pessoa Fisica deleted successfully!'
+        ], 200);
+    }
+
+    public function softDelete(Request $request)
+    {
+        $param = $request->route('id');
+
         $pessoa_fisica = PessoaFisica::where('fk_pessoa', $param)->first();
         if (!$pessoa_fisica) {
             return response()->json([
@@ -39,21 +61,20 @@ class PessoaFisicaController extends Controller
             ], 404);
         }
         $pessoa = $pessoa_fisica->pessoa;
-        $user = $pessoa->user;
+        $user   = $pessoa->user;
 
         $pessoa_fisica->delete();
         $pessoa->delete();
         $user->delete();
 
         return response()->json([
-            'message' => 'Pessoa Fisica deleted successfully!'
+            'message' => 'Pessoa Fisica inactivated successfully!'
         ], 200);
     }
 
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'username' => 'required|string|unique:users',
                 'password' => 'required|min:8',
@@ -63,9 +84,7 @@ class PessoaFisicaController extends Controller
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -98,16 +117,13 @@ class PessoaFisicaController extends Controller
 
     public function update(Request $request)
     {
-        try
-        {
+        try {
             $data = $request->validate([
                 'id' => 'required|integer',
                 'email' => 'required|string',
                 'telefone' => 'required|string|min:11',
             ]);
-        }
-        catch(Throwable $th)
-        {
+        } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -147,4 +163,6 @@ class PessoaFisicaController extends Controller
 
         return $list_pessoa_fisica;
     }
+
+    public function listaPaginada(Request $request) {}
 }

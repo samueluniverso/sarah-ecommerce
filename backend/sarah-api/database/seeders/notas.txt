@@ -1,0 +1,31 @@
+
+Comando que preciso rodar:
+php artisan make:seeder <NomeClass>Seeder
+php artisan make:factory <NomeClass>Factory
+php artisan make:Controller <NomeClass>Controller
+php artisan make:Model <NomeClass>
+php artisan make:migration create_<NomeClass>_table
+
+Marcas
+Medidas
+Promocoes
+
+php artisan make:seeder <NomeClass>Seeder
+php artisan make:factory <NomeClass>Factory
+php artisan make:Controller <NomeClass>Controller
+php artisan make:Model <NomeClass>
+
+php artisan make:seeder PromocoaSeeder; php artisan make:factory PromocaoFactory ; php artisan make:Controller PromocaoController ; php artisan make:Model Promocao
+php artisan make:seeder MedidaSeeder  ; php artisan make:factory MedidaFactory;php artisan make:Controller MedidaController;php artisan make:Model Medida
+php artisan make:seeder MarcaSeeder   ; php artisan make:factory MarcaFactory;php artisan make:Controller MarcaController;php artisan make:Model Marca
+php artisan make:seeder CategoriaSeeder   ; php artisan make:factory CategoriaFactory;php artisan make:Controller CategoriaController;php artisan make:Model Categoria
+php artisan make:migration create_marca_table ; php artisan make:migration create_medida_table ; php artisan make:migration create_promocao_table ; php artisan make:migration create_categoria_table
+php artisan make:seeder ProdutoSeeder ; php artisan make:factory ProdutoFactory;php artisan make:Controller ProdutoController;php artisan make:Model Produto ; php artisan make:migration create_produtos_table
+
+
+php artisan make:migration create_produtos_categorias_table ; php artisan make:migration create_caracteristicas_produtos_table
+php artisan make:seeder ProdutoCategoriaSeeder ; php artisan make:seeder CaracteristicaProdutoSeeder
+
+
+
+php artisan make:Model ProdutoCategoria ; php artisan make:Model CaracteristicaProduto ;php artisan make:factory ProdutoCategoriaFactory ; php artisan make:factory CaracteristicaProdutoFactory

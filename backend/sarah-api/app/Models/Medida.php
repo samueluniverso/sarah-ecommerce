@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pessoa extends Model
+class Medida extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $table = 'pessoas';
+    protected $table = 'medidas';
 
     public $incrementing = true;
 
@@ -20,14 +20,12 @@ class Pessoa extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nome',
-        'telefone'
+        'completo',
+        'sigla',
+        'comprimento',
+        'largura',
+        'altura'
     ];
-
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'fk_user');
-    }
 
     /**
      * Get the attributes that should be cast.

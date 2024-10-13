@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pessoa extends Model
+class Promocao extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $table = 'pessoas';
+    protected $table = 'promocoes';
 
     public $incrementing = true;
 
@@ -20,14 +21,16 @@ class Pessoa extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nome',
-        'telefone'
+        'dt_inicio',
+        'dt_fim',
+        'vl_percentual',
+        'vl_absoluto'
     ];
 
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'fk_user');
-    }
+    // public function produto() : HasOne
+    // {
+    //     return $this->hasOne(Produto::class, 'id', 'fk_produto');
+    // }
 
     /**
      * Get the attributes that should be cast.

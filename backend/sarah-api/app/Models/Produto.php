@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pessoa extends Model
+class Produto extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $table = 'pessoas';
+    protected $table = 'produtos';
 
     public $incrementing = true;
 
@@ -21,12 +23,23 @@ class Pessoa extends Model
      */
     protected $fillable = [
         'nome',
-        'telefone'
+        'is_destaque',
+        'preco'
     ];
 
-    public function user()
+    public function marca(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'fk_user');
+        return $this->hasOne(Marca::class, 'id', 'fk_marca');
+    }
+
+    public function caracteristicas(): HasMany
+    {
+        return $this->hasMany(CaracteristicaProduto::class, 'fk_produto', 'id');
+    }
+
+    public function produtosCategorias(): HasMany
+    {
+        return $this->hasMany(ProdutoCategoria::class, 'fk_produto', 'id');
     }
 
     /**
