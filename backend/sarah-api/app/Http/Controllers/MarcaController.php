@@ -78,25 +78,42 @@ class MarcaController extends Controller
         ], 200);
     }
 
+
+    // Usa o verbo delete
     public function delete(Request $request)
     {
         $param = $request->route('id');
 
-        if (!Marca::where('id', $param)->exists()) {
+        // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
+        $marca = Marca::withTrashed()->find($param);
+        if (!$marca) {
             return response()->json([
                 'message' => 'Marca not found!'
             ], 404);
         }
-
-        $marca = Marca::where('id', $param)->first();
-        $marca->delete();
-
+        $marca->forceDelete();
         return response()->json([
             'message' => 'Marca deleted successfully!'
         ], 200);
     }
 
-    public function list(Request $request) {}
+    // Usa o verbo patch
+    public function softDelete(Request $request)
+    {
+        $param = $request->route('id');
 
-    public function softDelete(Request $request) {}
+        $marca = Marca::where('id', $param)->first();
+        if (!$marca) {
+            return response()->json([
+                'message' => 'Marca not found!'
+            ], 404);
+        }
+
+        $marca->delete();
+        return response()->json([
+            'message' => 'Marca inactivated successfully!'
+        ], 200);
+    }
+
+    public function list(Request $request) {}
 }

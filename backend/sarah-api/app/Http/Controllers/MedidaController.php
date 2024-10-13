@@ -84,27 +84,46 @@ class MedidaController extends Controller
         }
 
         $medida = Medida::where('id', $param)->first();
-
         return response()->json([
             'Medida' => $medida
         ], 200);
     }
 
+    // Usa o verbo delete
     public function delete(Request $request)
     {
         $param = $request->route('id');
 
-        if (!Medida::where('id', $param)->exists()) {
+        // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
+        $medida = Medida::withTrashed()->find($param);
+
+        if (!$medida) {
             return response()->json([
                 'message' => 'Medida not found!'
             ], 404);
         }
-
-        $medida = Medida::where('id', $param)->first();
-        $medida->delete();
-
+        $medida->forceDelete();
         return response()->json([
             'message' => 'Medida deleted successfully!'
         ], 200);
     }
+
+    // Usa o verbo patch
+    public function softDelete(Request $request) {
+
+        $param = $request->route('id');
+
+        $medida = Medida::where('id', $param)->first();
+        if (!$medida) {
+            return response()->json([
+                'message' => 'Medida not found!'
+            ], 404);
+        }
+        $medida->delete();
+        return response()->json([
+            'message' => 'Medida inactivated successfully!'
+        ], 200);
+    }
+
+    public function list(Request $request) {}
 }

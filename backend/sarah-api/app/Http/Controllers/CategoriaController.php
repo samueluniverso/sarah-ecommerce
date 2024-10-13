@@ -78,25 +78,41 @@ class CategoriaController extends Controller
         ], 200);
     }
 
+    // Usa o verbo delete
     public function delete(Request $request)
     {
         $param = $request->route('id');
 
-        if (!Categoria::where('id', $param)->exists()) {
+        // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
+        $categoria = Categoria::withTrashed()->find($param);
+
+        if (!$categoria) {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
         }
-
-        $categoria = Categoria::where('id', $param)->first();
-        $categoria->delete();
-
+        $categoria->forceDelete();
         return response()->json([
             'message' => 'Categoria deleted successfully!'
         ], 200);
     }
 
-    public function list(Request $request) {}
+    // Usa o verbo patch
+    public function softDelete(Request $request) {
 
-    public function softDelete(Request $request) {}
+        $param = $request->route('id');
+
+        $categoria = Categoria::where('id', $param)->first();
+        if (!$categoria) {
+            return response()->json([
+                'message' => 'Categoria not found!'
+            ], 404);
+        }
+        $categoria->delete();
+        return response()->json([
+            'message' => 'Categoria inactivated successfully!'
+        ], 200);
+    }
+
+    public function list(Request $request) {}
 }

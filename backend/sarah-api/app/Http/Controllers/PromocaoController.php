@@ -32,7 +32,7 @@ class PromocaoController extends Controller
             ], 404);
         }
 
-        $promocao = new Promocao ();
+        $promocao = new Promocao();
         $promocao->dt_inicio     = $data['dt_inicio'];
         $promocao->dt_fim        = $data['dt_fim'];
         $promocao->vl_percentual = $data['vl_percentual'];
@@ -111,7 +111,26 @@ class PromocaoController extends Controller
         ], 200);
     }
 
+    // Usa o verbo delete
     public function delete(Request $request)
+    {
+        $param = $request->route('id');
+
+        // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
+        $promocao = Promocao::withTrashed()->find($param);
+        if (!$promocao) {
+            return response()->json([
+                'message' => 'Promocao not found!'
+            ], 404);
+        }
+        $promocao->forceDelete();
+        return response()->json([
+            'message' => 'Promocao deleted successfully!'
+        ], 200);
+    }
+
+    // Usa o verbo patch
+    public function softDelete(Request $request)
     {
         $param = $request->route('id');
 
@@ -122,9 +141,10 @@ class PromocaoController extends Controller
             ], 404);
         }
         $promocao->delete();
-
         return response()->json([
-            'message' => 'Promocao deleted successfully!'
+            'message' => 'Promocao inactivated successfully!'
         ], 200);
     }
+
+    public function list(Request $request) {}
 }

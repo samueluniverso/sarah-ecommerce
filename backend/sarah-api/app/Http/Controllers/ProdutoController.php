@@ -177,8 +177,28 @@ class ProdutoController extends Controller
         ], 200);
     }
 
+    // Usa o verbo delete
     public function delete(Request $request)
     {
+        $param = $request->route('id');
+
+        // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
+        $produto = Produto::withTrashed()->find($param);
+
+        if (!$produto) {
+            return response()->json([
+                'message' => 'Produto not found!'
+            ], 404);
+        }
+        $produto->forceDelete();
+        return response()->json([
+            'message' => 'Produto deleted successfully!'
+        ], 200);
+    }
+
+    // Usa o verbo patch
+    public function softDelete(Request $request) {
+
         $param = $request->route('id');
 
         $produto = Produto::where('id', $param)->first();
@@ -189,50 +209,7 @@ class ProdutoController extends Controller
         }
         $produto->delete();
         return response()->json([
-            'message' => 'Produto deleted successfully!'
+            'message' => 'Produto inactivated successfully!'
         ], 200);
-    }
-
-    public function list(Request $request) {}
-
-    public function softDelete(Request $request) {}
-
-    public function buscar(Request $request) {}
-
-    public function paginar(Request $request)
-    {
-        try {
-            $data = $request->validate([
-                'limit'  => 'nullable|integer',
-                'offset' => 'nullable|integer'
-            ]);
-        } catch (Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], 500);
-        }
-
-        $data['limit'] ?? '10'; // Se nao vier um limit ele assume como 10
-        $data['offset'] ?? '0'; // Se nao vier um offset ele assume como 0
-
-        $produto  = new Produto();
-        $produtos = $produto->take($data['limit'])->skip($data['offset'])->get();
-
-        $arrayProdutos = [];
-        foreach ($produtos as $produto) {
-
-            $objProduto = new stdClass();
-            $objProduto->caracteristicas    = $produto->caracteristicas;
-            $objProduto->marca              = $produto->marca;
-            $objProduto->produtosCategorias = $produto->produtosCategorias;
-            $objProduto->codigo_produto     = $produto['id'];
-            $objProduto->produto            = $produto['nome'];
-            $objProduto->preco              = $produto['preco'];
-            $arrayProdutos [] = $objProduto;
-        }
-
-        return response()->json([
-            'message' => $arrayProdutos
-        ]);
     }
 }
