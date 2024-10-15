@@ -14,7 +14,7 @@ export const POST = async ({ request, cookies }) => {
         const email = data.email;
         const telefone = data.telefone.replace(/\D/g, '');
 
-        const response = await fetch(`${process.env.BACKEND_API_URL}/pessoa-fisica`, {
+        const response = await fetch(`${process.env.BACKEND_API_URL}/pessoa/pessoa-fisica`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

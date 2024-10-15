@@ -4,7 +4,7 @@ import { json } from "@sveltejs/kit";
 const getUser = async (id: number, token: string): Promise<any> => {
     try
     {
-        const response = await fetch(`${process.env.BACKEND_API_URL}/pessoa-fisica/${id}`, {
+        const response = await fetch(`${process.env.BACKEND_API_URL}/pessoa/pessoa-fisica/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
