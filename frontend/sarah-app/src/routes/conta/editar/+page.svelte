@@ -33,7 +33,7 @@
         const token = getCookie('auth_token');
 
         let result = await fetch(
-            `http://localhost:8083/api/pessoa-fisica/${$user.id}`,
+            `http://localhost:8083/api/pessoa/pessoa-fisica/${$user.id}`,
             {
                 method: "GET",
                 headers: {
@@ -80,7 +80,7 @@
         const token = getCookie('auth_token');
 
         let result = await fetch(
-            `http://localhost:8083/api/pessoa-fisica/${$user.id}`,
+            `http://localhost:8083/api/pessoa/pessoa-fisica/${$user.id}`,
             {
                 method: "DELETE",
                 headers: {
