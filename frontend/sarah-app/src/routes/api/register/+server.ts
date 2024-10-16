@@ -1,6 +1,8 @@
 import { json } from '@sveltejs/kit';
 
-export const POST = async ({ request, cookies }) => {
+import type { RequestEvent } from '@sveltejs/kit';
+
+export const POST = async ({ request, cookies }: RequestEvent) => {
     try {
         const token = cookies.get('auth_token');
         // TODO: Retornar um unauthorized se não tiver token
@@ -30,7 +32,8 @@ export const POST = async ({ request, cookies }) => {
         const result = await response.json();
 
         return json({ success: result.success, message: result.message });
-    } catch (err: any) {
+    }
+    catch (err: any) {
         return json({ success: false, message: err.message }, { status: 500 });
     }
 }

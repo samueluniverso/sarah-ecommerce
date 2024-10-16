@@ -2,8 +2,7 @@ import { json } from "@sveltejs/kit";
 
 // TODO: Colocar isso na model depois
 const getUser = async (id: number, token: string): Promise<any> => {
-    try
-    {
+    try {
         const response = await fetch(`${process.env.BACKEND_API_URL}/pessoa/pessoa-fisica/${id}`, {
             method: 'GET',
             headers: {
@@ -16,13 +15,14 @@ const getUser = async (id: number, token: string): Promise<any> => {
 
         return { id: result.pessoa_fisica.id, name: result.pessoa_fisica.pessoa.nome };
     }
-    catch (err: any)
-    {
+    catch (err: any) {
         console.log(err);
     }
 }
 
-export const POST = async ({ request, cookies }) => {
+import type { RequestEvent } from '@sveltejs/kit';
+
+export const POST = async ({ request, cookies }: RequestEvent) => {
     try {
         const data = await request.json();
         const username = data.username;
@@ -53,7 +53,8 @@ export const POST = async ({ request, cookies }) => {
         let user = await getUser(result.pessoa_id, result.token);
 
         return json({ success: result.success, message: result.message, name: user.name, id: user.id });
-    } catch (err: any) {
+    }
+    catch (err: any) {
         return json({ success: false, message: err.message }, { status: 500 });
     }
 }
