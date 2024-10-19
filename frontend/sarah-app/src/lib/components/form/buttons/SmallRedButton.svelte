@@ -7,7 +7,7 @@
     export let onClick: ((e: Event) => void)|null = null;
 </script>
 
-<button on:click={onClick} class="flex justify-center items-center bg-sarah-green text-sarah-white p-1 hover:brightness-75 transition duration-300 px-5 py-2.5 text-center me-2 mb-2" {type}>
+<button on:click={onClick} class="flex justify-center items-center bg-sarah-red text-sarah-white p-1 hover:brightness-75 transition duration-300 px-3 py-1 text-center me-1 mb-1" {type}>
     {#if Icon}
         <svelte:component this={Icon} size={24} class="mr-1"/>
     {/if}
