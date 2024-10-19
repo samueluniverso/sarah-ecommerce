@@ -5,7 +5,6 @@ export let itensCarrinho = writable<ItemCarrinho[]>([]);
 
 /// adicionar ao carrinho
 export const adicionarAoCarrinho = (id: number) => {
-    console.log('aqui');
     let itens = get(itensCarrinho);
     let itemPoscao = itens.findIndex(
         (item) => {return item.id === id}
