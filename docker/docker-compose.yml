@@ -60,6 +60,8 @@ services:
             - ${FRONTEND}/sarah-app:/app/sarah-app
         entrypoint: ["/app/deploy/node-afterbuild.sh"]
         environment:
+            - NODE_OPTIONS=--max-old-space-size=4096
+            - GENERATE_SOURCEMAP=false
             ## enable hot-reload on Windows
             - WDS_SOCKET_HOST=localhost
             - CHOKIDAR_USEPOLLING=true
