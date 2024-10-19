@@ -15,6 +15,11 @@ declare global {
         preco: number
         quantidade: number
     }
+
+    declare class ItemCarrinho {
+        id: number
+        quantidade: number
+    }
 }
 
 export {};
