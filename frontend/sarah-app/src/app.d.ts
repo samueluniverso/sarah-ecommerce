@@ -8,6 +8,13 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+    declare class Produto {
+        id: number
+        nome: string
+        preco: number
+        quantidade: number
+    }
 }
 
 export {};
