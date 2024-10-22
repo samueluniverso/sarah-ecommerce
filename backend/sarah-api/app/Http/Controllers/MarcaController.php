@@ -121,10 +121,15 @@ class MarcaController extends Controller
         return Marca::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
     }
 
+    public function getByDescricao(Request $request)
+    {
+        return Marca::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+    }
+
     public function listaPaginada(Request $request)
     {
         try {
-            $data = $request->validate([
+            $request->validate([
                 'limit'  => 'nullable|integer',
                 'offset' => 'nullable|integer'
             ]);
@@ -134,11 +139,11 @@ class MarcaController extends Controller
             ], 500);
         }
 
-        $data['limit'] ?? '10'; // Se nao vier um limit ele assume como 10
-        $data['offset'] ?? '0'; // Se nao vier um offset ele assume como 0
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
 
         $marca  = new Marca();
-        $marcas = $marca->take($data['limit'])->skip($data['offset'])->get();
+        $marcas = $marca->take($request->limit)->skip($request->offset)->get();
 
         $arrayMarcas = [];
         foreach ($marcas as $marca) {

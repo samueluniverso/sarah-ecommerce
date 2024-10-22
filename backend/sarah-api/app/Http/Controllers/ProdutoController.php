@@ -197,7 +197,8 @@ class ProdutoController extends Controller
     }
 
     // Usa o verbo patch
-    public function softDelete(Request $request) {
+    public function softDelete(Request $request)
+    {
 
         $param = $request->route('id');
 
@@ -218,12 +219,22 @@ class ProdutoController extends Controller
         return Produto::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
     }
 
+    public function getByMarca(Request $request)
+    {
+        return Produto::where('fk_marca', $request->route('id'))->get();
+    }
+
+    public function getByCategoria(Request $request)
+    {
+        return ProdutoCategoria::where('fk_categoria', $request->route('id'))->get();
+    }
+
     public function listaPaginada(Request $request)
     {
         try {
-            $data = $request->validate([
-                'limit'  => 'nullable|integer',
-                'offset' => 'nullable|integer'
+            $request->validate([
+                'limit'  => 'nullable|integer|min:1',
+                'offset' => 'nullable|integer|min:0'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -231,11 +242,11 @@ class ProdutoController extends Controller
             ], 500);
         }
 
-        $data['limit'] ?? '10'; // Se nao vier um limit ele assume como 10
-        $data['offset'] ?? '0'; // Se nao vier um offset ele assume como 0
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
 
         $produto  = new Produto();
-        $produtos = $produto->take($data['limit'])->skip($data['offset'])->get();
+        $produtos = $produto->take($request->limit)->skip($request->offset)->get();
 
         $arrayProdutos = [];
         foreach ($produtos as $produto) {
@@ -274,7 +285,7 @@ class ProdutoController extends Controller
 
         $query = Produto::query();
 
-        $arrayColunas = ['nome','preco','is_destaque','fk_marca'];
+        $arrayColunas = ['nome', 'preco', 'is_destaque', 'fk_marca'];
         if ($data['combinar']) {
 
             foreach ($arrayColunas as $coluna) {
