@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use stdClass;
 use Throwable;
 
 class CategoriaController extends Controller
@@ -98,7 +99,8 @@ class CategoriaController extends Controller
     }
 
     // Usa o verbo patch
-    public function softDelete(Request $request) {
+    public function softDelete(Request $request)
+    {
 
         $param = $request->route('id');
 
@@ -119,5 +121,42 @@ class CategoriaController extends Controller
         return Categoria::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
     }
 
-    public function listaPaginada(Request $request) {}
+    public function getByDescricao(Request $request)
+    {
+        return Categoria::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+    }
+
+    public function listaPaginada(Request $request)
+    {
+        try {
+            $request->validate([
+                'limit'  => 'nullable|integer',
+                'offset' => 'nullable|integer'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
+
+        $categoria  = new Categoria();
+        $categorias = $categoria->take($request->limit)->skip($request->offset)->get();
+
+        $arrayCategorias = [];
+        foreach ($categorias as $categoria) {
+
+            $objCategoria = new stdClass();
+            $objCategoria->id        = $categoria['id'];
+            $objCategoria->nome      = $categoria['nome'];
+            $objCategoria->descricao = $categoria['preco'];
+            $arrayCategorias[] = $objCategoria;
+        }
+
+        return response()->json([
+            'message' => $arrayCategorias
+        ]);
+    }
 }

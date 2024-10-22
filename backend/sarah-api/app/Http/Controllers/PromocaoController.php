@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Promocao;
 use Illuminate\Http\Request;
+use stdClass;
 use Throwable;
 
 class PromocaoController extends Controller
@@ -146,5 +147,45 @@ class PromocaoController extends Controller
         ], 200);
     }
 
-    public function listaPaginada(Request $request) {}
+    public function getByProduto(Request $request)
+    {
+        return Promocao::where('fk_produto', $request->route('id'))->get();
+    }
+
+    public function listaPaginada(Request $request)
+    {
+        try {
+            $request->validate([
+                'limit'  => 'nullable|integer',
+                'offset' => 'nullable|integer'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
+
+        $promocao  = new Promocao();
+        $promocoes = $promocao->take($request->limit)->skip($request->offset)->get();
+
+        $arrayPromocoes = [];
+        foreach ($promocoes as $promocao) {
+
+            $objPromocao = new stdClass();
+            $objPromocao->id            = $promocao['id'];
+            $objPromocao->produto       = $promocao->produto;
+            $objPromocao->dt_inicio     = $promocao['dt_inicio'];
+            $objPromocao->dt_fim        = $promocao['dt_fim'];
+            $objPromocao->vl_percentual = $promocao['vl_percentual'];
+            $objPromocao->vl_produto    = $promocao['vl_produto'];
+            $arrayPromocoes[] = $objPromocao;
+        }
+
+        return response()->json([
+            'message' => $arrayPromocoes
+        ]);
+    }
 }

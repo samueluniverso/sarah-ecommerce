@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medida;
 use Illuminate\Http\Request;
+use stdClass;
 use Throwable;
 
 class MedidaController extends Controller
@@ -109,7 +110,8 @@ class MedidaController extends Controller
     }
 
     // Usa o verbo patch
-    public function softDelete(Request $request) {
+    public function softDelete(Request $request)
+    {
 
         $param = $request->route('id');
 
@@ -125,5 +127,40 @@ class MedidaController extends Controller
         ], 200);
     }
 
-    public function listaPaginada(Request $request) {}
+    public function listaPaginada(Request $request)
+    {
+        try {
+            $request->validate([
+                'limit'  => 'nullable|integer',
+                'offset' => 'nullable|integer'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
+
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
+
+        $medida  = new Medida();
+        $medidas = $medida->take($request->limit)->skip($request->offset)->get();
+
+        $arrayMedidas = [];
+        foreach ($medidas as $medida) {
+
+            $objMedida = new stdClass();
+            $objMedida->id           = $medida['id'];
+            $objMedida->completo     = $medida['completo'];
+            $objMedida->sigla        = $medida['sigla'];
+            $objMedida->comprimennto = $medida['comprimennto'];
+            $objMedida->altura       = $medida['altura'];
+            $objMedida->largura      = $medida['largura'];
+            $arrayMedidas[] = $objMedida;
+        }
+
+        return response()->json([
+            'message' => $arrayMedidas
+        ]);
+    }
 }

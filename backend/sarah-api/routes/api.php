@@ -144,6 +144,16 @@ Route::patch('/categoria/{id}', [
     'softDelete'
 ])->middleware('auth:sanctum');
 
+Route::get('/categoria/nome/{nome}', [
+    CategoriaController::class,
+    'getByNome'
+])->middleware('auth:sanctum');;
+
+Route::get('/categoria/descricao/{descricao}', [
+    CategoriaController::class,
+    'getByDescricao'
+])->middleware('auth:sanctum');;
+
 /**
  * Marca
  */
@@ -171,6 +181,16 @@ Route::patch('/marca/{id}', [
     MarcaController::class,
     'softDelete'
 ])->middleware('auth:sanctum');
+
+Route::get('/marca/nome/{nome}', [
+    CategoriaController::class,
+    'getByNome'
+])->middleware('auth:sanctum');;
+
+Route::get('/marca/descricao/{descricao}', [
+    CategoriaController::class,
+    'getByDescricao'
+])->middleware('auth:sanctum');;
 
 Route::prefix('marcas')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
@@ -235,6 +255,18 @@ Route::patch('/promocao/{id}', [
     'softDelete'
 ])->middleware('auth:sanctum');
 
+Route::get('/promocao/produto/{id}', [
+    PromocaoController::class,
+    'getByProduto'
+])->middleware('auth:sanctum');;
+
+Route::prefix('promocoes')->group(function () {
+    Route::get('/paginar/limit/{limit}/offset/{offset}', [
+        ProdutoController::class,
+        'listaPaginada'
+    ])->middleware('auth:sanctum');;
+});
+
 /**
  * Produto
  */
@@ -262,6 +294,21 @@ Route::patch('/produto/{id}', [
     ProdutoController::class,
     'softDelete'
 ])->middleware('auth:sanctum');
+
+Route::get('/produto/nome/{nome}', [
+    CategoriaController::class,
+    'getByNome'
+])->middleware('auth:sanctum');;
+
+Route::get('/produto/marca/{id}', [
+    ProdutoController::class,
+    'getByMarca'
+])->middleware('auth:sanctum');;
+
+Route::get('/produto/categoria/{id}', [
+    ProdutoController::class,
+    'getByCategoria'
+])->middleware('auth:sanctum');;
 
 Route::prefix('produtos')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
