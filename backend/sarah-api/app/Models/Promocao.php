@@ -27,10 +27,10 @@ class Promocao extends Model
         'vl_absoluto'
     ];
 
-    // public function produto() : HasOne
-    // {
-    //     return $this->hasOne(Produto::class, 'id', 'fk_produto');
-    // }
+    public function produto() : HasOne
+    {
+        return $this->hasOne(Produto::class, 'id', 'fk_produto');
+    }
 
     /**
      * Get the attributes that should be cast.
