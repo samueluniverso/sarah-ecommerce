@@ -160,6 +160,7 @@ class ProdutoController extends Controller
         $param = $request->route('id');
 
         $produto = Produto::where('id', $param)->first();
+
         if (!$produto) {
             return response()->json([
                 'message' => 'Produto not found!'
@@ -168,13 +169,11 @@ class ProdutoController extends Controller
 
 
         // Preciso carregar um obj contendo a medida da caracteristica
-        // var_dump($produto->teste);
-        // die;
 
         // Buscar medida do produto
         $produto->marca;
         $produto->caracteristicas;
-
+        unset($produto->fk_marca);
         return response()->json([
             'data' => $produto
         ], 200);
@@ -202,7 +201,6 @@ class ProdutoController extends Controller
     // Usa o verbo patch
     public function softDelete(Request $request)
     {
-
         $param = $request->route('id');
 
         $produto = Produto::where('id', $param)->first();
