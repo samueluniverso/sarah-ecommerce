@@ -108,7 +108,7 @@ class PromocaoController extends Controller
         }
 
         return response()->json([
-            'promocao' => $promocao->produto
+            'data' => $promocao->produto
         ], 200);
     }
 
@@ -185,7 +185,7 @@ class PromocaoController extends Controller
         }
 
         return response()->json([
-            'message' => $arrayPromocoes
-        ]);
+            'data' => $arrayPromocoes
+        ], 200);
     }
 }

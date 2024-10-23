@@ -75,7 +75,7 @@ class MarcaController extends Controller
         $marca = Marca::where('id', $param)->first();
 
         return response()->json([
-            'Marca' => $marca
+            'data' => $marca
         ], 200);
     }
 
@@ -156,7 +156,7 @@ class MarcaController extends Controller
         }
 
         return response()->json([
-            'message' => $arrayMarcas
-        ]);
+            'data' => $arrayMarcas
+        ], 200);
     }
 }

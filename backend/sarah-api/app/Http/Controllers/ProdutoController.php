@@ -166,14 +166,17 @@ class ProdutoController extends Controller
             ], 404);
         }
 
+
+        // Preciso carregar um obj contendo a medida da caracteristica
+        // var_dump($produto->teste);
+        // die;
+
+        // Buscar medida do produto
         $produto->marca;
         $produto->caracteristicas;
 
         return response()->json([
-            'produto' => $produto
-
-            // Falta retornar os dados das medidas do produtos, AS N medidas
-            // 'caracteristicas' => $produto->caracteristicas->medidas
+            'data' => $produto
         ], 200);
     }
 
@@ -242,7 +245,7 @@ class ProdutoController extends Controller
             ], 500);
         }
 
-        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->limit ?? '10'; // Se n    ao vier um limit ele assume como 10
         $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
 
         $produto  = new Produto();
@@ -262,8 +265,8 @@ class ProdutoController extends Controller
         }
 
         return response()->json([
-            'message' => $arrayProdutos
-        ]);
+            'data' => $arrayProdutos
+        ], 200);
     }
 
     // Esse metodo ficou meio ruim, pensar em uma abordagem usando JSON (condicao e o valor que desejo para ela)
@@ -318,7 +321,7 @@ class ProdutoController extends Controller
         // }
 
         return response()->json([
-            'message' => $produtos
-        ]);
+            'data' => $produtos
+        ], 200);
     }
 }
