@@ -122,7 +122,7 @@ Route::get('/pessoa-juridica/cnpj/{cnpj}', [
 Route::get('/categoria/{id}', [
     CategoriaController::class,
     'get'
-])->middleware('auth:sanctum');
+]);
 
 Route::post('/categoria/', [
     CategoriaController::class,
@@ -152,15 +152,22 @@ Route::get('/categoria/nome/{nome}', [
 Route::get('/categoria/descricao/{descricao}', [
     CategoriaController::class,
     'getByDescricao'
-])->middleware('auth:sanctum');;
+])->middleware('auth:sanctum');
 
-/**
+Route::prefix('categorias')->group(function () {
+    Route::get('/paginar/limit/{limit}/offset/{offset}', [
+        CategoriaController::class,
+        'listaPaginada'
+    ]);
+});
+
+/*
  * Marca
  */
 Route::get('/marca/{id}', [
     MarcaController::class,
     'get'
-])->middleware('auth:sanctum');
+]);
 
 Route::post('/marca/', [
     MarcaController::class,
@@ -183,21 +190,29 @@ Route::patch('/marca/{id}', [
 ])->middleware('auth:sanctum');
 
 Route::get('/marca/nome/{nome}', [
-    CategoriaController::class,
+    MarcaController::class,
     'getByNome'
 ])->middleware('auth:sanctum');;
 
 Route::get('/marca/descricao/{descricao}', [
-    CategoriaController::class,
+    MarcaController::class,
     'getByDescricao'
 ])->middleware('auth:sanctum');;
 
+// Rota em teste
 Route::prefix('marcas')->group(function () {
-    Route::get('/paginar/limit/{limit}/offset/{offset}', [
-        ProdutoController::class,
-        'listaPaginada'
-    ])->middleware('auth:sanctum');
+    Route::get('/paginar', [
+        MarcaController::class,
+        'listaPaginada2'
+    ]);
 });
+
+// Route::prefix('marcas')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         ProdutoController::class,
+//         'listaPaginada'
+//     ]);
+// });
 
 /**
  * Medida
@@ -205,7 +220,7 @@ Route::prefix('marcas')->group(function () {
 Route::get('/medida/{id}', [
     MedidaController::class,
     'get'
-])->middleware('auth:sanctum');
+]);
 
 Route::post('/medida/', [
     MedidaController::class,
@@ -227,13 +242,20 @@ Route::patch('/medida/{id}', [
     'softDelete'
 ])->middleware('auth:sanctum');
 
+Route::prefix('medidas')->group(function () {
+    Route::get('/paginar/limit/{limit}/offset/{offset}', [
+        MedidaController::class,
+        'listaPaginada'
+    ]);
+});
+
 /**
  * Promocao
  */
 Route::get('/promocao/{id}', [
     PromocaoController::class,
     'get'
-])->middleware('auth:sanctum');
+]);
 
 Route::post('/promocao/', [
     PromocaoController::class,
@@ -262,9 +284,9 @@ Route::get('/promocao/produto/{id}', [
 
 Route::prefix('promocoes')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
-        ProdutoController::class,
+        PromocaoController::class,
         'listaPaginada'
-    ])->middleware('auth:sanctum');;
+    ]);
 });
 
 /**
@@ -296,7 +318,7 @@ Route::patch('/produto/{id}', [
 ])->middleware('auth:sanctum');
 
 Route::get('/produto/nome/{nome}', [
-    CategoriaController::class,
+    ProdutoController::class,
     'getByNome'
 ])->middleware('auth:sanctum');;
 
