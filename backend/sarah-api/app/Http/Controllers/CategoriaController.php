@@ -75,7 +75,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::where('id', $param)->first();
 
         return response()->json([
-            'categoria' => $categoria
+            'data' => $categoria
         ], 200);
     }
 
@@ -156,7 +156,7 @@ class CategoriaController extends Controller
         }
 
         return response()->json([
-            'message' => $arrayCategorias
-        ]);
+            'data' => $arrayCategorias
+        ], 200);
     }
 }
