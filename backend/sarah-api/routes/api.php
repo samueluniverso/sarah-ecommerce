@@ -273,7 +273,7 @@ Route::prefix('promocoes')->group(function () {
 Route::get('/produto/{id}', [
     ProdutoController::class,
     'get'
-])->middleware('auth:sanctum');
+]);
 
 Route::post('/produto/', [
     ProdutoController::class,
@@ -314,7 +314,7 @@ Route::prefix('produtos')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         ProdutoController::class,
         'listaPaginada'
-    ])->middleware('auth:sanctum');
+    ]);
 
     Route::post('/buscar', [
         ProdutoController::class,
