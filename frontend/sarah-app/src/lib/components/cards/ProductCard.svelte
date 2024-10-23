@@ -12,7 +12,8 @@
         produtoCarrinho = carrinho[itemCarrinhoIndex];
     });
 
-    export let produto: ProdutoCarrinho = {id: 0, nome: "", preco: 0.0, quantidade: 0};
+    // export let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.0, quantidade: 0};
+    export let produto : any;
 
     import SmallGreenButton from "../form/buttons/SmallGreenButton.svelte";
     import SmallRedButton from "../form/buttons/SmallRedButton.svelte";
@@ -21,9 +22,9 @@
 
 <div class="max-w-sm p-14 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
     <header class="card-header">
-        <h2 class="text-4xl font-extrabold dark:text-black">{produto.nome}</h2>
+        <h2 class="text-4xl font-extrabold dark:text-black">{produto.produto}</h2>
     </header>
-    {#if produtoCarrinho !== undefined}
+    <!-- {#if produtoCarrinho !== undefined}
         <div class="card-body px-4">
             Quantidade: <strong> {produtoCarrinho.quantidade} </strong>
         </div>
@@ -35,5 +36,5 @@
     <footer class="card-footer">
         <SmallGreenButton onClick={() => adicionarAoCarrinho(produto.id)} label="Adicionar +" />
         <SmallRedButton onClick={() => removerDoCarrinho(produto.id)} label="Remover -" />
-    </footer>
+    </footer> -->
 </div>
