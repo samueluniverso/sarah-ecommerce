@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CaracteristicaProduto extends Model
@@ -21,11 +20,12 @@ class CaracteristicaProduto extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'cor'
+        'cor',
+        'fk_medida'
     ];
 
-    public function medidas(): HasOne
+    public function medida(): HasOne
     {
-        return $this->hasOne(Medida::class, 'fk_medida', 'id');
+        return $this->hasOne(Medida::class, 'id', 'fk_medida');
     }
 }

@@ -32,9 +32,9 @@ class Produto extends Model
         return $this->hasOne(Marca::class, 'id', 'fk_marca');
     }
 
-    public function caracteristicas(): HasMany
+    public function caracteristicas() : HasMany
     {
-        return $this->hasMany(CaracteristicaProduto::class, 'fk_produto', 'id');
+        return $this->hasMany(CaracteristicaProduto::class, 'fk_produto', 'id')->with('medida');
     }
 
     public function produtosCategorias(): HasMany
