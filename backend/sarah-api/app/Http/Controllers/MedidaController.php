@@ -86,7 +86,7 @@ class MedidaController extends Controller
 
         $medida = Medida::where('id', $param)->first();
         return response()->json([
-            'Medida' => $medida
+            'data' => $medida
         ], 200);
     }
 
@@ -112,7 +112,6 @@ class MedidaController extends Controller
     // Usa o verbo patch
     public function softDelete(Request $request)
     {
-
         $param = $request->route('id');
 
         $medida = Medida::where('id', $param)->first();
@@ -160,7 +159,7 @@ class MedidaController extends Controller
         }
 
         return response()->json([
-            'message' => $arrayMedidas
-        ]);
+            'data' => $arrayMedidas
+        ], 200);
     }
 }
