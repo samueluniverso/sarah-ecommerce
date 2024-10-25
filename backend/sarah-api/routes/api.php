@@ -6,6 +6,7 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MedidaController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PromocaoController;
 use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
@@ -343,3 +344,103 @@ Route::prefix('produtos')->group(function () {
         'buscar'
     ])->middleware('auth:sanctum');
 });
+
+/**
+ * Produto
+ */
+Route::get('/produto/{id}', [
+    ProdutoController::class,
+    'get'
+]);
+
+Route::post('/produto/', [
+    ProdutoController::class,
+    'store'
+])->middleware('auth:sanctum');
+
+Route::put('/produto/', [
+    ProdutoController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::delete('/produto/{id}', [
+    ProdutoController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::patch('/produto/{id}', [
+    ProdutoController::class,
+    'softDelete'
+])->middleware('auth:sanctum');
+
+Route::get('/produto/nome/{nome}', [
+    ProdutoController::class,
+    'getByNome'
+])->middleware('auth:sanctum');;
+
+Route::get('/produto/marca/{id}', [
+    ProdutoController::class,
+    'getByMarca'
+])->middleware('auth:sanctum');;
+
+Route::get('/produto/categoria/{id}', [
+    ProdutoController::class,
+    'getByCategoria'
+])->middleware('auth:sanctum');;
+
+Route::prefix('produtos')->group(function () {
+    Route::get('/paginar/limit/{limit}/offset/{offset}', [
+        ProdutoController::class,
+        'listaPaginada'
+    ]);
+
+    Route::post('/buscar', [
+        ProdutoController::class,
+        'buscar'
+    ])->middleware('auth:sanctum');
+});
+
+/**
+ * Pedido
+ */
+Route::get('/pedido/{id}', [
+    PedidoController::class,
+    'get'
+]);
+
+Route::post('/pedido/', [
+    PedidoController::class,
+    'store'
+])->middleware('auth:sanctum');
+
+Route::put('/pedido/', [
+    PedidoController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::delete('/pedido/{id}', [
+    PedidoController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::patch('/pedido/{id}', [
+    PedidoController::class,
+    'softDelete'
+])->middleware('auth:sanctum');
+
+Route::get('/pedido/pessoa/{id}', [
+    PedidoController::class,
+    'getByPessoa'
+])->middleware('auth:sanctum');;
+
+Route::get('/pedido/endereco/{id}', [
+    PedidoController::class,
+    'getByEndereco'
+])->middleware('auth:sanctum');
+
+// Route::prefix('produtos')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         PedidoController::class,
+//         'listaPaginada'
+//     ]);
+// });
