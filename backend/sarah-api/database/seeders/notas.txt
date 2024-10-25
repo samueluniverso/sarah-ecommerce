@@ -26,6 +26,14 @@ php artisan make:seeder ProdutoSeeder ; php artisan make:factory ProdutoFactory;
 php artisan make:migration create_produtos_categorias_table ; php artisan make:migration create_caracteristicas_produtos_table
 php artisan make:seeder ProdutoCategoriaSeeder ; php artisan make:seeder CaracteristicaProdutoSeeder
 
-
-
 php artisan make:Model ProdutoCategoria ; php artisan make:Model CaracteristicaProduto ;php artisan make:factory ProdutoCategoriaFactory ; php artisan make:factory CaracteristicaProdutoFactory
+
+
+
+php artisan make:Model Pedido ; php artisan make:Factory PedidoFactory ; php artisan make:seeder PedidoSeeder ; php artisan make:Controller PedidoController ;php artisan make:migration create_pedidos_table;
+php artisan make:Model PedidoProduto ; php artisan make:Factory PedidoProdutoFactory ; php artisan make:seeder PedidoProdutoSeeder ; php artisan make:Controller PedidoProdutoController ;php artisan make:migration create_pedidos_produtos_table;
+php artisan make:Model Endereco ; php artisan make:Factory EnderecoFactory ; php artisan make:seeder EnderecoSeeder ; php artisan make:Controller EnderecoController ;php artisan make:migration create_enderecos_table;
+
+
+
+php artisan make:Model PessoaEndereco ; php artisan make:Factory PessoaEnderecoFactory ; php artisan make:seeder PessoaEnderecoSeeder ;php artisan make:migration create_pessoas_enderecos_table;

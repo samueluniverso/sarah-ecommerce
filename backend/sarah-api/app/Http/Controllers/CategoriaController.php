@@ -46,13 +46,13 @@ class CategoriaController extends Controller
             ], 500);
         }
 
-        if (!Categoria::where('id', $data['id'])->exists()) {
+        $categoria = Categoria::where('id', $data['id'])->first();
+        if (!$categoria) {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
         }
 
-        $categoria = Categoria::where('id', $data['id'])->first();
         $categoria->nome      = $data['nome'];
         $categoria->descricao = $data['descricao'] ?? null;
         $categoria->update();
@@ -66,13 +66,12 @@ class CategoriaController extends Controller
     {
         $param = $request->route('id');
 
-        if (!Categoria::where('id', $param)->exists()) {
+        $categoria = Categoria::where('id', $param)->first();
+        if (!$categoria) {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
         }
-
-        $categoria = Categoria::where('id', $param)->first();
 
         return response()->json([
             'data' => $categoria
@@ -101,7 +100,6 @@ class CategoriaController extends Controller
     // Usa o verbo patch
     public function softDelete(Request $request)
     {
-
         $param = $request->route('id');
 
         $categoria = Categoria::where('id', $param)->first();

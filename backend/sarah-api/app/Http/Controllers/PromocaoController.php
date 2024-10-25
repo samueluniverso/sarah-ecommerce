@@ -90,6 +90,7 @@ class PromocaoController extends Controller
         $promocao->vl_percentual = $data['vl_percentual'];
         $promocao->vl_absoluto   = $data['vl_absoluto'];
         $promocao->fk_produto    = $produto->id;
+        $promocao->update();
 
         return response()->json([
             'message' => 'Promocao updated successfully!'

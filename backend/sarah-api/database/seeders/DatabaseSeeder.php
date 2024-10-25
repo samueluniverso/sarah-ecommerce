@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CaracteristicaProdutoSeeder::class);
         $this->call(ProdutoCategoriaSeeder::class);
         $this->call(PromocaoSeeder::class);
+        $this->call(EnderecoSeeder::class);
+        $this->call(PessoaEnderecoSeeder::class);
+        $this->call(PedidoSeeder::class);
+        $this->call(PedidoProdutoSeeder::class);
     }
 }
