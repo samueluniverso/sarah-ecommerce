@@ -55,13 +55,13 @@ class MedidaController extends Controller
             ], 500);
         }
 
-        if (!Medida::where('id', $data['id'])->exists()) {
+        $medida = Medida::where('id', $data['id'])->first();
+        if (!$medida) {
             return response()->json([
                 'message' => 'Medida not found!'
             ], 404);
         }
 
-        $medida = Medida::where('id', $data['id'])->first();
         $medida->completo    = $data['completo'];
         $medida->sigla       = $data['sigla'];
         $medida->comprimento = $data['comprimento'] ?? null;
@@ -78,13 +78,13 @@ class MedidaController extends Controller
     {
         $param = $request->route('id');
 
-        if (!Medida::where('id', $param)->exists()) {
+        $medida = Medida::where('id', $param)->first();
+        if (!$medida) {
             return response()->json([
                 'message' => 'Medida not found!'
             ], 404);
         }
 
-        $medida = Medida::where('id', $param)->first();
         return response()->json([
             'data' => $medida
         ], 200);

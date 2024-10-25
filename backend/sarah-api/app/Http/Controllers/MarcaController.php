@@ -46,13 +46,13 @@ class MarcaController extends Controller
             ], 500);
         }
 
-        if (!Marca::where('id', $data['id'])->exists()) {
+        $marca = Marca::where('id', $data['id'])->first();
+        if (!$marca) {
             return response()->json([
                 'message' => 'Marca not found!'
             ], 404);
         }
 
-        $marca = Marca::where('id', $data['id'])->first();
         $marca->nome      = $data['nome'];
         $marca->descricao = $data['descricao'] ?? null;
         $marca->update();
@@ -66,13 +66,12 @@ class MarcaController extends Controller
     {
         $param = $request->route('id');
 
-        if (!Marca::where('id', $param)->exists()) {
+        $marca = Marca::where('id', $param)->first();
+        if (!$marca) {
             return response()->json([
                 'message' => 'Marca not found!'
             ], 404);
         }
-
-        $marca = Marca::where('id', $param)->first();
 
         return response()->json([
             'data' => $marca
@@ -124,6 +123,13 @@ class MarcaController extends Controller
     public function getByDescricao(Request $request)
     {
         return Marca::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+    }
+
+    public function listaPaginada2(Request $request)
+    {
+        // Vai aceitar os queryParams
+        $request->limit ?? '10'; // Se nao vier um limit ele assume como 10
+        $request->offset ?? '0'; // Se nao vier um offset ele assume como 0
     }
 
     public function listaPaginada(Request $request)
