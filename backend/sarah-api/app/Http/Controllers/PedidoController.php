@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use App\Models\PedidoProduto;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -18,12 +20,16 @@ class PedidoController extends Controller
                 'observacao'      => 'nullable|string',
                 'fk_pessoa'       => 'required|integer',
                 'fk_endereco'     => 'required|integer',
+                'produtos'        => 'nullable|json'
             ]);
         } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
         }
+
+        // Valida os novos produtos inseridos pela pessoa
+        self::produtos($data['produtos']);
 
         $pedido = new Pedido();
         $pedido->dt_pedido       = $data['dt_pedido'];
@@ -33,6 +39,19 @@ class PedidoController extends Controller
         $pedido->fk_endereco     = $data['fk_endereco'];
         $pedido->observacao      = $data['observacao'] ?? null;
         $pedido->save();
+
+        $arrayProdutos = json_decode($data['produtos'],true);
+        foreach ($arrayProdutos as $produtos) {
+
+            foreach ($produtos as $produto) {
+
+                $pedidoProduto = new PedidoProduto();
+                $pedidoProduto->quantidade = $produto['quantidade'];
+                $pedidoProduto->fk_produto = $produto['produto']; // Codigo do produto
+                $pedidoProduto->fk_pedido  = $pedido->id;
+                $pedidoProduto->save();
+            }
+        }
 
         return response()->json([
             'message' => 'Pedido created successfully!'
@@ -50,6 +69,7 @@ class PedidoController extends Controller
                 'observacao'      => 'nullable|string',
                 'fk_pessoa'       => 'required|integer',
                 'fk_endereco'     => 'required|integer',
+                'produtos'        => 'nullable|json'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -64,6 +84,16 @@ class PedidoController extends Controller
             ], 404);
         }
 
+        // Valida os novos produtos inseridos pela pessoa
+        self::produtos($data['produtos']);
+
+        // Nao esta pronto
+        // Busca no banco de dados os produtos ja postos no pedido
+        $produtos = PedidoProduto::where('fk_pedido',$data['id'])->first();
+        // var_dump($produtos); die;
+
+        // Junta os produtos do banco de dados (atualizados) com os novos produtos
+
         $pedido->dt_pedido       = $data['dt_pedido'];
         $pedido->dt_entrega      = $data['dt_entrega'];
         $pedido->dt_cancelamento = $data['dt_cancelamento'];
@@ -77,6 +107,33 @@ class PedidoController extends Controller
         ], 200);
     }
 
+    // Troca o nome dessa funcao
+    private function produtos($produtos)
+    {
+        $arrayProdutos = json_decode($produtos, true);
+        foreach ($arrayProdutos as $produtos) {
+
+            foreach ($produtos as $produto) {
+
+                // Verifica se o produto existe
+                $objProduto = Produto::where('id', $produto['produto'])->first();
+                if (!$objProduto) {
+                    return response()->json([
+                        'message' => "Produto {$produto['produto']} not found!"
+                    ], 404);
+                }
+
+                // new Estoque
+
+                // Parte a ser implementada
+
+                // Verifica se tem estoque para esse produto
+
+                // Desconta do estoque
+            }
+        }
+    }
+
     public function get(Request $request)
     {
         $param = $request->route('id');
@@ -88,6 +145,7 @@ class PedidoController extends Controller
             ], 404);
         }
 
+        $pedido->produtos;
         $pedido->pessoa;
         $pedido->endereco;
 
