@@ -167,9 +167,6 @@ class ProdutoController extends Controller
             ], 404);
         }
 
-
-        // Preciso carregar um obj contendo a medida da caracteristica
-
         // Buscar medida do produto
         $produto->marca;
         $produto->caracteristicas;
