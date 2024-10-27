@@ -12,8 +12,8 @@
         produtoCarrinho = carrinho[itemCarrinhoIndex];
     });
 
-    export let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.0, quantidade: 0};
     export let produto : any;
+    export let itemCarrinho: ProdutoCarrinho = {id: produto.codigo_produto, nome: produto.produto, preco: produto.preco, quantidade: 0};
 
     import SmallGreenButton from "../form/buttons/SmallGreenButton.svelte";
     import SmallRedButton from "../form/buttons/SmallRedButton.svelte";
