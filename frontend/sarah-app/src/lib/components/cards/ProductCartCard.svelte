@@ -44,6 +44,6 @@
             <SmallRedButton onClick={() => removerDoCarrinho(itemCarrinho.codigo_produto)} label="Remover -" />
         </footer>
     {:catch error}
-    <p>Erro: {error.message}</p>
+        <p>Erro: {error.message}</p>
 {/await}
 </div>
