@@ -3,12 +3,12 @@
     import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart"; 
 
     let carrinho = get(itensCarrinho);
-    let itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === produto.codigo_produto; });
+    let itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === itemCarrinho.id; });
 
     let produtoCarrinho = carrinho[itemCarrinhoIndex];
     itensCarrinho.subscribe((novoItemCarrinho) => {
         carrinho = novoItemCarrinho;
-        itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === produto.codigo_produto; });
+        itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === itemCarrinho.id; });
         produtoCarrinho = carrinho[itemCarrinhoIndex];
     });
 
