@@ -2,6 +2,8 @@
     import { get } from "svelte/store";
     import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart"; 
 
+    let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.00, quantidade: 0};
+
     let carrinho = get(itensCarrinho);
     let itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === itemCarrinho.id; });
 
@@ -15,7 +17,7 @@
     /** produto vindo via api */
     export let produto : any;
     /** atribuir propriedaes  */
-    let itemCarrinho: ProdutoCarrinho = {id: produto.codigo_produto, nome: produto.produto, preco: produto.preco, quantidade: 0};
+    itemCarrinho = {id: produto.codigo_produto, nome: produto.produto, preco: produto.preco, quantidade: 0};
 
     import SmallGreenButton from "../form/buttons/SmallGreenButton.svelte";
     import SmallRedButton from "../form/buttons/SmallRedButton.svelte";

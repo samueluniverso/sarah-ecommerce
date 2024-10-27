@@ -3,10 +3,6 @@
 
     import ProdutoApi from "$lib/models/ProdutoApi";
 
-    // ProdutoApi.getProduto(1).then((produto) => {
-    //     console.log(produto);    
-    // });
-
     let lista = ProdutoApi.paginar(9, 0);
 
 </script>
