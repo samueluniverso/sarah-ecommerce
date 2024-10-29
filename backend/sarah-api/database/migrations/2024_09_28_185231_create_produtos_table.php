@@ -22,7 +22,7 @@ return new class extends Migration
         });
 
         Schema::table('produtos', function(Blueprint $table) {
-            $table->foreign('fk_marca')->references('id')->on('marcas')->onDelete('cascade');
+            $table->foreign('fk_marca')->references('id')->on('marcas');
         });
     }
 
