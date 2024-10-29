@@ -29,6 +29,11 @@ Route::post('/register', [
     'register'
 ]);
 
+Route::get('/user/{id}', [
+    UserAuthController::class,
+    'get'
+])->middleware('auth:sanctum');
+
 /**
  * Pessoa Fisica
  */

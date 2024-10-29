@@ -12,7 +12,6 @@ class ProdutoApi
             });
     
             let result = await response.json();
-
             return result.data;
         }
         catch (err: any) {
@@ -33,7 +32,6 @@ class ProdutoApi
             });
     
             let result = await response.json();
-
             return result.data;
         }
         catch (err: any) {

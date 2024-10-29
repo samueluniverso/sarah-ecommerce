@@ -1,11 +1,11 @@
-class ProdutoApi
+class UserApi
 {
     private static readonly api = `http://localhost:8083/api`;
 
-    public static getPessoa = async (id: number, token: string): Promise<any> => {
+    public static getUser = async (id: number, token: string): Promise<any> => {
 
         try {
-            const response = await fetch(`${this.api}/pessoa/pessoa-fisica/${id}`, {
+            const response = await fetch(`${this.api}/user/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ class ProdutoApi
             });
     
             let result = await response.json();
-            return result.pessoa_fisica;
+            return result.data;
         }
         catch (err: any) {
             console.log(err);
@@ -22,4 +22,4 @@ class ProdutoApi
     }
 }
 
-export default ProdutoApi;
+export default UserApi;

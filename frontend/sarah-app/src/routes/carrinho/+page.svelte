@@ -17,11 +17,16 @@
     import Currency from "@tabler/icons-svelte/icons/currency-dollar";
 
     import PessoaApi from "$lib/models/PessoaApi";
+    import UserApi from "$lib/models/UserApi";
 
-    let cpf = '';
-    let nome = '';
+    /** session data */
+    export let data;
+    let token = data.auth_token!;
+    let user_data = JSON.parse(localStorage.user);
+    let pessoa = PessoaApi.getPessoa(user_data.id, token);
+    let user = UserApi.getUser(user_data.id, token);
+
     let email = '';
-    let telefone = '';
   
     let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.00, quantidade: 0};
 
@@ -37,10 +42,10 @@
 
     const onSubmit = (e: Event) => {
 		e.preventDefault();
-        
+
         //TODO: Implementar a lógica de compra
 	};
-
+    
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
@@ -53,10 +58,19 @@
         <div class="col-span-1"></div>
             <section class="h-4/5 flex justify-center items-center">
                 <form on:submit={onSubmit} class="py-8 px-4 flex flex-col shadow-custom gap-4">
-                    <TextField Icon={User} name="nome" label="Nome" placeholder="Nome" bind:value={nome} required />
-                    <CpfField Icon={Id} name="cpf" bind:value={cpf} required />
-                    <EmailField Icon={Mail} name="email" bind:value={email} required />
-                    <PhoneField Icon={Phone} name="telefone" bind:value={telefone} required />
+                    {#await pessoa}
+                    <p>Carregando...</p>
+                    {:then data} 
+                        <div>{data.pessoa.nome}</div>
+                        <TextField Icon={User} name="nome" label="Nome" placeholder="Nome" value="{data.pessoa.nome}" disabled required />
+                        <CpfField Icon={Id} name="cpf" value="{data.cpf}" disabled required />
+                        <PhoneField Icon={Phone} name="telefone" value="{data.pessoa.telefone}" disabled required />
+                    {/await}
+                    {#await user}
+                        <p>Carregando...</p>
+                    {:then data} 
+                        <EmailField Icon={Mail} name="email" value="{data.email}" required />
+                    {/await}
                     <BaseButton Icon={Currency} label="Comprar" type="submit" />
                 </form>
             </section>

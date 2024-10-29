@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Throwable;
 
 class UserAuthController extends Controller
@@ -66,5 +67,12 @@ class UserAuthController extends Controller
         return response()->json([
             'message' => 'User registered successfully',
         ], 201);
+    }
+
+    public function get(Request $request)
+    {
+        return response()->json([
+            'data' => User::where('id', $request->route('id'))->first()
+        ], 500);
     }
 }
