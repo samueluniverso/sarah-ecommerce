@@ -40,7 +40,7 @@ class PedidoController extends Controller
         $pedido->observacao      = $data['observacao'] ?? null;
         $pedido->save();
 
-        $arrayProdutos = json_decode($data['produtos'],true);
+        $arrayProdutos = json_decode($data['produtos'], true);
         foreach ($arrayProdutos as $produtos) {
 
             foreach ($produtos as $produto) {
@@ -89,7 +89,7 @@ class PedidoController extends Controller
 
         // Nao esta pronto
         // Busca no banco de dados os produtos ja postos no pedido
-        $produtos = PedidoProduto::where('fk_pedido',$data['id'])->first();
+        $produtos = PedidoProduto::where('fk_pedido', $data['id'])->first();
         // var_dump($produtos); die;
 
         // Junta os produtos do banco de dados (atualizados) com os novos produtos
@@ -154,6 +154,7 @@ class PedidoController extends Controller
         ], 200);
     }
 
+    // Como fazer para deletar um produto do pedido?
     // Usa o verbo delete
     public function delete(Request $request)
     {
