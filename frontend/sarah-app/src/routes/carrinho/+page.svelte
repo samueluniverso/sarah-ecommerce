@@ -12,18 +12,20 @@
     import PessoaApi from "$lib/models/PessoaApi";
     import CepFieldChange from "$lib/components/form/CepFieldChange.svelte";
     import CepApi from "$lib/models/CepApi";
+    import PedidoApi from "$lib/models/PedidoApi";
 
     /** session data */
     export let data;
     let token = data.auth_token!;
     let user_data = JSON.parse(localStorage.user);
-    let pessoa = PessoaApi.getPessoa(user_data.id, token);
+    // let pessoa = PessoaApi.getPessoa(user_data.id, token);
 
     let cep = '';
     let cidade = '';
     let bairro = '';
     let rua = '';
-    let numero = '';
+    let numero = '';;
+    let observacao = ''
     let logradouro = '';
   
     let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.00, quantidade: 0};
@@ -41,7 +43,26 @@
     const onSubmit = (e: Event) => {
 		e.preventDefault();
 
-        //TODO: Implementar a lógica de compra
+        const date_now = new Date().toISOString().split('T')[0];
+
+        PedidoApi.store(
+            date_now,
+            observacao,
+            user_data.id,
+            [
+
+            ],
+            [
+                cep,
+                cidade,
+                bairro,
+                rua,
+                numero,
+                observacao,
+                logradouro
+            ],
+            token
+        );
 	};
 
     function cepData()
@@ -51,7 +72,6 @@
                 alert('CEP não encontrado');
                 return;
             }
-            console.log(data);
             cidade = data.city;
             bairro = data.neighborhood;
             rua = data.street;
@@ -77,6 +97,7 @@
                         <TextField name="rua" label="Rua" bind:value={rua} required />
                         <TextField name="numero" label="Número" bind:value={numero} required />
                         <TextField name="logradouro" label="Logradouro" bind:value={logradouro} required />
+                        <TextField name="observacao" label="Observação" bind:value={observacao} />
                     </div>
                     <BaseButton Icon={Currency} label="Comprar" type="submit" />
                 </form>
