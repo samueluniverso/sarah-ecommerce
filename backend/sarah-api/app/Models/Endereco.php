@@ -13,4 +13,22 @@ class Endereco extends Model
     protected $table = 'enderecos';
 
     public $incrementing = true;
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [];
+    }
 }
