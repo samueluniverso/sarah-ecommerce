@@ -9,7 +9,6 @@
 
     import Currency from "@tabler/icons-svelte/icons/currency-dollar";
 
-    import PessoaApi from "$lib/models/PessoaApi";
     import CepFieldChange from "$lib/components/form/CepFieldChange.svelte";
     import CepApi from "$lib/models/CepApi";
     import PedidoApi from "$lib/models/PedidoApi";
@@ -18,7 +17,6 @@
     export let data;
     let token = data.auth_token!;
     let user_data = JSON.parse(localStorage.user);
-    // let pessoa = PessoaApi.getPessoa(user_data.id, token);
 
     let cep = '';
     let cidade = '';
@@ -45,22 +43,28 @@
 
         const date_now = new Date().toISOString().split('T')[0];
 
+        let produtos: { produto: number; quantidade: number; }[] = [];
+        carrinho.forEach((item) => {
+            produtos.push({
+                produto: item.id,
+                quantidade: item.quantidade
+            });
+        });
+
+        let endereco = {
+            cep,
+            bairro,
+            rua,
+            numero,
+            logradouro
+        };
+
         PedidoApi.store(
             date_now,
             observacao,
             user_data.id,
-            [
-
-            ],
-            [
-                cep,
-                cidade,
-                bairro,
-                rua,
-                numero,
-                observacao,
-                logradouro
-            ],
+            JSON.stringify({produtos}),
+            JSON.stringify({endereco}),
             token
         );
 	};

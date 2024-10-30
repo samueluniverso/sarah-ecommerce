@@ -6,8 +6,8 @@ class PedidoApi
         dt_pedido: string,
         observacao: string | undefined,
         fk_pessoa: number,
-        produtos: Array<any>,
-        endereco: Array<any>,
+        produtos: string,
+        endereco: string,
         token: string,
     ): Promise<any> => {
         try {
