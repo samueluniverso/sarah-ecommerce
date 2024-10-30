@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Endereco;
 use App\Models\Pedido;
 use App\Models\PedidoProduto;
 use App\Models\Produto;
@@ -15,11 +16,12 @@ class PedidoController extends Controller
         try {
             $data = $request->validate([
                 'dt_pedido'       => 'required|date',
-                'dt_entrega'      => 'required|date',
-                'dt_cancelamento' => 'nullable|date',
+                // 'dt_entrega'      => 'required|date',
+                // 'dt_cancelamento' => 'nullable|date',
                 'observacao'      => 'nullable|string',
                 'fk_pessoa'       => 'required|integer',
-                'fk_endereco'     => 'required|integer',
+                'endereco'        => 'required|json',
+                // 'fk_endereco'     => 'required|integer', // Remover a fk_endereco e receber um json (endereco)
                 'produtos'        => 'nullable|json'
             ]);
         } catch (Throwable $th) {
@@ -31,16 +33,26 @@ class PedidoController extends Controller
         // Valida os novos produtos inseridos pela pessoa
         self::produtos($data['produtos']);
 
+        $arrayEndereco = json_decode($data['endereco'], true)['endereco'];
+
+        $endereco = new Endereco();
+        $endereco->cep         = $arrayEndereco['cep'];
+        $endereco->bairro      = $arrayEndereco['bairro'];
+        $endereco->rua         = $arrayEndereco['rua'];
+        $endereco->numero      = $arrayEndereco['numero'];
+        $endereco->complemento = $arrayEndereco['logradouro'];
+        $endereco->save();
+
         $pedido = new Pedido();
         $pedido->dt_pedido       = $data['dt_pedido'];
-        $pedido->dt_entrega      = $data['dt_entrega'];
-        $pedido->dt_cancelamento = $data['dt_cancelamento'];
+        // $pedido->dt_entrega      = $data['dt_entrega'];
+        // $pedido->dt_cancelamento = $data['dt_cancelamento'];
         $pedido->fk_pessoa       = $data['fk_pessoa'];
-        $pedido->fk_endereco     = $data['fk_endereco'];
+        $pedido->fk_endereco     = $endereco->id; // Guarda o endereco no new Endereco e pegar o id dela e por aqui
         $pedido->observacao      = $data['observacao'] ?? null;
         $pedido->save();
 
-        $arrayProdutos = json_decode($data['produtos'],true);
+        $arrayProdutos = json_decode($data['produtos'], true);
         foreach ($arrayProdutos as $produtos) {
 
             foreach ($produtos as $produto) {
@@ -89,7 +101,7 @@ class PedidoController extends Controller
 
         // Nao esta pronto
         // Busca no banco de dados os produtos ja postos no pedido
-        $produtos = PedidoProduto::where('fk_pedido',$data['id'])->first();
+        $produtos = PedidoProduto::where('fk_pedido', $data['id'])->first();
         // var_dump($produtos); die;
 
         // Junta os produtos do banco de dados (atualizados) com os novos produtos
