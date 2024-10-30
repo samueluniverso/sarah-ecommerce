@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('formas_pagamentos', function (Blueprint $table) {
             $table->id();
-            $table->integer('cep')->unsigned();
-            $table->text('numero')->nullable();
-            $table->text('rua')->nullable();
-            $table->text('complemento')->nullable();
-            $table->text('bairro')->nullable();
+            $table->text('descricao');
+            $table->text('tipo');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enderecos');
+        Schema::dropIfExists('formas_pagamentos');
     }
 };

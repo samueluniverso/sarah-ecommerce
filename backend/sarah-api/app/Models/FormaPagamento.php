@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Endereco extends Model
+class FormaPagamento extends Model
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $table = 'enderecos';
+    protected $table = 'formas_pagamentos';
 
     public $incrementing = true;
-
 
     /**
      * The attributes that are mass assignable.

@@ -37,3 +37,9 @@ php artisan make:Model Endereco ; php artisan make:Factory EnderecoFactory ; php
 
 
 php artisan make:Model PessoaEndereco ; php artisan make:Factory PessoaEnderecoFactory ; php artisan make:seeder PessoaEnderecoSeeder ;php artisan make:migration create_pessoas_enderecos_table;
+
+
+
+php artisan make:Model Pagamento ; php artisan make:Factory PagamentoFactory ; php artisan make:seeder PagamentoSeeder ; php artisan make:Controller PagamentoController ;php artisan make:migration create_pagamentos_table;
+php artisan make:Model Estoque ; php artisan make:Factory EstoqueFactory ; php artisan make:seeder EstoqueSeeder ; php artisan make:Controller EstoqueController ;php artisan make:migration create_estoques_table;
+php artisan make:Model FormaPagamento ; php artisan make:Factory FormaPagamentoFactory ; php artisan make:seeder FormaPagamentoSeeder ; php artisan make:Controller FormaPagamentoController ;php artisan make:migration create_formas_pagamentos_table;
