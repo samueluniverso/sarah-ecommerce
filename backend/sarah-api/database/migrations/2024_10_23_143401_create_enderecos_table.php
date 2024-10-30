@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('numero')->nullable();
             $table->text('rua')->nullable();
             $table->text('complemento')->nullable();
-            $table->timestamps();
+            $table->text('bairro')->nullable();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

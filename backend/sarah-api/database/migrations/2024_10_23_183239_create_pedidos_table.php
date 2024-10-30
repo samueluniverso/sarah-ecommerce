@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->timestamp('dt_pedido');
-            $table->timestamp('dt_entrega');
+            $table->timestamp('dt_entrega')->nullable();
             $table->timestamp('dt_cancelamento')->nullable();
             $table->text('observacao')->nullable(); // Significa que pode ser null
             $table->bigInteger('fk_pessoa')->unsigned();
