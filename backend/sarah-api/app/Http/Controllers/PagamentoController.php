@@ -16,7 +16,7 @@ class PagamentoController extends Controller
             $data = $request->validate([
                 'fk_pedido'          => 'required|integer',
                 'fk_forma_pagamento' => 'required|integer',
-                'valor'              => 'required|float'
+                'valor'              => 'required|numeric'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -56,7 +56,7 @@ class PagamentoController extends Controller
                 'id'                 => 'required|integer',
                 'fk_pedido'          => 'required|integer',
                 'fk_forma_pagamento' => 'required|integer',
-                'valor'              => 'required|float'
+                'valor'              => 'required|numeric'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -78,14 +78,14 @@ class PagamentoController extends Controller
             ], 404);
         }
 
-        $pagamento =  new Pagamento();
+        $pagamento = Pagamento::where('id', $data['id'])->first();
         $pagamento->fk_pedido          = $pedido->id;
         $pagamento->fk_forma_pagamento = $formaPagamento->id;
         $pagamento->valor              = $data['valor'];
         $pagamento->update();
 
         return response()->json([
-            'message' => 'Pagamento created successfully!'
+            'message' => 'Pagamento update successfully!'
         ], 200);
     }
 
