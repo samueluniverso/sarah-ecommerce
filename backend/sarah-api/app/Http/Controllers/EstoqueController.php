@@ -93,7 +93,7 @@ class EstoqueController extends Controller
         }
 
         // $caracteristica_produto = CaracteristicaProduto::where('id', $data['fk_caracteristica_produto'])->first();
-        $estoque = new Estoque();
+        $estoque = Estoque::where('id', $data['id'])->first();
         $estoque->fk_produto                = $produto->id;
         $estoque->fk_medida                 = $medida->id;
         $estoque->fk_caracteristica_produto = $caracteristica_produto->id ?? null;
