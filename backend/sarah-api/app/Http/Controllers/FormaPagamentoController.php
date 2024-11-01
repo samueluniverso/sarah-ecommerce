@@ -21,6 +21,11 @@ class FormaPagamentoController extends Controller
             ], 500);
         }
 
+        $formaPagamento = new FormaPagamento();
+        $formaPagamento->tipo      = $data['tipo'];
+        $formaPagamento->descricao = $data['descricao'];
+        $formaPagamento->save();
+
         return response()->json([
             'message' => 'Forma pagamento created successfully!'
         ], 200);
