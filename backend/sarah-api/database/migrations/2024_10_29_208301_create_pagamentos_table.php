@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('fk_pedido')->unsigned()->nullable();
-            $table->bigInteger('fk_forma_pagamento')->unsigned()->nullable();
-            $table->float('valor')->nullable();
+            $table->bigInteger('fk_pedido')->unsigned();
+            $table->bigInteger('fk_forma_pagamento')->unsigned();
+            $table->float('valor');
             $table->softDeletes();
             $table->timestamps();
         });
