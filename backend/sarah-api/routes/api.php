@@ -477,17 +477,22 @@ Route::patch('/forma-pagamento/{id}', [
     'softDelete'
 ])->middleware('auth:sanctum');
 
-Route::get('/forma-pagamento/pessoa/{id}', [
+Route::get('/forma-pagamento/tipo/{tipo}', [
     FormaPagamentoController::class,
-    'getByPessoa'
+    'getByTipo'
 ])->middleware('auth:sanctum');;
 
-Route::prefix('forma-pagamentos')->group(function () {
-    Route::get('/paginar/limit/{limit}/offset/{offset}', [
-        FormaPagamentoController::class,
-        'listaPaginada'
-    ]);
-});
+Route::get('/forma-pagamento/descricao/{descricao}', [
+    FormaPagamentoController::class,
+    'getByDescricao'
+])->middleware('auth:sanctum');
+
+// Route::prefix('forma-pagamentos')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         FormaPagamentoController::class,
+//         'listaPaginada'
+//     ]);
+// });
 
 
 /**
@@ -497,7 +502,7 @@ Route::prefix('forma-pagamentos')->group(function () {
 Route::get('/pagamento/{id}', [
     PagamentoController::class,
     'get'
-]);
+]); // Essa eu acho que deveria ser sanctum
 
 Route::post('/pagamento/', [
     PagamentoController::class,
@@ -518,6 +523,14 @@ Route::patch('/pagamento/{id}', [
     PagamentoController::class,
     'softDelete'
 ])->middleware('auth:sanctum');
+
+Route::get('/pagamento/pedido/{id}', [
+    PagamentoController::class,
+    'getByPedido'
+])->middleware('auth:sanctum');
+
+
+
 
 /**
  * Estoque
@@ -546,3 +559,25 @@ Route::patch('/estoque/{id}', [
     EstoqueController::class,
     'softDelete'
 ])->middleware('auth:sanctum');
+
+Route::get('/estoque/produto/{id}', [
+    EstoqueController::class,
+    'getByProduto'
+])->middleware('auth:sanctum');
+
+Route::get('/estoque/medida/{id}', [
+    EstoqueController::class,
+    'getByMedida'
+])->middleware('auth:sanctum');
+
+Route::get('/estoque/quantidade/{id}', [
+    EstoqueController::class,
+    'getByQuantidade'
+])->middleware('auth:sanctum');
+
+// Route::prefix('pagamentos')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         PagamentoController::class,
+//         'listaPaginada'
+//     ]);
+// });
