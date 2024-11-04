@@ -1,0 +1,145 @@
+controllers
+
+CategoriaController.php
+    -
+    - store
+- update
+- get
+- delete
+- softDelete
+- getByNome
+- getByDescricao
+- listaPaginada
+
+EstoqueController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByProduto
+- getByMedida
+- getByQuantidade
+
+FormaPagamentoController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByTipo
+- getByDescricao
+- listaPaginada
+
+MarcaController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByNome
+- getByDescricao
+- listaPaginada2
+- listaPaginada
+
+MedidaController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- listaPaginada
+
+PagamentoController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByPedido
+
+PedidoController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByPessoa
+- getByEndereco
+- listaPaginada
+
+PessoaFisicaController.php
+- get
+- delete
+- softDelete
+- store
+- update
+- getByNome
+- getByCpf
+- listaPaginada
+
+PessoaJuridicaController.php
+- get
+- delete
+- softDelete
+- store
+- update
+- getByNomeFantasia
+- getByNomeRazaoSocial
+- getByCnpj
+- listaPaginada
+
+ProdutoController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByNome
+- getByMarca
+- getByCategoria
+- listaPaginada
+- buscar
+
+PromocaoController.php
+- store
+- update
+- get
+- delete
+- softDelete
+- getByProduto
+- listaPaginada
+
+UserAuthController.php
+- login
+- logout
+- register
+
+PedidoProdutoController.php
+(Nada)
+
+EnderecoController.php
+(Nada)
+
+models
+
+CaracteristicaProduto.php
+-
+Categoria.php
+Endereco.php
+Estoque.php
+FormaPagamento.php
+Marca.php
+Medida.php
+Pagamento.php
+Pedido.php
+PedidoProduto.php
+PessoaEndereco.php
+PessoaFisica.php
+PessoaJuridica.php
+Pessoa.php
+ProdutoCategoria.php
+Produto.php
+Promocao.php
+User.php
+
