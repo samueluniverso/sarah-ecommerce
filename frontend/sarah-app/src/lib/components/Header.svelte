@@ -1,6 +1,8 @@
 <script lang="ts">
     import { user } from "$lib/stores";
     import { IconUserCircle } from "@tabler/icons-svelte";
+    import { IconShoppingCart } from "@tabler/icons-svelte";
+    import { IconSearch } from "@tabler/icons-svelte";
     import Popover from "./Popover.svelte";
     import { goto } from "$app/navigation";
 
@@ -20,6 +22,18 @@
 			});
 		});
 	};
+
+    const onProduct = (e: Event) => {
+		e.preventDefault();
+
+        goto('/produtos');
+	};
+
+    const onCart = (e: Event) => {
+		e.preventDefault();
+
+        goto('/carrinho');
+	};
 </script>
 
 <header class="px-32 py-2 bg-sarah-green border-b-sarah-gold border-b-2 shadow-custom">
@@ -29,6 +43,12 @@
             <h1 class="text-white font-bold text-2xl tracking-widest">SARAH</h1>
         </a>
         <nav class="flex items-center">
+            <button type="button" on:click={onProduct}>
+                <IconSearch size={35} color={'#fff'} />
+            </button>
+            <button type="button" on:click={onCart}>
+                <IconShoppingCart size={35} color={'#fff'} />
+            </button>
             {#if $user}
                 <Popover>
                     <div slot="trigger" class="flex items-center">
