@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FaturaMail;
 use App\Models\CaracteristicaProduto;
 use App\Models\Categoria;
 use App\Models\Imagem;
@@ -11,6 +12,7 @@ use App\Models\Medida;
 use App\Models\Produto;
 use App\Models\ProdutoCategoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use stdClass;
 use Throwable;
 
@@ -92,6 +94,29 @@ class ProdutoController extends Controller
             $objProdutoCategoria->fk_produto    = $produto->id;
             $objProdutoCategoria->save();
         }
+
+        // TESTE (https://stackoverflow.com/questions/35830567/how-to-send-email-using-laravel)
+        // $to_name = "RECEIVER_NAME";
+        // $to_email = "rianwlp@gmail.com";
+        // $data = array("name" => "Cloudways (sender_name)", "body" => "A test mail");
+        // Mail::send([], $data, function ($message) use ($to_name, $to_email) {
+        //     $message->to($to_email, $to_name)
+        //         ->subject("Laravel Test Mail");
+        //     $message->from("rian.welp@universo.univates.br", "Test Mail");
+        // });
+
+
+
+
+        // var_dump('enviar email');
+        // $orderDetails = [
+        //     'product_name' => $request->input('product_name'),
+        //     'quantity' => $request->input('quantity'),
+        //     'total_price' => $request->input('total_price'),
+        // ];
+        // $mailer = new FaturaMail();
+        // $mailer->to($request->input('customer_email'))->send(new ProductOrderMail($orderDetails));
+
 
         return response()->json([
             'message' => 'Produto created successfully!'
