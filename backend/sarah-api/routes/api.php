@@ -524,12 +524,15 @@ Route::patch('/pagamento/{id}', [
     'softDelete'
 ])->middleware('auth:sanctum');
 
+Route::get('/pagamento-confirma/{codigo-pedido}', [
+    PagamentoController::class,
+    'get'
+])->middleware('auth:sanctum');
+
 Route::get('/pagamento/pedido/{id}', [
     PagamentoController::class,
     'getByPedido'
 ])->middleware('auth:sanctum');
-
-
 
 
 /**
