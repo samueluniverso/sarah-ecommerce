@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FaturaMail;
 use App\Models\CaracteristicaProduto;
 use App\Models\Categoria;
+use App\Models\Imagem;
+use App\Models\ImagemProduto;
 use App\Models\Marca;
 use App\Models\Medida;
 use App\Models\Produto;
 use App\Models\ProdutoCategoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use stdClass;
 use Throwable;
 
@@ -22,6 +26,7 @@ class ProdutoController extends Controller
                 'is_destaque'     => 'required|boolean',
                 'preco'           => 'required|numeric',
                 'fk_marca'        => 'required|integer',
+                'imagens'         => 'nullable|json',
                 'cor'             => 'required|string',
                 'caracteristicas' => 'required|json', // Vai vir um JSON com todas as medioas possiveis daquele produto (M, G, GG etc ...)
                 'categorias'      => 'required|json'
@@ -68,6 +73,11 @@ class ProdutoController extends Controller
         $produto->fk_marca    = $marca->id;
         $produto->save();
 
+        if (empty($data['imagens'])) {
+            $imagens = json_decode($data['imagens'])->image_data;
+            self::storeImagens($imagens, $produto->id);
+        }
+
         foreach ($caracteristicas as $caracteristica) {
 
             $objCaracteristica = new CaracteristicaProduto();
@@ -85,13 +95,28 @@ class ProdutoController extends Controller
             $objProdutoCategoria->save();
         }
 
-        // Nao user o factory por agora pois ele enche o saco e nao deixa salvar o registro
-        // $produto = Produto::factory()->create()([
-        //     'nome'        => $data['nome'],
-        //     'is_destaque' => $data['is_destaque'],
-        //     'preco'       => $data['preco'],
-        //     'fk_marca'    => $marca->id
-        // ]);
+        // TESTE (https://stackoverflow.com/questions/35830567/how-to-send-email-using-laravel)
+        // $to_name = "RECEIVER_NAME";
+        // $to_email = "rianwlp@gmail.com";
+        // $data = array("name" => "Cloudways (sender_name)", "body" => "A test mail");
+        // Mail::send([], $data, function ($message) use ($to_name, $to_email) {
+        //     $message->to($to_email, $to_name)
+        //         ->subject("Laravel Test Mail");
+        //     $message->from("rian.welp@universo.univates.br", "Test Mail");
+        // });
+
+
+
+
+        // var_dump('enviar email');
+        // $orderDetails = [
+        //     'product_name' => $request->input('product_name'),
+        //     'quantity' => $request->input('quantity'),
+        //     'total_price' => $request->input('total_price'),
+        // ];
+        // $mailer = new FaturaMail();
+        // $mailer->to($request->input('customer_email'))->send(new ProductOrderMail($orderDetails));
+
 
         return response()->json([
             'message' => 'Produto created successfully!'
@@ -108,6 +133,7 @@ class ProdutoController extends Controller
                 'preco'           => 'required|numeric',
                 'fk_marca'        => 'required|integer',
                 'cor'             => 'required|string',
+                'imagens'         => 'nullable|json',
                 'caracteristicas' => 'required|json' // Vai vir um JSON com todas as medioas possiveis daquele produto (M, G, GG etc ...)
             ]);
         } catch (Throwable $th) {
@@ -140,6 +166,12 @@ class ProdutoController extends Controller
         $produto->preco       = $data['preco'];
         $produto->fk_marca =    $marca->id;
         $produto->update();
+
+        if (empty($data['imagens'])) {
+            $imagens = json_decode($data['imagens'])->image_data;
+            self::storeImagens($imagens, $produto->id);
+            self::deleteImagem($data['id']);
+        }
 
         foreach ($caracteristicas as $caracteristica) {
 
@@ -319,4 +351,49 @@ class ProdutoController extends Controller
             'data' => $produtos
         ], 200);
     }
+
+
+    public function storeImagens($imagens, $fk_produto)
+    {
+        foreach ($imagens as $imagen) {
+
+            if (empty(trim($imagen->nome)) || empty(trim($imagen->path))) {
+                continue;
+            }
+
+            $objImagem = new Imagem();
+            $objImagem->nome = $imagen->nome;
+            $objImagem->path = $imagen->path;
+            $objImagem->checksum ?? null;
+            $objImagem->save();
+
+            $objImagenProduto = new ImagemProduto();
+            $objImagenProduto->fk_imagem  = $objImagem->id;
+            $objImagenProduto->fk_produto = $fk_produto;
+            $objImagenProduto->save();
+        }
+    }
+
+    public function deleteImagem($fk_produto)
+    {
+        $imagensProduto = ImagemProduto::where('fk_produto', $fk_produto)->get();
+        foreach ($imagensProduto as $imagemProduto) {
+
+            $imagem = Imagem::where('id', $imagemProduto->id)->get();
+            $imagem->forceDelete();
+
+            $imagemProduto->forceDelete();
+        }
+    }
 }
+
+// {
+//     "where": [
+//         {"value1": "teste", "operator": "=", "value2": "teste2"}
+//     ],
+//     "limit": 10,
+//     "offset": 5,
+//     "order_by": [
+//         "name DESC"
+//     ]
+// }

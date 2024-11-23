@@ -4,8 +4,11 @@ use App\Http\Controllers\PessoaFisicaController;
 use App\Http\Controllers\PessoaJuridicaController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\EstoqueController;
+use App\Http\Controllers\FormaPagamentoController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MedidaController;
+use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PromocaoController;
 use App\Http\Controllers\ProdutoController;
@@ -446,6 +449,143 @@ Route::get('/pedido/endereco/{id}', [
 // Route::prefix('produtos')->group(function () {
 //     Route::get('/paginar/limit/{limit}/offset/{offset}', [
 //         PedidoController::class,
+//         'listaPaginada'
+//     ]);
+// });
+
+
+/**
+ * Forma Pagamento
+ */
+Route::get('/forma-pagamento/{id}', [
+    FormaPagamentoController::class,
+    'get'
+]);
+
+Route::post('/forma-pagamento/', [
+    FormaPagamentoController::class,
+    'store'
+])->middleware('auth:sanctum');
+
+Route::put('/forma-pagamento/', [
+    FormaPagamentoController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::delete('/forma-pagamento/{id}', [
+    FormaPagamentoController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::patch('/forma-pagamento/{id}', [
+    FormaPagamentoController::class,
+    'softDelete'
+])->middleware('auth:sanctum');
+
+Route::get('/forma-pagamento/tipo/{tipo}', [
+    FormaPagamentoController::class,
+    'getByTipo'
+])->middleware('auth:sanctum');;
+
+Route::get('/forma-pagamento/descricao/{descricao}', [
+    FormaPagamentoController::class,
+    'getByDescricao'
+])->middleware('auth:sanctum');
+
+// Route::prefix('forma-pagamentos')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         FormaPagamentoController::class,
+//         'listaPaginada'
+//     ]);
+// });
+
+
+/**
+ * Pagamento
+ */
+
+Route::get('/pagamento/{id}', [
+    PagamentoController::class,
+    'get'
+]); // Essa eu acho que deveria ser sanctum
+
+Route::post('/pagamento/', [
+    PagamentoController::class,
+    'store'
+])->middleware('auth:sanctum');
+
+Route::put('/pagamento/', [
+    PagamentoController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::delete('/pagamento/{id}', [
+    PagamentoController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::patch('/pagamento/{id}', [
+    PagamentoController::class,
+    'softDelete'
+])->middleware('auth:sanctum');
+
+Route::get('/pagamento-confirma/{codigo-pedido}', [
+    PagamentoController::class,
+    'get'
+])->middleware('auth:sanctum');
+
+Route::get('/pagamento/pedido/{id}', [
+    PagamentoController::class,
+    'getByPedido'
+])->middleware('auth:sanctum');
+
+
+/**
+ * Estoque
+ */
+Route::get('/estoque/{id}', [
+    EstoqueController::class,
+    'get'
+]);
+
+Route::post('/estoque/', [
+    EstoqueController::class,
+    'store'
+])->middleware('auth:sanctum');
+
+Route::put('/estoque/', [
+    EstoqueController::class,
+    'update'
+])->middleware('auth:sanctum');
+
+Route::delete('/estoque/{id}', [
+    EstoqueController::class,
+    'delete'
+])->middleware('auth:sanctum');
+
+Route::patch('/estoque/{id}', [
+    EstoqueController::class,
+    'softDelete'
+])->middleware('auth:sanctum');
+
+Route::get('/estoque/produto/{id}', [
+    EstoqueController::class,
+    'getByProduto'
+])->middleware('auth:sanctum');
+
+Route::get('/estoque/medida/{id}', [
+    EstoqueController::class,
+    'getByMedida'
+])->middleware('auth:sanctum');
+
+Route::get('/estoque/quantidade/{id}', [
+    EstoqueController::class,
+    'getByQuantidade'
+])->middleware('auth:sanctum');
+
+// Route::prefix('pagamentos')->group(function () {
+//     Route::get('/paginar/limit/{limit}/offset/{offset}', [
+//         PagamentoController::class,
 //         'listaPaginada'
 //     ]);
 // });

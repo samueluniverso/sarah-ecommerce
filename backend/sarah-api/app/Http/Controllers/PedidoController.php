@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Endereco;
+use App\Models\Estoque;
 use App\Models\Pedido;
 use App\Models\PedidoProduto;
 use App\Models\Produto;
@@ -15,14 +16,11 @@ class PedidoController extends Controller
     {
         try {
             $data = $request->validate([
-                'dt_pedido'       => 'required|date',
-                // 'dt_entrega'      => 'required|date',
-                // 'dt_cancelamento' => 'nullable|date',
-                'observacao'      => 'nullable|string',
-                'fk_pessoa'       => 'required|integer',
-                'endereco'        => 'required|json',
-                // 'fk_endereco'     => 'required|integer', // Remover a fk_endereco e receber um json (endereco)
-                'produtos'        => 'nullable|json'
+                'dt_pedido'  => 'required|date',
+                'observacao' => 'nullable|string',
+                'fk_pessoa'  => 'required|integer',
+                'endereco'   => 'required|json',
+                'produtos'   => 'nullable|json'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -44,12 +42,10 @@ class PedidoController extends Controller
         $endereco->save();
 
         $pedido = new Pedido();
-        $pedido->dt_pedido       = $data['dt_pedido'];
-        // $pedido->dt_entrega      = $data['dt_entrega'];
-        // $pedido->dt_cancelamento = $data['dt_cancelamento'];
-        $pedido->fk_pessoa       = $data['fk_pessoa'];
-        $pedido->fk_endereco     = $endereco->id; // Guarda o endereco no new Endereco e pegar o id dela e por aqui
-        $pedido->observacao      = $data['observacao'] ?? null;
+        $pedido->dt_pedido   = $data['dt_pedido'];
+        $pedido->fk_pessoa   = $data['fk_pessoa'];
+        $pedido->fk_endereco = $endereco->id; // Guarda o endereco no new Endereco e pegar o id dela e por aqui
+        $pedido->observacao  = $data['observacao'] ?? null;
         $pedido->save();
 
         $arrayProdutos = json_decode($data['produtos'], true);
@@ -75,13 +71,8 @@ class PedidoController extends Controller
         try {
             $data = $request->validate([
                 'id'              => 'required|integer',
-                'dt_pedido'       => 'required|date',
                 'dt_entrega'      => 'required|date',
-                'dt_cancelamento' => 'nullable|date',
-                'observacao'      => 'nullable|string',
-                'fk_pessoa'       => 'required|integer',
-                'fk_endereco'     => 'required|integer',
-                'produtos'        => 'nullable|json'
+                'dt_cancelamento' => 'nullable|date'
             ]);
         } catch (Throwable $th) {
             return response()->json([
@@ -97,21 +88,10 @@ class PedidoController extends Controller
         }
 
         // Valida os novos produtos inseridos pela pessoa
-        self::produtos($data['produtos']);
+        self::produtos($data['produtos']); // Vai cair fora
 
-        // Nao esta pronto
-        // Busca no banco de dados os produtos ja postos no pedido
-        $produtos = PedidoProduto::where('fk_pedido', $data['id'])->first();
-        // var_dump($produtos); die;
-
-        // Junta os produtos do banco de dados (atualizados) com os novos produtos
-
-        $pedido->dt_pedido       = $data['dt_pedido'];
         $pedido->dt_entrega      = $data['dt_entrega'];
         $pedido->dt_cancelamento = $data['dt_cancelamento'];
-        $pedido->fk_pessoa       = $data['fk_pessoa'];
-        $pedido->fk_endereco     = $data['fk_endereco'];
-        $pedido->observacao      = $data['observacao'] ?? null;
         $pedido->update();
 
         return response()->json([
@@ -135,8 +115,7 @@ class PedidoController extends Controller
                     ], 404);
                 }
 
-                // new Estoque
-
+                $objEstoque = new Estoque();
                 // Parte a ser implementada
 
                 // Verifica se tem estoque para esse produto
