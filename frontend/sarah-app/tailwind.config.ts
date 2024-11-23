@@ -12,6 +12,9 @@ export default {
         'sarah-green': {
           DEFAULT: '#325140'
         },
+        'sarah-red': {
+            DEFAULT: '#C70039'
+          },
         'sarah-gold': {
           DEFAULT: '#D0A16F'
         }

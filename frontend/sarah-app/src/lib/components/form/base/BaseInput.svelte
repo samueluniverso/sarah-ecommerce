@@ -11,6 +11,7 @@
     export let mask: ((value: string) => string) | null = null;
     export let disabled = false;
 
+    export let onChange: ((e: Event) => void)|null = null;
     const handleInput = (e: Event) => {
         const target = e.target as HTMLInputElement;
         value = target.value;
@@ -31,7 +32,7 @@
                 <svelte:component this={Icon} size={32} color="#000" class="p-1 w-8 border-r-2 border-r-sarah-gold" />
             </label>
         {/if}
-        <input id={name} class="p-1 flex-1 focus-visible:outline-none" {name} value={value} on:input={handleInput} {required} {placeholder} {type} {disabled} />
+        <input id={name} class="p-1 flex-1 focus-visible:outline-none" {name} value={value} on:change={onChange} on:input={handleInput} {required} {placeholder} {type} {disabled} />
         <slot/>
     </span>
 </div>
