@@ -23,6 +23,7 @@
     {#if isOpen}
         <span transition:fly={{ y: -10 }} class="triangle"></span>
         <div transition:fly={{ y: -10 }} class="popover">
+            <slot name="product"/>
             <slot name="content"/>
         </div>
     {/if}
