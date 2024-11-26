@@ -73,7 +73,7 @@ class ProdutoController extends Controller
         $produto->fk_marca    = $marca->id;
         $produto->save();
 
-        if (empty($data['imagens'])) {
+        if (!empty($data['imagens'])) {
             $imagens = json_decode($data['imagens'])->image_data;
             self::storeImagens($imagens, $produto->id);
         }

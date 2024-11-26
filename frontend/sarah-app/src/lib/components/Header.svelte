@@ -29,6 +29,12 @@
         goto('/produtos');
 	};
 
+    const onAddProduct = (e: Event) => {
+		e.preventDefault();
+
+        goto('/produtos/cadastrar');
+	};
+
     const onCart = (e: Event) => {
 		e.preventDefault();
 
@@ -57,6 +63,9 @@
                             <span class="w-fit">{$user.name}</span>
                             <span class="w-fit text-xs">{$user.username}</span>
                         </span>
+                    </div>
+                    <div class="flex flex-col" slot="product">
+                        <button type="button" on:click={onAddProduct}>Produtos</button>
                     </div>
                     <div class="flex flex-col" slot="content">
                         <a href="/conta/editar">Conta</a>
