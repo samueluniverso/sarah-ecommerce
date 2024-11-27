@@ -8,10 +8,52 @@ use App\Models\Pedido;
 use App\Models\PedidoProduto;
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class PedidoController extends Controller
 {
+    public function teste(Request $request)
+    {
+        // return new Envelope(
+        //     from: new Address('example@example.com', 'Test Sender'),
+        //     subject: 'Test Email',
+        // );
+
+        $to_name = "RECEIVER_NAME";
+        $to_email = "rian.welp@universo.univates.br";
+        $data = array("name" => "Cloudways (sender_name)", "body" => "Este é um e-mail de teste enviado pelo Laravel.");
+
+        try {
+            Mail::send('emails.test-mail', $data, function ($message) use ($to_name, $to_email) {
+                $message->to($to_email, $to_name)
+                    ->subject("Laravel Test Mail");
+                $message->from("rianwlp@gmail.com", "Test Mail");
+            });
+        } catch (\Throwable $th) {
+            var_dump($th->getMessage());
+        }
+
+        // $to_name  = "RECEIVER_NAME";
+        // $to_email = "rian.welp@universo.univates.br";
+        // $data = array("name" => "Cloudways (sender_name)", "body" => "A test mail");
+
+        // try {
+        //     Mail::send([], $data, function ($message) use ($to_name, $to_email) {
+        //         $message->to($to_email, $to_name)
+        //             ->subject("Laravel Test Mail")
+        //             ->setBody("Este é um e-mail de teste enviado pelo Laravel.", "text/plain");
+        //         $message->from('rianwlp@gmail.com', 'Test Mail');
+        //     });
+        // } catch (\Throwable $th) {
+        //     var_dump($th->getMessage());
+        // }
+
+        // \Mail::send('rian.welp@universo.univates.br', ['data' => 'TESTE']);
+
+        // http://localhost:8083/api/pedido-teste
+    }
+
     public function store(Request $request)
     {
         try {

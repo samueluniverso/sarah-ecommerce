@@ -117,12 +117,26 @@ class MarcaController extends Controller
 
     public function getByNome(Request $request)
     {
-        return Marca::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+        $marcas = Marca::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+        return response()->json([
+            'data' => $marcas
+        ], 200);
     }
 
     public function getByDescricao(Request $request)
     {
-        return Marca::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+        $marcas = Marca::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+        return response()->json([
+            'data' => $marcas
+        ], 200);
+    }
+
+    public function list()
+    {
+        $marca = new Marca();
+        return response()->json([
+            'data' => $marca->get()
+        ], 200);
     }
 
     public function listaPaginada2(Request $request)

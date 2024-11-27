@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PessoaFisicaController;
 use App\Http\Controllers\PessoaJuridicaController;
 use App\Http\Controllers\UserAuthController;
@@ -12,7 +13,8 @@ use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PromocaoController;
 use App\Http\Controllers\ProdutoController;
-use Illuminate\Support\Facades\Route;
+use App\Mail\MyTestEmailPedido;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Usuario
@@ -163,10 +165,16 @@ Route::get('/categoria/descricao/{descricao}', [
     'getByDescricao'
 ])->middleware('auth:sanctum');
 
+
 Route::prefix('categorias')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         CategoriaController::class,
         'listaPaginada'
+    ]);
+
+    Route::get('/', [
+        CategoriaController::class,
+        'list'
     ]);
 });
 
@@ -214,6 +222,10 @@ Route::prefix('marcas')->group(function () {
         MarcaController::class,
         'listaPaginada2'
     ]);
+    Route::get('/', [
+        MarcaController::class,
+        'list'
+    ]);
 });
 
 // Route::prefix('marcas')->group(function () {
@@ -255,6 +267,10 @@ Route::prefix('medidas')->group(function () {
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         MedidaController::class,
         'listaPaginada'
+    ]);
+    Route::get('/', [
+        MedidaController::class,
+        'list'
     ]);
 });
 
@@ -539,6 +555,15 @@ Route::get('/pagamento/pedido/{id}', [
     'getByPedido'
 ])->middleware('auth:sanctum');
 
+Route::get('/pagamento/confirma/{id}', [
+    PagamentoController::class,
+    'confirmaPagamento'
+]);
+
+// Route::get('/pagamento/confirma/{id}', [
+//     PagamentoController::class,
+//     'confirmaPagamento'
+// ])->middleware('auth:sanctum');
 
 /**
  * Estoque
@@ -582,6 +607,22 @@ Route::get('/estoque/quantidade/{id}', [
     EstoqueController::class,
     'getByQuantidade'
 ])->middleware('auth:sanctum');
+
+
+// http://localhost:8083/api/pedido-teste
+Route::post('/teste/', [
+    PedidoController::class,
+    'teste'
+]);
+
+// Route::get('/testroute', function () {
+//     $name = "Funny Coder";
+
+//     // The email sending is done using the to method on the Mail facade
+//     Mail::to('testreceiver@gmail.com')->send(new MyTestEmailPedido($name));
+// });
+
+
 
 // Route::prefix('pagamentos')->group(function () {
 //     Route::get('/paginar/limit/{limit}/offset/{offset}', [

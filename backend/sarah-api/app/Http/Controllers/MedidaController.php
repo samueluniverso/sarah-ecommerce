@@ -126,6 +126,14 @@ class MedidaController extends Controller
         ], 200);
     }
 
+    public function list()
+    {
+        $medida = new Medida();
+        return response()->json([
+            'data' => $medida->get()
+        ], 200);
+    }
+
     public function listaPaginada(Request $request)
     {
         try {

@@ -116,12 +116,26 @@ class CategoriaController extends Controller
 
     public function getByNome(Request $request)
     {
-        return Categoria::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+        $categorias = Categoria::whereRaw('lower(nome) ILIKE ?', ["%{$request->route('nome')}%"])->get();
+        return response()->json([
+            'data' => $categorias
+        ], 200);
     }
 
     public function getByDescricao(Request $request)
     {
-        return Categoria::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+        $categorias = Categoria::whereRaw('lower(descricao) ILIKE ?', ["%{$request->route('descricao')}%"])->get();
+        return response()->json([
+            'data' => $categorias
+        ], 200);
+    }
+
+    public function list()
+    {
+        $categoria = new Categoria();
+        return response()->json([
+            'data' => $categoria->get()
+        ], 200);
     }
 
     public function listaPaginada(Request $request)

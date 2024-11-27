@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\FormaPagamento;
 use App\Models\Pagamento;
 use App\Models\Pedido;
+use App\Models\PedidoProduto;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -146,10 +148,9 @@ class PagamentoController extends Controller
         return Pagamento::where('fk_pedido', $request->route('id'))->get();
     }
 
-    // pagamentos
     public function confirmaPagamento(Request $request)
     {
-        $param = $request->route('codigo-pedido');
+        $param = $request->route('id');
 
         $pedido = Pedido::where('id', $param)->first();
         if (!$pedido) {
@@ -158,30 +159,13 @@ class PagamentoController extends Controller
             ], 404);
         }
 
-        /**
-         * Para gravar na tabela de pagamentos eu preciso de 3 informacoes:
-         * fk_pedido (Tenho)
-         * fk_forma_pagamento (Nao tenho)
-         * valor (Nao tenho)
-         *
-         * Validar com o Samuel como essas infos vao vir
-         */
+        $pedidoProduto = PedidoProduto::where('fk_pedido', $pedido->id)->first();
+        $produto       = Produto::where('id', $pedidoProduto->fk_produto)->first();
 
-        // $pagamento = Pagamento::where('id', $data['id'])->first();
-        // $pagamento->fk_pedido          = $pedido->id;
-        // $pagamento->fk_forma_pagamento = $formaPagamento->id;
-        // $pagamento->valor              = $data['valor'];
-        // $pagamento->update();
-
-        // $pagamento = Pagamento::where('codigo-produto', $param)->first();
-        // if ($pagamento) {
-        //     return response()->json([
-        //         'message' => 'Pagamento do pedido !'
-        //     ], 200);
-        // }
-        // $pagamento->delete();
-        // return response()->json([
-        //     'message' => 'Pagamento inactivated successfully!'
-        // ], 200);
+        $pagamento =  new Pagamento();
+        $pagamento->fk_pedido          = $pedido->id;
+        $pagamento->fk_forma_pagamento = 5;
+        $pagamento->valor              = $produto->preco;
+        $pagamento->save();
     }
 }
