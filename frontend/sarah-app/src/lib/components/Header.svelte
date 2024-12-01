@@ -47,6 +47,12 @@
         goto('/categorias/cadastrar');
 	};
 
+    const onAddMeasure = (e: Event) => {
+		e.preventDefault();
+
+        goto('/medidas/cadastrar');
+	};
+
     const onCart = (e: Event) => {
 		e.preventDefault();
 
@@ -84,6 +90,9 @@
                     </div>
                     <div class="flex flex-col" slot="category">
                         <button type="button" on:click={onAddCategory}>Categorias</button>
+                    </div>
+                    <div class="flex flex-col" slot="measures">
+                        <button type="button" on:click={onAddMeasure}>Medidas</button>
                     </div>
                     <div class="flex flex-col" slot="content">
                         <a href="/conta/editar">Conta</a>
