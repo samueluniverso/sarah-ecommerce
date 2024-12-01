@@ -215,6 +215,11 @@ Route::get('/marca/descricao/{descricao}', [
 
 // Rota em teste
 Route::prefix('marcas')->group(function () {
+    Route::get('/listar', [
+        MarcaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar', [
         MarcaController::class,
         'listaPaginada2'

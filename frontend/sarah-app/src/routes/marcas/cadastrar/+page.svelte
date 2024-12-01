@@ -11,6 +11,7 @@
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
     import MarcaApi from "$lib/models/MarcaApi.js";
+    import TableMarcas from "$lib/components/tables/TableMarcas.svelte";
 
     /** session data */
     export let data;
@@ -49,6 +50,9 @@
                     </div>
                     <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
                 </form>
+            </section>
+            <section class="h-4/5 w-80 flex justify-left items-left">
+                <TableMarcas token={token} />
             </section>
     </div>
 </div>
