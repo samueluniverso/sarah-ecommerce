@@ -98,6 +98,7 @@
         <div class="col-span-1"></div>
             <section class="h-4/5 flex justify-center items-center">
                 <form on:submit={onSubmit} class="py-8 px-4 flex flex-col shadow-custom gap-4">
+                    <h1><strong>Realizar pedido</strong></h1>
                     <CepFieldChange name="cep" label="CEP" onChange={() => cepData()} bind:value={cep} required />
                     <div>
                         <TextField name="cidade" label="Cidade" bind:value={cidade} disabled required />
