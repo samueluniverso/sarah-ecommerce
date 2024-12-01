@@ -164,6 +164,11 @@ Route::get('/categoria/descricao/{descricao}', [
 ])->middleware('auth:sanctum');
 
 Route::prefix('categorias')->group(function () {
+    Route::get('/listar', [
+        CategoriaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         CategoriaController::class,
         'listaPaginada'

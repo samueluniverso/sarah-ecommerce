@@ -8,9 +8,6 @@
     let data = MedidaApi.listar();
 
     const onDelete = (id: any) => () => {
-        console.log('here');
-        console.log(id);
-        console.log(token);
 
         MedidaApi.delete(id, token);
 

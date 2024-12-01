@@ -11,12 +11,15 @@ class CategoriaController extends Controller
 {
     public function store(Request $request)
     {
-        try {
+        try
+        {
             $data = $request->validate([
                 'nome'      => 'required|string',
                 'descricao' => 'nullable|string'
             ]);
-        } catch (Throwable $th) {
+        }
+        catch (Throwable $th)
+        {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -34,20 +37,24 @@ class CategoriaController extends Controller
 
     public function update(Request $request)
     {
-        try {
+        try
+        {
             $data = $request->validate([
                 'id'        => 'required|integer',
                 'nome'      => 'required|string|min:1',
                 'descricao' => 'nullable|string'
             ]);
-        } catch (Throwable $th) {
+        }
+        catch (Throwable $th)
+        {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
         }
 
         $categoria = Categoria::where('id', $data['id'])->first();
-        if (!$categoria) {
+        if (!$categoria)
+        {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
@@ -67,7 +74,8 @@ class CategoriaController extends Controller
         $param = $request->route('id');
 
         $categoria = Categoria::where('id', $param)->first();
-        if (!$categoria) {
+        if (!$categoria)
+        {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
@@ -86,7 +94,8 @@ class CategoriaController extends Controller
         // O withTrashed diz para que mesmo se o registro estiver como softDelete o sistema exclua ele
         $categoria = Categoria::withTrashed()->find($param);
 
-        if (!$categoria) {
+        if (!$categoria)
+        {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
@@ -103,7 +112,8 @@ class CategoriaController extends Controller
         $param = $request->route('id');
 
         $categoria = Categoria::where('id', $param)->first();
-        if (!$categoria) {
+        if (!$categoria)
+        {
             return response()->json([
                 'message' => 'Categoria not found!'
             ], 404);
@@ -126,12 +136,15 @@ class CategoriaController extends Controller
 
     public function listaPaginada(Request $request)
     {
-        try {
+        try
+        {
             $request->validate([
                 'limit'  => 'nullable|integer',
                 'offset' => 'nullable|integer'
             ]);
-        } catch (Throwable $th) {
+        }
+        catch (Throwable $th)
+        {
             return response()->json([
                 'message' => $th->getMessage()
             ], 500);
@@ -144,12 +157,34 @@ class CategoriaController extends Controller
         $categorias = $categoria->take($request->limit)->skip($request->offset)->get();
 
         $arrayCategorias = [];
-        foreach ($categorias as $categoria) {
+        foreach ($categorias as $categoria)
+        {
 
             $objCategoria = new stdClass();
             $objCategoria->id        = $categoria['id'];
             $objCategoria->nome      = $categoria['nome'];
             $objCategoria->descricao = $categoria['preco'];
+            $arrayCategorias[] = $objCategoria;
+        }
+
+        return response()->json([
+            'data' => $arrayCategorias
+        ], 200);
+    }
+
+    public function listar(Request $request)
+    {
+        $categoria  = new Categoria();
+        $categorias = $categoria->get();
+
+        $arrayCategorias = [];
+        foreach ($categorias as $categoria)
+        {
+
+            $objCategoria = new stdClass();
+            $objCategoria->id        = $categoria['id'];
+            $objCategoria->nome      = $categoria['nome'];
+            $objCategoria->descricao = $categoria['descricao'];
             $arrayCategorias[] = $objCategoria;
         }
 

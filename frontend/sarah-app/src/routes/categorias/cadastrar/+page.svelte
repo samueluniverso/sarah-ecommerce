@@ -11,6 +11,7 @@
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
     import CategoraiApi from "$lib/models/CategoriaApi.js";
+    import TableCategorias from "$lib/components/tables/TableCategorias.svelte";
 
     /** session data */
     export let data;
@@ -49,6 +50,9 @@
                     </div>
                     <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
                 </form>
+            </section>
+            <section class="h-4/5 w-80 flex justify-left items-left">
+                <TableCategorias token={token} />
             </section>
     </div>
 </div>
