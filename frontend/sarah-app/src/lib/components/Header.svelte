@@ -35,6 +35,12 @@
         goto('/produtos/cadastrar');
 	};
 
+    const onAddBrand = (e: Event) => {
+		e.preventDefault();
+
+        goto('/marcas/cadastrar');
+	};
+
     const onCart = (e: Event) => {
 		e.preventDefault();
 
@@ -66,6 +72,9 @@
                     </div>
                     <div class="flex flex-col" slot="product">
                         <button type="button" on:click={onAddProduct}>Produtos</button>
+                    </div>
+                    <div class="flex flex-col" slot="brand">
+                        <button type="button" on:click={onAddBrand}>Marcas</button>
                     </div>
                     <div class="flex flex-col" slot="content">
                         <a href="/conta/editar">Conta</a>

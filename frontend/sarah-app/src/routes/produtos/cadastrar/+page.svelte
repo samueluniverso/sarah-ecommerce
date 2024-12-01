@@ -11,7 +11,7 @@
     /** session data */
     export let data;
     let token = data.auth_token!;
-    let user_data = JSON.parse(localStorage.user);
+    //let user_data = JSON.parse(localStorage.user);
 
     let nome = '';
     let is_destque = false;
