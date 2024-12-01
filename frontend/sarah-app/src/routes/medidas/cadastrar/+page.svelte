@@ -3,10 +3,13 @@
 </svelte:head>
 
 <script lang="ts">
+
+    import { goto, invalidate } from '$app/navigation';
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
 
     import TextField from "$lib/components/form/TextField.svelte";
+    import TabelaMedidas from "$lib/components/tables/TableMedidas.svelte";
 
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
@@ -37,6 +40,12 @@
 
         alert('Medida cadastrada com sucesso!');
 
+        const thisPage = window.location.pathname;
+
+        goto('/').then(
+            () => goto(thisPage)
+        );
+
     };
 </script>
 
@@ -58,6 +67,9 @@
                     </div>
                     <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
                 </form>
+            </section>
+            <section class="h-4/5 w-80 flex justify-left items-left">
+                <TabelaMedidas token={token} />
             </section>
     </div>
 </div>

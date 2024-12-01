@@ -252,6 +252,11 @@ Route::patch('/medida/{id}', [
 ])->middleware('auth:sanctum');
 
 Route::prefix('medidas')->group(function () {
+    Route::get('/listar', [
+        MedidaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         MedidaController::class,
         'listaPaginada'

@@ -125,6 +125,29 @@ class MedidaController extends Controller
             'message' => 'Medida inactivated successfully!'
         ], 200);
     }
+    
+    public function listar(Request $request)
+    {
+        $medida  = new Medida();
+        $medidas = $medida->get();
+
+        $arrayMedidas = [];
+        foreach ($medidas as $medida) {
+
+            $objMedida = new stdClass();
+            $objMedida->id           = $medida['id'];
+            $objMedida->completo     = $medida['completo'];
+            $objMedida->sigla        = $medida['sigla'];
+            $objMedida->comprimento  = $medida['comprimento'];
+            $objMedida->altura       = $medida['altura'];
+            $objMedida->largura      = $medida['largura'];
+            $arrayMedidas[] = $objMedida;
+        }
+
+        return response()->json([
+            'data' => $arrayMedidas
+        ], 200);
+    }
 
     public function listaPaginada(Request $request)
     {
@@ -152,7 +175,7 @@ class MedidaController extends Controller
             $objMedida->id           = $medida['id'];
             $objMedida->completo     = $medida['completo'];
             $objMedida->sigla        = $medida['sigla'];
-            $objMedida->comprimennto = $medida['comprimennto'];
+            $objMedida->comprimento  = $medida['comprimento'];
             $objMedida->altura       = $medida['altura'];
             $objMedida->largura      = $medida['largura'];
             $arrayMedidas[] = $objMedida;
