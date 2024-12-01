@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Produtos</title>
+</svelte:head>
+
 <script lang="ts">
     import ProductCard from "$lib/components/cards/ProductCard.svelte";
 

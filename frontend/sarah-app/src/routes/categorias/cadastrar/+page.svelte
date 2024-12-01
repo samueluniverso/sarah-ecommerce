@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Cadastrar Categorias</title>
+</svelte:head>
+
 <script lang="ts">
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";

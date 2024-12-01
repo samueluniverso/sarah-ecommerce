@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Conta</title>
+</svelte:head>
+
 <script lang="ts">
     import { goto } from "$app/navigation";
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";

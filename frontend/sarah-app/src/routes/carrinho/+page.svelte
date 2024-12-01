@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Carrinho</title>
+</svelte:head>
+
 <script lang="ts">
     import { get } from "svelte/store";
     import { itensCarrinho } from "../../cart"; 

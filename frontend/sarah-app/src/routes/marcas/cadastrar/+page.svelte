@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Cadastrar Marcas</title>
+</svelte:head>
+
 <script lang="ts">
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
