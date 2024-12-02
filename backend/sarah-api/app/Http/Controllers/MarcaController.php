@@ -165,4 +165,24 @@ class MarcaController extends Controller
             'data' => $arrayMarcas
         ], 200);
     }
+
+    public function listar(Request $request)
+    {
+        $marca  = new Marca();
+        $marcas = $marca->get();
+
+        $arrayMarcas = [];
+        foreach ($marcas as $marca) {
+
+            $objMarca = new stdClass();
+            $objMarca->id        = $marca['id'];
+            $objMarca->nome      = $marca['nome'];
+            $objMarca->descricao = $marca['descricao'];
+            $arrayMarcas[] = $objMarca;
+        }
+
+        return response()->json([
+            'data' => $arrayMarcas
+        ], 200);
+    }
 }

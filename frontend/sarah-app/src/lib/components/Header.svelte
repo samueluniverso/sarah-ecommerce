@@ -35,6 +35,24 @@
         goto('/produtos/cadastrar');
 	};
 
+    const onAddBrand = (e: Event) => {
+		e.preventDefault();
+
+        goto('/marcas/cadastrar');
+	};
+
+    const onAddCategory = (e: Event) => {
+		e.preventDefault();
+
+        goto('/categorias/cadastrar');
+	};
+
+    const onAddMeasure = (e: Event) => {
+		e.preventDefault();
+
+        goto('/medidas/cadastrar');
+	};
+
     const onCart = (e: Event) => {
 		e.preventDefault();
 
@@ -66,6 +84,15 @@
                     </div>
                     <div class="flex flex-col" slot="product">
                         <button type="button" on:click={onAddProduct}>Produtos</button>
+                    </div>
+                    <div class="flex flex-col" slot="brand">
+                        <button type="button" on:click={onAddBrand}>Marcas</button>
+                    </div>
+                    <div class="flex flex-col" slot="category">
+                        <button type="button" on:click={onAddCategory}>Categorias</button>
+                    </div>
+                    <div class="flex flex-col" slot="measures">
+                        <button type="button" on:click={onAddMeasure}>Medidas</button>
                     </div>
                     <div class="flex flex-col" slot="content">
                         <a href="/conta/editar">Conta</a>

@@ -24,6 +24,9 @@
         <span transition:fly={{ y: -10 }} class="triangle"></span>
         <div transition:fly={{ y: -10 }} class="popover">
             <slot name="product"/>
+            <slot name="brand"/>
+            <slot name="category"/>
+            <slot name="measures"/>
             <slot name="content"/>
         </div>
     {/if}

@@ -164,6 +164,11 @@ Route::get('/categoria/descricao/{descricao}', [
 ])->middleware('auth:sanctum');
 
 Route::prefix('categorias')->group(function () {
+    Route::get('/listar', [
+        CategoriaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         CategoriaController::class,
         'listaPaginada'
@@ -210,6 +215,11 @@ Route::get('/marca/descricao/{descricao}', [
 
 // Rota em teste
 Route::prefix('marcas')->group(function () {
+    Route::get('/listar', [
+        MarcaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar', [
         MarcaController::class,
         'listaPaginada2'
@@ -252,6 +262,11 @@ Route::patch('/medida/{id}', [
 ])->middleware('auth:sanctum');
 
 Route::prefix('medidas')->group(function () {
+    Route::get('/listar', [
+        MedidaController::class,
+        'listar'
+    ]);
+
     Route::get('/paginar/limit/{limit}/offset/{offset}', [
         MedidaController::class,
         'listaPaginada'

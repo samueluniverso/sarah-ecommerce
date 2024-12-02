@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Cadastrar Produtos</title>
+</svelte:head>
+
 <script lang="ts">
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
@@ -11,7 +15,7 @@
     /** session data */
     export let data;
     let token = data.auth_token!;
-    let user_data = JSON.parse(localStorage.user);
+    //let user_data = JSON.parse(localStorage.user);
 
     let nome = '';
     let is_destque = false;
@@ -55,6 +59,7 @@
         <div class="col-span-1"></div>
             <section class="h-4/5 flex justify-center items-center">
                 <form on:submit={onSubmit} class="py-8 px-4 flex flex-col shadow-custom gap-4">
+                    <h1><strong>Cadastrar Produto</strong></h1>
                     <div>
                         <TextField name="nome" label="Nome" bind:value={nome} required />
                         <TextField name="preco" label="Preço" bind:value={preco} required />
