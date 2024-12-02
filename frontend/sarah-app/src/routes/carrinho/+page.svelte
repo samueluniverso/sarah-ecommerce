@@ -3,6 +3,7 @@
 </svelte:head>
 
 <script lang="ts">
+
     import { get } from "svelte/store";
     import { itensCarrinho } from "../../cart"; 
     import ProductCartCard from "$lib/components/cards/ProductCartCard.svelte";
@@ -16,6 +17,7 @@
     import CepFieldChange from "$lib/components/form/CepFieldChange.svelte";
     import CepApi from "$lib/models/CepApi";
     import PedidoApi from "$lib/models/PedidoApi";
+    import ProdutoApi from "$lib/models/ProdutoApi";
 
     /** session data */
     export let data;
@@ -30,6 +32,8 @@
     let observacao = ''
     let logradouro = '';
   
+    let valorTotal = 0.00;
+
     let itemCarrinho: ProdutoCarrinho = {id: 0, nome: "", preco: 0.00, quantidade: 0};
 
     let carrinho = get(itensCarrinho);
@@ -40,6 +44,12 @@
         carrinho = novoItemCarrinho;
         itemCarrinhoIndex = carrinho.findIndex((item) => { return item.id === itemCarrinho.id; });
         produtoCarrinho = carrinho[itemCarrinhoIndex];
+    });
+
+    carrinho.forEach((item) => {
+        ProdutoApi.getProduto(item.id).then((produto) => {
+            valorTotal = valorTotal + parseFloat(produto.preco);
+        });
     });
 
     const onSubmit = (e: Event) => {
@@ -109,6 +119,7 @@
                         <TextField name="observacao" label="Observação" bind:value={observacao} />
                     </div>
                     <BaseButton Icon={Currency} label="Comprar" type="submit" />
+                    <h1><strong>Valor: R$ {valorTotal}</strong></h1>
                 </form>
             </section>
     </div>

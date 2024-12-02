@@ -1,4 +1,4 @@
-class ProdutoApi
+class PessoaApi
 {
     private static readonly api = `http://localhost:8083/api`;
 
@@ -21,4 +21,4 @@ class ProdutoApi
     }
 }
 
-export default ProdutoApi;
+export default PessoaApi;
