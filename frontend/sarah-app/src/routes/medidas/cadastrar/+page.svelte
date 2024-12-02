@@ -4,13 +4,11 @@
 
 <script lang="ts">
 
-    import { goto, invalidate } from '$app/navigation';
+    import { goto } from '$app/navigation';
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
-
     import TextField from "$lib/components/form/TextField.svelte";
     import TabelaMedidas from "$lib/components/tables/TableMedidas.svelte";
-
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
     import MedidaApi from "$lib/models/MedidaApi.js";
@@ -39,13 +37,10 @@
         );
 
         alert('Medida cadastrada com sucesso!');
-
         const thisPage = window.location.pathname;
-
         goto('/').then(
             () => goto(thisPage)
         );
-
     };
 </script>
 
@@ -61,9 +56,9 @@
                     <div>
                         <TextField name="competo" label="Completo" bind:value={completo} required />
                         <TextField name="sigla" label="Sigla" bind:value={sigla} required />
-                        <TextField name="comprimento" label="Comprimento" bind:value={comprimento} required />
-                        <TextField name="largura" label="Largura" bind:value={largura} required />
-                        <TextField name="altura" label="Altura" bind:value={altura} required />
+                        <TextField name="comprimento" label="Comprimento (cm)" bind:value={comprimento} required />
+                        <TextField name="largura" label="Largura (cm)" bind:value={largura} required />
+                        <TextField name="altura" label="Altura (cm)" bind:value={altura} required />
                     </div>
                     <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
                 </form>

@@ -3,11 +3,10 @@
 </svelte:head>
 
 <script lang="ts">
-   
+   import { goto } from "$app/navigation";
+
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
-
     import TextField from "$lib/components/form/TextField.svelte";
-
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
     import MarcaApi from "$lib/models/MarcaApi.js";
@@ -31,6 +30,10 @@
         );
 
         alert('Marca cadastrada com sucesso!');
+        const thisPage = window.location.pathname;
+        goto('/').then(
+            () => goto(thisPage)
+        );
 
     };
 </script>

@@ -28,9 +28,9 @@
                 <tr>
                     <th class="px-7">Completo</th>
                     <th class="px-7">Sigla</th>
-                    <th class="px-7">Comprimento</th>
-                    <th class="px-7">Largura</th>
-                    <th class="px-7">Altura</th>
+                    <th class="px-7">Comprimento (cm)</th>
+                    <th class="px-7">Largura (cm)</th>
+                    <th class="px-7">Altura (cm)</th>
                     <th class="px-7">Opções</th>
                 </tr>
             </thead>
