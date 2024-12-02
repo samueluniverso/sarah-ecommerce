@@ -4,17 +4,17 @@
 
 <script lang="ts">
 
+    let pix_data = 'EstaStringEApenasUmTesteParaQRCodeDePix';
+
     import { get } from "svelte/store";
     import { itensCarrinho } from "../../cart"; 
     import ProductCartCard from "$lib/components/cards/ProductCartCard.svelte";
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
-
     import TextField from "$lib/components/form/TextField.svelte";
-
     import Currency from "@tabler/icons-svelte/icons/currency-dollar";
-
     import CepFieldChange from "$lib/components/form/CepFieldChange.svelte";
+
     import CepApi from "$lib/models/CepApi";
     import PedidoApi from "$lib/models/PedidoApi";
     import ProdutoApi from "$lib/models/ProdutoApi";
@@ -31,6 +31,8 @@
     let numero = '';;
     let observacao = ''
     let logradouro = '';
+
+    let showModal = true;
   
     let valorTotal = 0.00;
 
@@ -81,6 +83,8 @@
             JSON.stringify({endereco}),
             token
         );
+        alert('Pedido realizado com sucesso!');
+        togglePix();
 	};
 
     function cepData()
@@ -94,6 +98,17 @@
             bairro = data.neighborhood;
             rua = data.street;
         });
+    }
+
+    function togglePix()
+    {
+        let pix = document.getElementById('pix');
+        if (pix && pix.style.display == 'block') {
+            pix.style.display = 'none';
+        }
+        else if(pix && pix.style.display == 'none') {
+            pix.style.display = 'block';
+        }
     }
 
 </script>
@@ -119,7 +134,11 @@
                         <TextField name="observacao" label="Observação" bind:value={observacao} />
                     </div>
                     <BaseButton Icon={Currency} label="Comprar" type="submit" />
+                    <!-- <BaseButton label="Pix" type="submit" onClick={togglePix} /> -->
                     <h1><strong>Valor: R$ {valorTotal}</strong></h1>
+                    <div>
+                        <img id="pix" src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${pix_data}" height="128px" width="128px" alt="Pix" style="display:none;"/>
+                    </div>
                 </form>
             </section>
     </div>
