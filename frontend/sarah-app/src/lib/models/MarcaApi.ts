@@ -47,6 +47,36 @@ class MarcaApi
         }
     }
 
+    public static update = async (
+        id: string,
+        nome: string,
+        descricao: string,
+        token: string,
+    ): Promise<any> => {
+
+        try {
+            const response = await fetch(`${this.api}/marca/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    'id': parseInt(id),
+                    'nome': nome,
+                    'descricao': descricao,
+                })
+            });
+
+            if (!response.ok) {
+                return response;
+            }
+        }
+        catch (err: any) {
+            console.log(err);
+        }
+    }
+
     public static delete = async (
         id: string,
         token: string,
