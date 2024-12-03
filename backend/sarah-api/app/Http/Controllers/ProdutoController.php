@@ -11,6 +11,7 @@ use App\Models\Marca;
 use App\Models\Medida;
 use App\Models\Produto;
 use App\Models\ProdutoCategoria;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use stdClass;
@@ -288,6 +289,7 @@ class ProdutoController extends Controller
             $objProduto->codigo_produto     = $produto['id'];
             $objProduto->produto            = $produto['nome'];
             $objProduto->preco              = $produto['preco'];
+            $objProduto->imagens            = $produto->imagens;
             $arrayProdutos[] = $objProduto;
         }
 
@@ -352,6 +354,18 @@ class ProdutoController extends Controller
         ], 200);
     }
 
+    public function getCount(Request $request)
+    {
+        try {
+            return response()->json([
+                'data' => Produto::count()
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 
     public function storeImagens($imagens, $fk_produto)
     {

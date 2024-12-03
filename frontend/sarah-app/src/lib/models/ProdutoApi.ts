@@ -10,7 +10,7 @@ class ProdutoApi
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             let result = await response.json();
             return result.data;
         }
@@ -30,12 +30,30 @@ class ProdutoApi
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             let result = await response.json();
             return result.data;
         }
         catch (err: any) {
             console.log(err);
+        }
+    }
+
+    public static getCount = async (): Promise<number> => {
+        try {
+            const response = await fetch(`${this.api}/produtos/count`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            let result = await response.json();
+            return result.data as number;
+        }
+        catch (err: any) {
+            console.log(err);
+            return 0;
         }
     }
 

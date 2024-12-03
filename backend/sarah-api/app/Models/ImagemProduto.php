@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ImagemProduto extends Model
 {
@@ -21,6 +22,11 @@ class ImagemProduto extends Model
     protected $fillable = [
         'ref_produto'
     ];
+
+    public function imagem(): HasOne
+    {
+        return $this->hasOne(Imagem::class, 'id', 'fk_imagem');
+    }
 
     /**
      * Get the attributes that should be cast.

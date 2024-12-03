@@ -1,9 +1,12 @@
 <script lang="ts">
     import { get } from "svelte/store";
-    import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart"; 
+    import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart";
 
     /** produto vindo via api */
     export let produto : any;
+    let imagem_produto = produto.imagens[0] ?? "/images/produtos/imagem-padrao.jpg";
+    let imagem = produto.imagens[0] ? produto.imagens[0].imagem.path : '/images/produtos/imagem-padrao.jpg';
+
     /** atribuir propriedaes  */
     let itemCarrinho: ProdutoCarrinho = {id: produto.codigo_produto, nome: produto.produto, preco: produto.preco, quantidade: 0};
 
@@ -22,9 +25,10 @@
 
 </script>
 
-<div class="max-w-sm p-14 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
+<div class="w-96 h-72 p-4 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
+    <img class="h-24" src={imagem} alt="Jaqueta Jeans">
     <header class="card-header">
-        <h2 class="text-4xl font-extrabold dark:text-black">{itemCarrinho.nome}</h2>
+        <h2 class="text-2xl font-extrabold dark:text-black">{itemCarrinho.nome}</h2>
     </header>
     <div class="card-body px-1">
         Preço: R$ {itemCarrinho.preco}
@@ -35,7 +39,7 @@
             Quantidade: <strong> {produtoCarrinho.quantidade} </strong>
         </div>
     {/if}
-    <footer class="card-footer">
+    <footer class="card-footer flex">
         <SmallGreenButton onClick={() => adicionarAoCarrinho(itemCarrinho.id)} label="Adicionar +" />
         <SmallRedButton onClick={() => removerDoCarrinho(itemCarrinho.id)} label="Remover -" />
     </footer>
