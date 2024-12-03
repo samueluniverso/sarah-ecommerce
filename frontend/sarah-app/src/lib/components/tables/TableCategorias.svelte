@@ -18,7 +18,6 @@
         CategoriaApi.delete(id, token);
 
         const thisPage = window.location.pathname;
-
         goto('/').then(
             () => goto(thisPage)
         );

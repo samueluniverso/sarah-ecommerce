@@ -53,6 +53,42 @@ class MedidaApi
         }
     }
 
+    public static update = async (
+        id: string,
+        completo: string,
+        sigla: string,
+        comprimento: number,
+        largura: number,
+        altura: number,
+        token: string,
+    ): Promise<any> => {
+
+        try {
+            const response = await fetch(`${this.api}/medida/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    'id': parseInt(id),
+                    'completo': completo,
+                    'sigla': sigla,
+                    'comprimento': comprimento,
+                    'largura': largura,
+                    'altura': altura
+                })
+            });
+
+            if (!response.ok) {
+                return response;
+            }
+        }
+        catch (err: any) {
+            console.log(err);
+        }
+    }
+
     public static delete = async (
         id: string,
         token: string,

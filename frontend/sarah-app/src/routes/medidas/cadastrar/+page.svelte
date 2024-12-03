@@ -23,20 +23,38 @@
     let comprimento = '';
     let largura = '';
     let altura = '';
+
+    let code = '';
+    let is_update = false;
+    let submit_label = "Cadastrar";
   
     const onSubmit = (e: Event) => {
 		e.preventDefault();
 
-        MedidaApi.store(
-            completo,
-            sigla,
-            parseFloat(comprimento),
-            parseFloat(largura),
-            parseFloat(altura),
-            token
-        );
+        if (is_update) {
+            MedidaApi.update(
+                code,
+                completo,
+                sigla,
+                parseFloat(comprimento),
+                parseFloat(largura),
+                parseFloat(altura),
+                token
+            );
+            alert('Medida atualizada com sucesso!');
+        }
+        else {
+            MedidaApi.store(
+                completo,
+                sigla,
+                parseFloat(comprimento),
+                parseFloat(largura),
+                parseFloat(altura),
+                token
+            );
+            alert('Medida cadastrada com sucesso!');
+        }
 
-        alert('Medida cadastrada com sucesso!');
         const thisPage = window.location.pathname;
         goto('/').then(
             () => goto(thisPage)
@@ -60,11 +78,11 @@
                         <TextField name="largura" label="Largura (cm)" bind:value={largura} required />
                         <TextField name="altura" label="Altura (cm)" bind:value={altura} required />
                     </div>
-                    <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
+                    <BaseButton Icon={Clipboard} label="{submit_label}" type="submit" />
                 </form>
             </section>
             <section class="h-4/5 w-80 flex justify-left items-left">
-                <TabelaMedidas token={token} />
+                <TabelaMedidas bind:code={code} bind:submit_label={submit_label} bind:is_update={is_update} bind:completo={completo} bind:sigla={sigla} bind:comprimento={comprimento} bind:largura={largura} bind:altura={altura} token={token} />
             </section>
     </div>
 </div>
