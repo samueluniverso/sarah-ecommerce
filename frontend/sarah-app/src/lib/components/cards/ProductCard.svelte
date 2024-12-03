@@ -4,8 +4,8 @@
 
     /** produto vindo via api */
     export let produto : any;
-    let imagem_produto = produto.imagens[0] ?? "/images/produtos/imagem-padrao.jpg";
-    let imagem = produto.imagens[0] ? produto.imagens[0].imagem.path : '/images/produtos/imagem-padrao.jpg';
+    let imagem_nome = produto.imagens[0] ? produto.imagens[0].imagem.nome : '';
+    let imagem_path = produto.imagens[0] ? produto.imagens[0].imagem.path : '/images/produtos/imagem-padrao.jpg';
 
     /** atribuir propriedaes  */
     let itemCarrinho: ProdutoCarrinho = {id: produto.codigo_produto, nome: produto.produto, preco: produto.preco, quantidade: 0};
@@ -26,7 +26,7 @@
 </script>
 
 <div class="w-96 h-72 p-4 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
-    <img class="h-24" src={imagem} alt="Jaqueta Jeans">
+    <img class="h-24" src={imagem_path} alt={imagem_nome}>
     <header class="card-header">
         <h2 class="text-2xl font-extrabold dark:text-black">{itemCarrinho.nome}</h2>
     </header>
