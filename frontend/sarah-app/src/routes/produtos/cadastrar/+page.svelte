@@ -3,14 +3,16 @@
 </svelte:head>
 
 <script lang="ts">
+    import { goto } from '$app/navigation';
    
     import BaseButton from "$lib/components/form/base/BaseButton.svelte";
-
     import TextField from "$lib/components/form/TextField.svelte";
-
     import Clipboard from "@tabler/icons-svelte/icons/clipboard-data";
 
     import ProdutoApi from "$lib/models/ProdutoApi";
+    import MarcaApi from "$lib/models/MarcaApi.js";
+    import CategoriaApi from "$lib/models/CategoriaApi.js";
+    import MedidaApi from "$lib/models/MedidaApi.js";
 
     /** session data */
     export let data;
@@ -24,6 +26,10 @@
     let cor = '';;
     let categoria = ''
     let medida = '';
+
+    let list_marcas = MarcaApi.listar();
+    let list_categorias = CategoriaApi.listar();
+    let list_medidas = MedidaApi.listar();
   
     const onSubmit = (e: Event) => {
 		e.preventDefault();
@@ -45,8 +51,12 @@
             JSON.stringify(caracteristicas),
             token
         );
-
         alert('Produto cadastrado com sucesso!');
+
+        const thisPage = window.location.pathname;
+        goto('/').then(
+            () => goto(thisPage)
+        );
 
     };
 </script>
@@ -64,48 +74,45 @@
                         <TextField name="nome" label="Nome" bind:value={nome} required />
                         <TextField name="preco" label="Preço" bind:value={preco} required />
                         <TextField name="cor" label="Cor" bind:value={cor} required />
-                        <p>Marcas</p>
-                        <select id='marcas' bind:value={fk_marca} required>
-                            <option value=''>Selecione a marca</option>
-                            <option value='1'>Urban Style</option>
-                            <option value='2'>EchoChic</option>
-                            <option value='3'>Classique</option>
-                            <option value='4'>SportFlex</option>
-                            <option value='5'>VintageVibes</option>
-                        </select>
-                        <p>Categorias</p>
-                        <select id='medidas' bind:value={categoria} required>
-                            <option value=''>Selecione a medida</option>
-                            <option value='1'>Casual</option>
-                            <option value='2'>Esportivo</option>
-                            <option value='3'>Formal</option>
-                            <option value='4'>Noite</option>
-                            <option value='5'>Inverno</option>
-                            <option value='6'>Praia</option>
-                            <option value='7'>Trabalho</option>
-                            <option value='8'>Vintage</option>
-                            <option value='9'>Sustentável</option>
-                            <option value='10'>Streetwear</option>
-                        </select>
-                        <p>Medidas</p>
-                        <select id='medidas' bind:value={medida} required>
-                            <option value=''>Selecione a medida</option>
-                            <option value='1'>Muito Pequeno (PP)</option>
-                            <option value='2'>Pequeno (P)</option>
-                            <option value='3'>Médio (M)</option>
-                            <option value='4'>Grande (G)</option>
-                            <option value='5'>Extra Grande (GG)</option>
-                            <option value='6'>Extra Extra Grande (XG)</option>
-                        </select>
-                        <!-- <fieldset>
-                            <div>
-                                <input type='radio' id='is_destque' name='destaque' value='1' required />
-                                <label for='is_destque'>Destaque</label>
 
-                                <input type='radio' id='not_destaque' name='destaque' value='0' />
-                                <label for='not_destque'>Não destaque</label>
-                            </div>
-                        </fieldset> -->
+                        <p>Marcas</p>
+                        {#await list_marcas}
+                            <p>Carregando...</p>
+                        {:then list_marcas}
+                            <select id='marcas' bind:value={fk_marca} required>
+                        {#each list_marcas as marca}
+                            <option value={marca.id}>{marca.nome}</option>
+                        {/each}
+                        </select>
+                        {:catch error}
+                            <p>Erro ao carregar a lista de marcas</p>
+                        {/await}
+
+                        <p>Categorias</p>
+                        {#await list_categorias}
+                            <p>Carregando...</p>
+                        {:then list_categorias}
+                            <select id='categorias' bind:value={categoria} required>
+                        {#each list_categorias as categoria}
+                            <option value={categoria.id}>{categoria.nome}</option>
+                        {/each}
+                            </select>
+                        {:catch error}
+                            <p>Erro ao carregar a lista de categorias</p>
+                        {/await}
+
+                        <p>Medidas</p>
+                        {#await list_medidas}
+                            <p>Carregando...</p>
+                        {:then list_medidas}
+                            <select id='medidas' bind:value={medida} required>
+                        {#each list_medidas as medida}
+                            <option value={medida.id}>{medida.completo}</option>
+                        {/each}
+                            </select>
+                        {:catch error}
+                            <p>Erro ao carregar a lista de medidas</p>
+                        {/await}
                     </div>
 
                     <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
