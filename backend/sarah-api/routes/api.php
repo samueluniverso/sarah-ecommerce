@@ -416,6 +416,10 @@ Route::prefix('produtos')->group(function () {
         ProdutoController::class,
         'listaPaginada'
     ]);
+    Route::get('/count', [
+        ProdutoController::class,
+        'getCount'
+    ]);
 
     Route::post('/buscar', [
         ProdutoController::class,

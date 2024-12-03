@@ -29,5 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstoqueSeeder::class);
         $this->call(FormaPagamentoSeeder::class);
         $this->call(PagamentoSeeder::class);
+        $this->call(ImagemSeeder::class);
+        $this->call(ImagemProdutoSeeder::class);
     }
 }
