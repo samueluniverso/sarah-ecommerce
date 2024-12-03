@@ -35,19 +35,7 @@
             submit_label = 'Editar';
             is_update = true;
         });
-
-        // MarcaApi.update(
-        //     id,
-        //     nome,
-        //     descricao,
-        //     token
-        // );
-
-        // const thisPage = window.location.pathname;
-        // goto('/').then(
-        //     () => goto(thisPage)
-        // );
-}
+    }
 
 </script>
 

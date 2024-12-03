@@ -19,15 +19,31 @@
 
     let nome = '';
     let descricao = '';
+
+    let code = '';
+    let is_update = false;
+    let submit_label = "Cadastrar";
   
     const onSubmit = (e: Event) => {
 		e.preventDefault();
 
-        CategoraiApi.store(
-            nome,
-            descricao,
-            token
-        );
+        if (is_update) {
+            CategoraiApi.update(
+                code,
+                nome,
+                descricao,
+                token
+            );
+            alert('Marca atualizada com sucesso!');
+        }
+        else {
+            CategoraiApi.store(
+                nome,
+                descricao,
+                token
+            );
+            alert('Marca cadastrada com sucesso!');
+        }
 
         alert('Categoria cadastrada com sucesso!');
         const thisPage = window.location.pathname;
@@ -51,11 +67,11 @@
                         <TextField name="nome" label="Nome" bind:value={nome} required />
                         <TextField name="descricao" label="Descrição" bind:value={descricao} required />
                     </div>
-                    <BaseButton Icon={Clipboard} label="Cadastrar" type="submit" />
+                    <BaseButton Icon={Clipboard} label="{submit_label}" type="submit" />
                 </form>
             </section>
             <section class="h-4/5 w-80 flex justify-left items-left">
-                <TableCategorias token={token} />
+                <TableCategorias bind:code={code} bind:submit_label={submit_label} bind:is_update={is_update} bind:nome={nome} bind:descricao={descricao} token={token} />
             </section>
     </div>
 </div>
