@@ -34,7 +34,7 @@
                 descricao,
                 token
             );
-            alert('Marca atualizada com sucesso!');
+            alert('Categoria atualizada com sucesso!');
         }
         else {
             CategoraiApi.store(
@@ -42,10 +42,9 @@
                 descricao,
                 token
             );
-            alert('Marca cadastrada com sucesso!');
+            alert('Categoria cadastrada com sucesso!');
         }
 
-        alert('Categoria cadastrada com sucesso!');
         const thisPage = window.location.pathname;
         goto('/').then(
             () => goto(thisPage)
