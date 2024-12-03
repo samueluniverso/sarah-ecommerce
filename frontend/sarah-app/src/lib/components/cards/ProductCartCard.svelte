@@ -1,6 +1,6 @@
 <script lang="ts">
     import { get } from "svelte/store";
-    import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart"; 
+    import { itensCarrinho, adicionarAoCarrinho, removerDoCarrinho } from "../../../cart";
 
     /** atribuir propriedaes  */
     export let itemCarrinho: any = {id: 0, quantidade: 0};
@@ -23,12 +23,13 @@
 
 </script>
 
-<div class="max-w-sm p-14 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
+<div class="w-96 h-72 p-4 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
     {#await produto}
         <p>Carregando...</p>
         {:then produto}
+            <img class="h-24" src="/images/produtos/imagem-padrao.jpg" alt="">
             <header class="card-header">
-                <h2 class="text-4xl font-extrabold dark:text-black">{produto.nome}</h2>
+                <h2 class="text-2xl font-extrabold dark:text-black">{produto.nome}</h2>
             </header>
         <div class="card-body px-1">
             Preço: R$ {produto.preco}
@@ -39,7 +40,7 @@
                 Quantidade: <strong> {produtoCarrinho.quantidade} </strong>
             </div>
         {/if}
-        <footer class="card-footer">
+        <footer class="card-footer flex">
             <SmallGreenButton onClick={() => adicionarAoCarrinho(produto.codigo_produto)} label="Adicionar +" />
             <SmallRedButton onClick={() => removerDoCarrinho(itemCarrinho.codigo_produto)} label="Remover -" />
         </footer>
